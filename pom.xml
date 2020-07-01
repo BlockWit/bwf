@@ -45,6 +45,36 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+			<version>0.40</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>5.13.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.5.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -53,6 +83,55 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+<!--						<goals>
+							<goal>exec</goal>
+						</goals> -->
+
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<classpathScope>compile</classpathScope>
+							<mainClass>com.vaadin.sass.SassCompiler</mainClass>
+							<arguments>
+								<argument>${project.basedir}/src/main/resources/static/scss</argument>
+								<argument>${project.basedir}/src/main/resources/static/css</argument>
+							</arguments>
+						</configuration>
+
+					</execution>
+				</executions>
+				<configuration>
+					<executable>maven</executable>
+<!--					<resources>
+						<resource>
+							<source>
+								<directory>${project.basedir}/src/main/resources/static/scss</directory>
+							</source>
+							<destination>${project.basedir}/src/main/resources/static/css</destination>
+						</resource>
+					</resources>-->
+<!--					<executable>maven</executable> -->
+					<!-- optional -->
+<!--					<workingDirectory>/tmp</workingDirectory>
+					<arguments>
+						<argument>-X</argument>
+						<argument>myproject:dist</argument>
+					</arguments>
+					<environmentVariables>
+						<LANG>en_US</LANG>
+					</environmentVariables>-->
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
