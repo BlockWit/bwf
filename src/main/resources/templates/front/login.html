@@ -11,6 +11,11 @@
     <div class="container bs-container">
         <div class="container bs-authreg-container">
             <h2 class="mb-4">Войти</h2>
+
+            <div th:if="${message}">
+                <div th:text="${message}"></div>
+            </div>
+
             <p class="mb-5">Мы рады что Вы присоединились к сообществу</p>
             <form action="/app/login" method="POST" class="form-vertical" role="form">
                 <div class="form-group   " id="email_field">

@@ -1,38 +1,85 @@
 package com.blockwit.bwf.models;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "account")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
-    @Setter
     private Long id;
 
-    @Getter
-    @Setter
     private String login;
 
-    @Getter
-    @Setter
     private String email;
 
-    @Getter
-    @Setter
     private String hash;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "account_roles", joinColumns = @JoinColumn(name="account_id"))
+    private String confirmCode;
+
     @Enumerated(value = EnumType.STRING)
-    @Getter
-    @Setter
+    private ConfirmationStatus confirmationStatus;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"))
+    @Enumerated(value = EnumType.STRING)
     private Set<Role> roles;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getConfirmCode() {
+        return confirmCode;
+    }
+
+    public void setConfirmCode(String confirmCode) {
+        this.confirmCode = confirmCode;
+    }
+
+    public ConfirmationStatus getConfirmationStatus() {
+        return confirmationStatus;
+    }
+
+    public void setConfirmationStatus(ConfirmationStatus confirmationStatus) {
+        this.confirmationStatus = confirmationStatus;
+    }
 }

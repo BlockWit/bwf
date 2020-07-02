@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <div th:replace="/blocks/front/head"></div>
+</head>
+<body>
+
+<div th:replace="/blocks/front/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content">
+    <div class="container bs-container">
+        <div class="container bs-authreg-container">
+            <h2>Шаг 2 из 3</h2>
+            <h4 class="mb-4 mt-4">Почти готово</h4>
+            <p>Для продолжения необходимо пройти по ссылке, которую мы отправили Вам на email.</p>
+            <p class="mb-5">Это необходимо чтобы проверить, что почта действительно сущестует.</p>
+            <p class="text-secondary mt-5">
+                Хотите начать регистрацию заново?   <a href="/app/register/reg-step-1">Регистрация</a>
+            </p>
+        </div>
+    </div>
+</main>
+
+<div th:replace="/blocks/front/footer :: footer"></div>
+<div th:replace="/blocks/front/scripts"></div>
+
+</body>
+</html>
+
+
+
