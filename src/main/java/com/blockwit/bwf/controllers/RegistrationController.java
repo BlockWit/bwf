@@ -43,20 +43,17 @@ public class RegistrationController {
         LOGGER.info("regStep1Post called");
         if (login == null) {
             model.put("message", "Login can't be empty");
-            // FIXME:
-            return "redirect: /app/register/reg-step-1";
+            return "front/reg-step-1";
         }
 
         if (login.length() <= 5) {
             model.put("message", "Login length must be greater than 5 symbols");
-            // FIXME:
-            return "redirect: /app/register/reg-step-1";
+            return "front/reg-step-1";
         }
 
         if (email == null) {
             model.put("message", "Email can't be empty");
-            // FIXME:
-            return "redirect: /app/register/reg-step-1";
+            return "front/reg-step-1";
         }
 
         /* FIXME: Check email for pattern
@@ -68,8 +65,7 @@ public class RegistrationController {
         Account accountFromDB = accountRepo.findByLogin(login);
         if (accountFromDB != null) {
             model.put("message", "Login busy");
-            // FIXME:
-            return "redirect: /app/register/reg-step-1";
+            return "front/reg-step-1";
         }
 
         LOGGER.info("regStep1Post: Sanity checks passed");
