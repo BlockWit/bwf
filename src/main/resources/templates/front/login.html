@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <div th:replace="/blocks/front/head"></div>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+
+<div th:replace="/blocks/front/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content">
+    <div class="container bs-container">
+        <div class="container bs-authreg-container">
+            <h2 class="mb-4">Войти</h2>
+            <p class="mb-5">Мы рады что Вы присоединились к сообществу</p>
+            <form action="/app/login" method="POST" class="form-vertical" role="form">
+                <div class="form-group   " id="email_field">
+                    <label for="email">Логин или email</label>
+                    <input type="text" id="email" name="email" value="" minlength="3" maxlength="50" required="true"
+                           class="form-control">
+                </div>
+                <div class="form-group" id="pass_field">
+                    <label for="pass">Пароль</label>
+                    <input type="password" id="pass" name="pass" value="" minlength="8" maxlength="80" required="true"
+                           class="form-control">
+                </div>
+                <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-outline-primary btn-block"> Войти</button>
+                </div>
+            </form>
+            <p class="text-secondary mt-5">
+                Все еще нет аккаунта? <a href="/app/register/reg-step-1"> Зарегистрироваться</a>
+            </p>
+            <p>Забыли пароль? <a href="/app/forgotpassword">Восстановить.</a></p>
+        </div>
+    </div>
+</main>
+
+<div th:replace="/blocks/front/footer :: footer"></div>
+<div th:replace="/blocks/front/scripts"></div>
+
 </body>
 </html>
+
+
+

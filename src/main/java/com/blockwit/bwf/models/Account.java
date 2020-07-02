@@ -3,12 +3,11 @@ package com.blockwit.bwf.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -29,10 +28,11 @@ public class Account {
     @Setter
     private String hash;
 
-    public Account(Long id, String login, String email, String hash) {
-        this.id = id;
-        this.login = login;
-        this.email = email;
-        this.hash = hash;
-    }
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "account_roles", joinColumns = @JoinColumn(name="account_id"))
+    @Enumerated(value = EnumType.STRING)
+    @Getter
+    @Setter
+    private Set<Role> roles;
+
 }

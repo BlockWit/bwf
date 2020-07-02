@@ -1,0 +1,8 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<li class="nav-item" th:fragment="navbarItem (targetName, targetUrl, menuItemIcon)">
+    <a class="nav-link" th:href="${targetUrl}">
+        <i th:class="'fa ' + ${menuItemIcon}"></i>
+        <span th:text="${targetName}"></span>
+    </a>
+</li>

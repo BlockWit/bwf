@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light bs-navbar-top" th:fragment="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/img/logo.png}" alt="BlockWit" class="navbar-brand-logo"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li th:replace="/blocks/front/navbar/navbarItem :: navbarItem(targetName = 'регистрация', targetUrl = '/app/register/reg-step-1', menuItemIcon = 'fa-user-plus')"/>
+                <li th:replace="/blocks/front/navbar/navbarItem :: navbarItem(targetName = 'войти', targetUrl = '/app/login', menuItemIcon = 'fa-sign-in-alt')"/>
+            </ul>
+        </div>
+    </div>
+</nav>

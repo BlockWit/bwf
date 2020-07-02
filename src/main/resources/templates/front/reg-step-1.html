@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <div th:replace="/blocks/front/head"></div>
+</head>
+<body>
+
+<div th:replace="/blocks/front/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content">
+    <div class="container bs-container">
+
+        <div class="container bs-authreg-container">
+            <h2>Шаг 1 из 3</h2>
+            <h4 class="mb-4 mt-4">Добро пожаловать!</h4>
+            <p>Для того чтобы начать регистрацию, вам необходимо указать логин. Он доллжен состоять из латинских букв
+                нижнего регистра и цифр. Не меннее 3 символов.</p>
+            <p class="mb-5">После того как Вы укажите логин и email мы отправим Вам письмо для подтверждения электронной
+                почты.</p>
+
+            <form action="/app/register/reg-step-1" method="POST" class="form-vertical" role="form">
+                <div class="form-group   " id="login_field">
+                    <label for="login">Логин</label>
+                    <input type="text" id="login" name="login" value="" minlength="3" maxlength="20" required="true"
+                           class="form-control">
+                </div>
+                <div class="form-group   " id="email_field">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" value="" class="form-control">
+                </div>
+                <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-outline-primary btn-block"> Регистрация</button>
+                </div>
+            </form>
+            <p class="text-secondary mt-5">Уже имеете аккаунт? <a href="/app/login">Войти</a></p>
+        </div>
+
+    </div>
+</main>
+
+<div th:replace="/blocks/front/footer :: footer"></div>
+<div th:replace="/blocks/front/scripts"></div>
+
+</body>
+</html>
+
+
+
