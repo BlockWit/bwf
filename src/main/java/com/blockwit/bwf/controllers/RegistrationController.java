@@ -11,6 +11,7 @@ import com.blockwit.bwf.models.service.exceptions.LoginBusyAccountServiceExcepti
 import com.blockwit.bwf.services.EmailService;
 import com.blockwit.bwf.services.PasswordService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +48,8 @@ public class RegistrationController {
 
     @GetMapping("/app/register/reg-step-2")
     public String regStep2Get() {
-        return "front/reg-step-2";
+        //return "front/reg-step-2";
+        throw new NotImplementedException("Coming soon");
     }
 
     @GetMapping("/app/register/reg-step-1")
