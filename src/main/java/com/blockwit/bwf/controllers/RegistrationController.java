@@ -1,89 +1,89 @@
 package com.blockwit.bwf.controllers;
 
-import com.blockwit.bwf.models.Account;
-import com.blockwit.bwf.models.ConfirmationStatus;
-import com.blockwit.bwf.models.Role;
-import com.blockwit.bwf.repo.AccountRepo;
+import com.blockwit.bwf.controllers.model.NewAccount;
+import com.blockwit.bwf.models.entity.Account;
+import com.blockwit.bwf.models.service.AccountService;
+import com.blockwit.bwf.models.service.RoleService;
+import com.blockwit.bwf.models.service.exceptions.DefaultAdminRoleNotExistsServiceException;
+import com.blockwit.bwf.models.service.exceptions.DefaultUserRoleNotExistsServiceException;
+import com.blockwit.bwf.models.service.exceptions.EmailBusyAccountServiceException;
+import com.blockwit.bwf.models.service.exceptions.LoginBusyAccountServiceException;
 import com.blockwit.bwf.services.EmailService;
 import com.blockwit.bwf.services.PasswordService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
+import javax.validation.Valid;
 import java.util.Map;
 
+@Log4j2
 @Controller
 public class RegistrationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+    private final AccountService accountService;
 
-    @Autowired
-    private AccountRepo accountRepo;
+    private final EmailService emailService;
 
-    @Autowired
-    private EmailService emailService;
+    private final PasswordService passwordService;
 
-    @Autowired
-    private PasswordService passwordService;
+    private final RoleService roleService;
+
+    public RegistrationController(EmailService emailService,
+                                  PasswordService passwordService,
+                                  RoleService roleService,
+                                  AccountService accountService) {
+        this.emailService = emailService;
+        this.passwordService = passwordService;
+        this.roleService = roleService;
+        this.accountService = accountService;
+    }
+
+    @GetMapping("/app/register/reg-step-2")
+    public String regStep2Get() {
+        return "front/reg-step-2";
+    }
 
     @GetMapping("/app/register/reg-step-1")
-    public String regStep1Get() {
-        return "front/reg-step-1";
+    public ModelAndView regStep1Get() {
+        return new ModelAndView("front/reg-step-1", Map.of("newAccount", new NewAccount()));
     }
 
     @PostMapping("/app/register/reg-step-1")
-    public String regStep1Post(@RequestParam String login,
-                               @RequestParam String email, Map<String, Object> model) {
-        LOGGER.info("regStep1Post called");
-        if (login == null) {
-            model.put("message", "Login can't be empty");
-            return "front/reg-step-1";
+    public ModelAndView regStep1Post(@ModelAttribute("newAccount") @Valid NewAccount newAccount, BindingResult bindingResult) throws
+            DefaultAdminRoleNotExistsServiceException,
+            DefaultUserRoleNotExistsServiceException {
+        log.info("Perform new account form checks");
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("front/reg-step-1", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
         }
 
-        if (login.length() <= 5) {
-            model.put("message", "Login length must be greater than 5 symbols");
-            return "front/reg-step-1";
+        log.info("Create account");
+        Account account = null;
+        try {
+            accountService._registerUnconfirmedAccount(newAccount.getLogin(), newAccount.getEmail());
+        } catch (LoginBusyAccountServiceException e) {
+            bindingResult.rejectValue("login", "model.newaccount.login.exists.error");
+            return new ModelAndView("front/reg-step-1", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+        } catch (EmailBusyAccountServiceException e) {
+            bindingResult.rejectValue("email", "model.newaccount.email.exists.error");
+            return new ModelAndView("front/reg-step-1", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
         }
 
-        if (email == null) {
-            model.put("message", "Email can't be empty");
-            return "front/reg-step-1";
-        }
+        emailService.sendVerificationToken(account.getEmail(), account.getLogin(), account.getConfirmCode());
+        log.info("Verification token sends");
 
-        /* FIXME: Check email for pattern
-        if(email.) {
-            model.put("message", "Email can't be empty");
-            return "/app/register/reg-step-1";
-        }*/
+        accountService._setConfirmationStatusTokenSended(account);
+        log.info("New account created");
 
-        Account accountFromDB = accountRepo.findByLogin(login);
-        if (accountFromDB != null) {
-            model.put("message", "Login busy");
-            return "front/reg-step-1";
-        }
-
-        LOGGER.info("regStep1Post: Sanity checks passed");
-
-        Account account = new Account();
-        account.setLogin(login);
-        account.setEmail(email);
-        account.setRoles(Collections.singleton(Role.USER));
-        account.setConfirmationStatus(ConfirmationStatus.WAIT_CONFIRMATION);
-        account.setConfirmCode(passwordService.generateRegistrationToken(login));
-
-        LOGGER.info("regStep1Post: Send verification token");
-        emailService.sendVerificationToken(email, login, account.getConfirmCode());
-
-        accountRepo.save(account);
-        LOGGER.info("regStep1Post: New account saved");
-
-        return "front/reg-step-1-success";
+        return new ModelAndView("front/reg-step-1-success");
     }
 
     @GetMapping("/app/login")

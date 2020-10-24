@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <div th:replace="/blocks/front/head"></div>
+    <div th:replace="/front/blocks/head"></div>
 </head>
 <body>
 
-<div th:replace="/blocks/front/navbar/navbar :: navbar"></div>
+<div th:replace="/front/blocks/navbar/navbar :: navbar"></div>
 
 <main role="main" class="main-content">
     <div class="container bs-container">
@@ -18,15 +18,19 @@
             <p class="mb-5">После того как Вы укажите логин и email мы отправим Вам письмо для подтверждения электронной
                 почты.</p>
 
-            <form action="/app/register/reg-step-1" method="POST" class="form-vertical" role="form">
+            <form th:action="@{/app/register/reg-step-1}" method="POST" class="form-vertical" role="form"
+                  th:object="${newAccount}">
                 <div class="form-group   " id="login_field">
                     <label for="login">Логин</label>
-                    <input type="text" id="login" name="login" value="" minlength="3" maxlength="20" required="true"
+                    <input type="text" id="login" name="login" th:value="*{login}" minlength="3" maxlength="50"
+                           required="true"
                            class="form-control">
+                    <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</td>
                 </div>
                 <div class="form-group   " id="email_field">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" value="" class="form-control">
+                    <input type="text" id="email" name="email" th:value="*{email}" class="form-control">
+                    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</td>
                 </div>
                 <div class="form-group mt-5">
                     <button type="submit" class="btn btn-outline-primary btn-block"> Регистрация</button>
@@ -38,8 +42,8 @@
     </div>
 </main>
 
-<div th:replace="/blocks/front/footer :: footer"></div>
-<div th:replace="/blocks/front/scripts"></div>
+<div th:replace="/front/blocks/footer :: footer"></div>
+<div th:replace="/front/blocks/scripts"></div>
 
 </body>
 </html>

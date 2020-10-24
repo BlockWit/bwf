@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <div th:replace="/blocks/front/head"></div>
+    <div th:replace="/front/blocks/head"></div>
 </head>
 <body>
 
-<div th:replace="/blocks/front/navbar/navbar :: navbar"></div>
+<div th:replace="/front/blocks/navbar/navbar :: navbar"></div>
 
 <main role="main" class="main-content">
     <div class="container bs-container">
@@ -21,8 +21,8 @@
     </div>
 </main>
 
-<div th:replace="/blocks/front/footer :: footer"></div>
-<div th:replace="/blocks/front/scripts"></div>
+<div th:replace="/front/blocks/footer :: footer"></div>
+<div th:replace="/front/blocks/scripts"></div>
 
 </body>
 </html>
