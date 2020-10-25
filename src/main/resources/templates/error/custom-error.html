@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <div th:replace="/front/blocks/head"></div>
+</head>
+<body>
+
+<div th:replace="/front/blocks/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content">
+    <div class="container bs-container">
+        <div class="jumbotron alert-danger">
+            <p th:text="${exception.message}"></p>
+        </div>
+    </div>
+</main>
+
+<div th:replace="/front/blocks/footer :: footer"></div>
+<div th:replace="/front/blocks/scripts"></div>
+
+</body>
+</html>

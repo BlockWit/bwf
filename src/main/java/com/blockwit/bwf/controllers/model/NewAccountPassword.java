@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -15,7 +14,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewAccount {
+public class NewAccountPassword {
 
     @NotNull
     @Size(min = 3, max = 50)
@@ -24,7 +23,18 @@ public class NewAccount {
     private String login;
 
     @NotNull
-    @Email(message = "{model.newaccount.email.regexp.error}")
-    private String email;
+    @Pattern(regexp = Constants.REGEXP_CONFIRM_CODE,
+            message = "{model.newaccount.code.regexp.error}")
+    private String code;
+
+    @NotNull
+    @Pattern(regexp = Constants.REGEXP_PASSWORD,
+            message = "{model.newaccount.pwd.regexp.error}")
+    private String password;
+
+    @NotNull
+    @Pattern(regexp = Constants.REGEXP_PASSWORD,
+            message = "{model.newaccount.repwd.regexp.error}")
+    private String repassword;
 
 }

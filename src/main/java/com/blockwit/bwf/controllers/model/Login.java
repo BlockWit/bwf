@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewAccount {
+public class Login {
 
     @NotNull
     @Size(min = 3, max = 50)
@@ -24,7 +25,7 @@ public class NewAccount {
     private String login;
 
     @NotNull
-    @Email(message = "{model.newaccount.email.regexp.error}")
-    private String email;
+    @Size(min = 8, max = 50)
+    private String password;
 
 }

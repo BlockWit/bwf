@@ -2,12 +2,8 @@ package com.blockwit.bwf.models.service;
 
 import com.blockwit.bwf.models.entity.Role;
 import com.blockwit.bwf.models.repository.RoleRepository;
-import com.blockwit.bwf.models.service.exceptions.DefaultAdminRoleNotExistsServiceException;
-import com.blockwit.bwf.models.service.exceptions.DefaultUserRoleNotExistsServiceException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Log4j2
 @Service
@@ -19,19 +15,31 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
 
-    public RoleService(RoleRepository roleRepository) {
+    private final PermissionsService permissionsService;
+
+    public RoleService(RoleRepository roleRepository,
+                       PermissionsService permissionsService) {
         this.roleRepository = roleRepository;
+        this.permissionsService = permissionsService;
     }
 
-    public Role getDefaultUserRole() throws DefaultUserRoleNotExistsServiceException {
-        Optional<Role> roleOpt = roleRepository.findByName(ROLE_ADMIN);
-        return roleOpt.orElseThrow(() -> new DefaultUserRoleNotExistsServiceException());
+    private static Role getOrCreateRole(RoleRepository roleRepository,
+                                        DefaultPermissionsProvider defaultPermissionsProvider,
+                                        String name) {
+        return roleRepository.findByName(name).orElseGet(() -> {
+            Role role = new Role();
+            role.setName(name);
+            role.setPermissions(defaultPermissionsProvider.getPermissions());
+            return roleRepository.save(role);
+        });
     }
 
-    public Role getDefaultAdminRole() throws DefaultAdminRoleNotExistsServiceException {
-        Optional<Role> roleOpt = roleRepository.findByName(ROLE_ADMIN);
-        return roleOpt.orElseThrow(() -> new DefaultAdminRoleNotExistsServiceException());
+    public Role getDefaultAdminRole() {
+        return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultAdminPermissions(), ROLE_ADMIN);
     }
 
+    public Role getDefaultUserRole() {
+        return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultUserPermissions(), ROLE_USER);
+    }
 
 }
