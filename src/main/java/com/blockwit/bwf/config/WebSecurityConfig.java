@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -28,22 +29,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/",
-                        "/app/registration/**",
-                        "/app/login",
-                        "/img/*",
-                        "/css/*",
-                        "/webjars/*").permitAll()
-                .antMatchers(HttpMethod.POST,
-                        "/app/registration/**",
-                        "/app/login").permitAll()
+                        "/img/**",
+                        "/js/**",
+                        "/css/**",
+                        "/webjars/**").permitAll()
+                //.antMatchers(HttpMethod.GET,"/app/login").anonymous()
+                //.antMatchers(HttpMethod.POST, "/app/perform_login").anonymous()
+                .antMatchers(HttpMethod.POST, "/app/login").anonymous()
+                .antMatchers("/app/registration/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/app/login")
-                .permitAll()
+                //.loginProcessingUrl("/app/perform_login")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
-                .permitAll();
+                .logoutUrl("/app/logout");
     }
 
     @Override

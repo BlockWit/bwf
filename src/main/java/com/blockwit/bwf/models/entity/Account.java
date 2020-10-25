@@ -25,7 +25,7 @@ public class Account {
     @Column(length = 60)
     private String hash;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String confirmCode;
 
     @Enumerated(value = EnumType.STRING)

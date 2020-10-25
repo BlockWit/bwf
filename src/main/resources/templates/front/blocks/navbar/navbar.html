@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light bs-navbar-top" th:fragment="navbar">
     <div class="container">
@@ -12,10 +12,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
+                <li sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'panel', targetUrl = '/lk', menuItemIcon = 'fa-th')"/>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'регистрация', targetUrl = '/app/registration/new', menuItemIcon = 'fa-user-plus')"/>
-                <li th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'войти', targetUrl = '/app/login', menuItemIcon = 'fa-sign-in-alt')"/>
+                <li sec:authorize="!isAuthenticated()" th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'регистрация', targetUrl = '/app/registration/new', menuItemIcon = 'fa-user-plus')"/>
+                <li sec:authorize="!isAuthenticated()" th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'войти', targetUrl = '/app/login', menuItemIcon = 'fa-sign-in-alt')"/>
+                <li sec:authorize="isAuthenticated()" th:replace="/front/blocks/navbar/navbarItem :: navbarItem(targetName = 'выйти', targetUrl = '/app/logout', menuItemIcon = 'fa-sign-out-alt')"/>
             </ul>
         </div>
     </div>
