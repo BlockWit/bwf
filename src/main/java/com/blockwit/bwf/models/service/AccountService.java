@@ -3,10 +3,7 @@ package com.blockwit.bwf.models.service;
 import com.blockwit.bwf.models.entity.Account;
 import com.blockwit.bwf.models.entity.ConfirmationStatus;
 import com.blockwit.bwf.models.repository.AccountRepository;
-import com.blockwit.bwf.models.service.exceptions.EmailBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.LoginBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.NotFoundAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.WrongConfirmStatusAccountServiceException;
+import com.blockwit.bwf.models.service.exceptions.*;
 import com.blockwit.bwf.services.PasswordService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -88,14 +85,6 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public boolean isExistsLogin(String login) {
-        return accountRepository.existsByLogin(login.trim().toLowerCase());
-    }
-
-    public boolean isExistsEmail(String email) {
-        return accountRepository.existsByEmail(email.trim().toLowerCase());
-    }
-
     @Transactional
     public Account _setAccountConfirmedWithPassword(String login, String password) throws
             NotFoundAccountServiceException,
@@ -114,5 +103,26 @@ public class AccountService {
         account.setHash(passwordEncoder.encode(password));
 
         return accountRepository.save(account);
+    }
+
+    public Account _tryLogin(String login, String password) throws
+            NotFoundAccountServiceException,
+            WrongConfirmStatusAccountServiceException,
+            WaitConfirmationAccountServiceException,
+            WrongCredentialsAccountServiceException {
+
+        Optional<Account> accountOpt = accountRepository.findByLogin(login.toLowerCase());
+        if (accountOpt.isEmpty())
+            throw new NotFoundAccountServiceException(login);
+
+        Account account = accountOpt.get();
+        if (account.getConfirmationStatus() == ConfirmationStatus.WAIT_CONFIRMATION)
+            throw new WaitConfirmationAccountServiceException(login);
+
+        if(account.getConfirmationStatus() != ConfirmationStatus.CONFIRMED)
+            throw new WrongConfirmStatusAccountServiceException(account.getConfirmationStatus(), ConfirmationStatus.WAIT_CONFIRMATION);
+
+        //passwordEncoder.matches()
+        return null;
     }
 }

@@ -33,6 +33,6 @@ public abstract class CommonValidator implements Validator {
         performValidate(o, errors);
     }
 
-    public abstract void performValidate(Object o, Errors errors);
+    public void performValidate(Object o, Errors errors) {}
 
 }

@@ -1,5 +1,6 @@
 package com.blockwit.bwf.controllers;
 
+import com.blockwit.bwf.controllers.model.Login;
 import com.blockwit.bwf.controllers.model.NewAccount;
 import com.blockwit.bwf.controllers.model.NewAccountPassword;
 import com.blockwit.bwf.models.entity.Account;
@@ -141,13 +142,27 @@ public class RegistrationController {
     }
 
     @GetMapping("/app/login")
-    public String login(Model model) {
-        return "front/login";
+    public ModelAndView login(Model model) {
+        return new ModelAndView("front/login", Map.of("login", new Login()));
     }
 
     @PostMapping("/app/login")
-    public String loginPost(Model model) {
-        return "front/login";
+    public ModelAndView loginPost(@ModelAttribute("login") @Valid Login login, BindingResult bindingResult) {
+        log.info("Perform login checks");
+
+        if (bindingResult.hasErrors())
+            return new ModelAndView("front/login", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+
+        Account account;
+        try {
+            account = accountService._tryLogin(login.getLogin().trim().toLowerCase(), login.getPassword().trim());
+        } catch (NotFoundAccountServiceException e) {
+            return new ModelAndView("error/custom-error",
+                    Map.of("message", "Wrong login or password"),
+                    HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ModelAndView("front/home", Map.of("account", account));
     }
 
 }
