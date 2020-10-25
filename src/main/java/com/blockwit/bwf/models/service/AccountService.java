@@ -3,12 +3,10 @@ package com.blockwit.bwf.models.service;
 import com.blockwit.bwf.models.entity.Account;
 import com.blockwit.bwf.models.entity.ConfirmationStatus;
 import com.blockwit.bwf.models.repository.AccountRepository;
-import com.blockwit.bwf.models.service.exceptions.EmailBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.LoginBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.NotFoundAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.WrongConfirmStatusAccountServiceException;
+import com.blockwit.bwf.models.service.exceptions.*;
 import com.blockwit.bwf.services.PasswordService;
 import lombok.extern.log4j.Log4j2;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,6 +104,49 @@ public class AccountService {
         account.setHash(passwordEncoder.encode(password));
 
         return accountRepository.save(account);
+    }
+
+    @Transactional
+    public Optional<Account> _generatePasswordRecoveryCode(String loginOrEmail) throws AttemptTimelimitAccountServiceException {
+        String preparedLogin = loginOrEmail.trim().toLowerCase();
+        Optional<Account> accountOpt = findByEmailOrLogin(preparedLogin);
+
+        if (accountOpt.isPresent()) {
+
+            Account account = accountOpt.get();
+
+            long limit = account.getPasswordRecoveryTimestamp() + 60000 - System.currentTimeMillis();
+            if (limit > 0)
+                throw new AttemptTimelimitAccountServiceException(account.getLogin(), limit);
+
+            account.setPasswordRecoveryCode(generateRecoveryCode(preparedLogin));
+            accountRepository.save(account);
+
+            return Optional.of(account);
+        }
+
+        return accountOpt;
+    }
+
+    public Account _recoveryTokenSended(Account account) {
+        account.setPasswordRecoveryTimestamp(System.currentTimeMillis());
+        return accountRepository.save(account);
+    }
+
+    //TODO:FIXME
+    public static String generateRecoveryCode(String login) {
+        //Random random = new Random();
+        //String randomString = String.valueOf(random.nextBytes(new byte[5]));
+        String randomString = "12345";
+        String result = BCrypt.hashpw(randomString + login + System.currentTimeMillis(), BCrypt.gensalt())
+                .replaceAll("\\.", "s")
+                .replaceAll("\\\\", "d")
+                .replaceAll("\\$", "g")
+                .substring(0, 99);
+
+        return result;
+        //.toList.map(_.toInt.toHexString)
+        //.mkString.substring(0, 99)
     }
 
 }

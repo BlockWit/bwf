@@ -17,10 +17,14 @@ public class EmailServiceImpl implements EmailService {
 
     // TODO: Should be dynamically generate
     @Value("${verification.link.pattern}")
-    private String pattern;
+    private String verificationPattern;
 
-    @Override
-    public void sendVerificationToken(String to, String login, String code) throws SendVerificationTokenException {
+    // TODO: Should be dynamically generate
+    @Value("${recoeverypassword.link.pattern}")
+    private String recoveryPasswordPattern;
+
+
+    private static void sendLinkWithCode(String serverPort, String to, String login, String code, String pattern) throws SendVerificationTokenException {
         String hostname;
         try {
             hostname = InetAddress.getLocalHost().getHostName();
@@ -39,5 +43,14 @@ public class EmailServiceImpl implements EmailService {
         log.info(verificationLink);
     }
 
+    @Override
+    public void sendPasswordRecoveryToken(String to, String login, String code) throws SendVerificationTokenException {
+        sendLinkWithCode(serverPort, to, login, code, recoveryPasswordPattern);
+    }
+
+    @Override
+    public void sendVerificationToken(String to, String login, String code) throws SendVerificationTokenException {
+        sendLinkWithCode(serverPort, to, login, code, verificationPattern);
+    }
 
 }

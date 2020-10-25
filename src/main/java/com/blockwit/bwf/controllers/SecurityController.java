@@ -1,24 +1,22 @@
 package com.blockwit.bwf.controllers;
 
+import com.blockwit.bwf.controllers.model.Forgotpassword;
 import com.blockwit.bwf.controllers.model.NewAccount;
 import com.blockwit.bwf.controllers.model.NewAccountPassword;
 import com.blockwit.bwf.models.entity.Account;
 import com.blockwit.bwf.models.entity.ConfirmationStatus;
-import com.blockwit.bwf.models.repository.AccountRepository;
 import com.blockwit.bwf.models.service.AccountService;
 import com.blockwit.bwf.models.service.RoleService;
-import com.blockwit.bwf.models.service.exceptions.EmailBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.LoginBusyAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.NotFoundAccountServiceException;
-import com.blockwit.bwf.models.service.exceptions.WrongConfirmStatusAccountServiceException;
+import com.blockwit.bwf.models.service.exceptions.*;
 import com.blockwit.bwf.services.EmailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -30,8 +28,6 @@ import java.util.regex.Pattern;
 @Controller
 public class SecurityController {
 
-    private final AccountRepository accountRepository;
-
     private final AccountService accountService;
 
     private final EmailService emailService;
@@ -40,12 +36,10 @@ public class SecurityController {
 
     public SecurityController(EmailService emailService,
                               RoleService roleService,
-                              AccountService accountService,
-                              AccountRepository accountRepository) {
+                              AccountService accountService) {
         this.emailService = emailService;
         this.roleService = roleService;
         this.accountService = accountService;
-        this.accountRepository = accountRepository;
     }
 
     @GetMapping("/app/registration/setpassword/{login}/{code}")
@@ -138,19 +132,33 @@ public class SecurityController {
         return new ModelAndView("front/reg-new-success");
     }
 
+    @PostMapping("/app/registration/new")
+    public ModelAndView registrationPost(@ModelAttribute("forgotpassword") @Valid Forgotpassword forgotpassword, BindingResult bindingResult) {
+        log.info("Prepare to forgotpassword");
 
-//    @RequestMapping(value="/app/perform_login", method = RequestMethod.POST)
-//    public String login(@RequestAttribute("username") String userName, @RequestAttribute("password")  String password) {
-//
-//        //does the authentication
-//        final Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        userName,
-//                        password
-//                )
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return "index";
-//    }
+        if (bindingResult.hasErrors())
+            return new ModelAndView("front/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+
+
+        Optional<Account> accountOpt;
+        try {
+            accountOpt = accountService._generatePasswordRecoveryCode(forgotpassword.getLogin());
+        } catch (AttemptTimelimitAccountServiceException e) {
+            bindingResult.rejectValue("login", "Attempts time limit not exceeded " + e.getLimit() + " millisecond");
+            return new ModelAndView("front/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+        }
+
+        accountOpt.stream().forEach(account -> {
+            emailService.sendPasswordRecoveryToken(account.getEmail(), account.getLogin(), account.getPasswordRecoveryCode());
+            accountService._recoveryTokenSended(account);
+        });
+
+        return new ModelAndView("front/forgotpassword-success");
+    }
+
+    @GetMapping("/app/forgotpassword")
+    public ModelAndView forgotpassword() {
+        return new ModelAndView("front/forgotpassword", Map.of("forgotPassword", new Forgotpassword()));
+    }
 
 }
