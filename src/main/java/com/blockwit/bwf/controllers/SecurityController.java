@@ -132,7 +132,7 @@ public class SecurityController {
         return new ModelAndView("front/reg-new-success");
     }
 
-    @PostMapping("/app/registration/new")
+    @PostMapping("/app/forgotpassword")
     public ModelAndView registrationPost(@ModelAttribute("forgotpassword") @Valid Forgotpassword forgotpassword, BindingResult bindingResult) {
         log.info("Prepare to forgotpassword");
 
