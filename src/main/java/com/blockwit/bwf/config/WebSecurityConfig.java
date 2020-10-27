@@ -31,8 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/css/**",
                         "/webjars/**").permitAll()
-                .antMatchers("/app/login").anonymous()
-                .antMatchers("/app/registration/**").anonymous()
+                .antMatchers("/app/login",
+                        "/app/registration/**",
+                        "/app/forgotpassword",
+                        "/app/forgotpassword/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

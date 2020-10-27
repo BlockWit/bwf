@@ -28,11 +28,11 @@ public class Account {
     @Column(length = 99)
     private String confirmCode;
 
-    @Column(length = 100)
+    @Column(length = 99)
     private String passwordRecoveryCode;
 
     @Column()
-    private long passwordRecoveryTimestamp;
+    private Long passwordRecoveryTimestamp;
 
     @Enumerated(value = EnumType.STRING)
     private ConfirmationStatus confirmationStatus;

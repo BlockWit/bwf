@@ -15,6 +15,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByLoginAndConfirmCode(String login, String confirmCode);
 
+    Optional<Account> findByLoginAndAndPasswordRecoveryCode(String login, String passwordRecoveryCode);
+
     boolean existsByEmail(String email);
 
     boolean existsByLogin(String login);

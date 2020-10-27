@@ -5,7 +5,9 @@ import com.blockwit.bwf.models.entity.ConfirmationStatus;
 import com.blockwit.bwf.models.repository.AccountRepository;
 import com.blockwit.bwf.models.service.exceptions.*;
 import com.blockwit.bwf.services.PasswordService;
+import com.blockwit.bwf.services.RandomService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.codec.binary.Hex;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,18 +29,26 @@ public class AccountService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final RandomService randomService;
+
     public AccountService(AccountRepository accountRepository,
                           RoleService roleService,
                           PasswordService passwordService,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder,
+                          RandomService randomService) {
         this.accountRepository = accountRepository;
         this.roleService = roleService;
         this.passwordService = passwordService;
         this.passwordEncoder = passwordEncoder;
+        this.randomService = randomService;
     }
 
     public Optional<Account> findByLoginAndConfirmCode(String login, String confirmCode) {
         return accountRepository.findByLoginAndConfirmCode(login, confirmCode);
+    }
+
+    public Optional<Account> findByLoginAndAndPasswordRecoveryCode(String login, String confirmCode) {
+        return accountRepository.findByLoginAndAndPasswordRecoveryCode(login, confirmCode);
     }
 
     public Optional<Account> findByEmailOrLogin(String loginOrEmail) {
@@ -87,6 +97,26 @@ public class AccountService {
     }
 
     @Transactional
+    public Account _setAccountForgottenNewPassword(String login, String password) throws
+            NotFoundAccountServiceException,
+            WrongConfirmStatusAccountServiceException {
+
+        Optional<Account> accountOpt = accountRepository.findByLogin(login.toLowerCase());
+        if (accountOpt.isEmpty())
+            throw new NotFoundAccountServiceException(login);
+
+        Account account = accountOpt.get();
+        if (account.getConfirmationStatus() != ConfirmationStatus.CONFIRMED)
+            throw new WrongConfirmStatusAccountServiceException(account.getConfirmationStatus(), ConfirmationStatus.CONFIRMED);
+
+        account.setPasswordRecoveryCode(null);
+        account.setPasswordRecoveryTimestamp(null);
+        account.setHash(passwordEncoder.encode(password));
+
+        return accountRepository.save(account);
+    }
+
+    @Transactional
     public Account _setAccountConfirmedWithPassword(String login, String password) throws
             NotFoundAccountServiceException,
             WrongConfirmStatusAccountServiceException {
@@ -115,14 +145,15 @@ public class AccountService {
 
             Account account = accountOpt.get();
 
-            long limit = account.getPasswordRecoveryTimestamp() + 60000 - System.currentTimeMillis();
-            if (limit > 0)
-                throw new AttemptTimelimitAccountServiceException(account.getLogin(), limit);
+            if (account.getPasswordRecoveryTimestamp() != null) {
+                long limit = account.getPasswordRecoveryTimestamp() + 60000 - System.currentTimeMillis();
+                if (limit > 0)
+                    throw new AttemptTimelimitAccountServiceException(account.getLogin(), limit);
+            }
 
             account.setPasswordRecoveryCode(generateRecoveryCode(preparedLogin));
-            accountRepository.save(account);
-
-            return Optional.of(account);
+            account.setPasswordRecoveryTimestamp(null);
+            return Optional.of(accountRepository.save(account));
         }
 
         return accountOpt;
@@ -133,20 +164,12 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    //TODO:FIXME
-    public static String generateRecoveryCode(String login) {
-        //Random random = new Random();
-        //String randomString = String.valueOf(random.nextBytes(new byte[5]));
-        String randomString = "12345";
-        String result = BCrypt.hashpw(randomString + login + System.currentTimeMillis(), BCrypt.gensalt())
+    public String generateRecoveryCode(String login) {
+        return Hex.encodeHexString(BCrypt.hashpw(randomService.nextString5() + login + System.currentTimeMillis(), BCrypt.gensalt())
                 .replaceAll("\\.", "s")
                 .replaceAll("\\\\", "d")
                 .replaceAll("\\$", "g")
-                .substring(0, 99);
-
-        return result;
-        //.toList.map(_.toInt.toHexString)
-        //.mkString.substring(0, 99)
+                .getBytes()).substring(0, 99);
     }
 
 }

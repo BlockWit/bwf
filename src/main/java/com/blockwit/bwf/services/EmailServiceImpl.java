@@ -1,6 +1,6 @@
 package com.blockwit.bwf.services;
 
-import com.blockwit.bwf.exceptions.SendVerificationTokenException;
+import com.blockwit.bwf.services.excetptions.SendVerificationTokenException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.blockwit.bwf.services;
 
-import com.blockwit.bwf.exceptions.SendVerificationTokenException;
+import com.blockwit.bwf.services.excetptions.SendVerificationTokenException;
 
 public interface EmailService {
 

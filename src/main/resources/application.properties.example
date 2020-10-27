@@ -7,7 +7,7 @@ spring.datasource.password=dbPassword
 
 verification.link.pattern = "http://%host%:%port%/app/register/approve/%account.login%/%account.confirmCode%"
 
-recoeverypassword.link.pattern = "http://%host%:%port%/app/register/approve/%account.login%/%account.confirmCode%"
+recoeverypassword.link.pattern = "http://%host%:%port%/app/forgotpassword/setpassword/%account.login%/%account.confirmCode%"
 
 
 

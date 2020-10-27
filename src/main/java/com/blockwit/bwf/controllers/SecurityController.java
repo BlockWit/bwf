@@ -1,8 +1,8 @@
 package com.blockwit.bwf.controllers;
 
-import com.blockwit.bwf.controllers.model.Forgotpassword;
+import com.blockwit.bwf.controllers.model.ForgotPassword;
 import com.blockwit.bwf.controllers.model.NewAccount;
-import com.blockwit.bwf.controllers.model.NewAccountPassword;
+import com.blockwit.bwf.controllers.model.SetAccountPassword;
 import com.blockwit.bwf.models.entity.Account;
 import com.blockwit.bwf.models.entity.ConfirmationStatus;
 import com.blockwit.bwf.models.service.AccountService;
@@ -68,7 +68,7 @@ public class SecurityController {
                     Map.of("message", "Account with login " + login + " and code " + code + " already confirmed"),
                     HttpStatus.BAD_REQUEST);
 
-        NewAccountPassword newAccountPassword = new NewAccountPassword();
+        SetAccountPassword newAccountPassword = new SetAccountPassword();
         newAccountPassword.setLogin(login);
         newAccountPassword.setCode(code);
 
@@ -76,7 +76,7 @@ public class SecurityController {
     }
 
     @PostMapping("/app/registration/setpassword")
-    public ModelAndView registrationSetPasswordPost(@ModelAttribute("newAccountPassword") @Valid NewAccountPassword newAccountPassword,
+    public ModelAndView registrationSetPasswordPost(@ModelAttribute("newAccountPassword") @Valid SetAccountPassword setAccountPassword,
                                                     BindingResult bindingResult) {
         log.info("Perform set password account checks");
 
@@ -85,14 +85,14 @@ public class SecurityController {
 
         Account account;
         try {
-            account = accountService._setAccountConfirmedWithPassword(newAccountPassword.getLogin().toLowerCase(), newAccountPassword.getPassword());
+            account = accountService._setAccountConfirmedWithPassword(setAccountPassword.getLogin().toLowerCase(), setAccountPassword.getPassword());
         } catch (NotFoundAccountServiceException e) {
             return new ModelAndView("error/custom-error",
-                    Map.of("message", "Account with login " + newAccountPassword.getLogin() + " not found"),
+                    Map.of("message", "Account with login " + setAccountPassword.getLogin() + " not found"),
                     HttpStatus.BAD_REQUEST);
         } catch (WrongConfirmStatusAccountServiceException e) {
             return new ModelAndView("error/custom-error",
-                    Map.of("message", "Account with login " + newAccountPassword.getLogin() + " have wrong confirmation status"),
+                    Map.of("message", "Account with login " + setAccountPassword.getLogin() + " have wrong confirmation status"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -133,7 +133,7 @@ public class SecurityController {
     }
 
     @PostMapping("/app/forgotpassword")
-    public ModelAndView registrationPost(@ModelAttribute("forgotpassword") @Valid Forgotpassword forgotpassword, BindingResult bindingResult) {
+    public ModelAndView forgotPasswordPost(@ModelAttribute("forgotPassword") @Valid ForgotPassword forgotPassword, BindingResult bindingResult) {
         log.info("Prepare to forgotpassword");
 
         if (bindingResult.hasErrors())
@@ -142,9 +142,10 @@ public class SecurityController {
 
         Optional<Account> accountOpt;
         try {
-            accountOpt = accountService._generatePasswordRecoveryCode(forgotpassword.getLogin());
+            accountOpt = accountService._generatePasswordRecoveryCode(forgotPassword.getLogin());
         } catch (AttemptTimelimitAccountServiceException e) {
-            bindingResult.rejectValue("login", "Attempts time limit not exceeded " + e.getLimit() + " millisecond");
+            bindingResult.rejectValue("login", "model.forgotpassword.timelimit.error");
+            //bindingResult.rejectValue("login", "Attempts time limit not exceeded " + e.getLimit() + " millisecond");
             return new ModelAndView("front/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
         }
 
@@ -157,8 +158,65 @@ public class SecurityController {
     }
 
     @GetMapping("/app/forgotpassword")
-    public ModelAndView forgotpassword() {
-        return new ModelAndView("front/forgotpassword", Map.of("forgotPassword", new Forgotpassword()));
+    public ModelAndView forgotPassword() {
+        return new ModelAndView("front/forgotpassword", Map.of("forgotPassword", new ForgotPassword()));
+    }
+
+    @GetMapping("/app/forgotpassword/setpassword/{login}/{code}")
+    public ModelAndView forgotPasswordSetNewPassword(@PathVariable("login") String login,
+                                                     @PathVariable("code") String code) {
+
+        if (!Pattern.matches(Constants.REGEXP_LOGIN, login))
+            return new ModelAndView("error/custom-error",
+                    Map.of("message", "Malformed login " + login),
+                    HttpStatus.BAD_REQUEST);
+
+        if (!Pattern.matches(Constants.REGEXP_CONFIRM_CODE, code))
+            return new ModelAndView("error/custom-error",
+                    Map.of("message", "Malformed login " + code),
+                    HttpStatus.BAD_REQUEST);
+
+        Optional<Account> accountOpt = accountService.findByLoginAndAndPasswordRecoveryCode(login.toLowerCase(), code.toLowerCase());
+        if (accountOpt.isEmpty())
+            return new ModelAndView("custom-error",
+                    Map.of("message", "Account with login " + login + " and code " + code + " not found"),
+                    HttpStatus.BAD_REQUEST);
+
+        Account account = accountOpt.get();
+        if (account.getConfirmationStatus() != ConfirmationStatus.CONFIRMED)
+            return new ModelAndView("custom-error",
+                    Map.of("message", "Account with login " + login + " and code " + code + " has wrong status"),
+                    HttpStatus.BAD_REQUEST);
+
+        SetAccountPassword newAccountPassword = new SetAccountPassword();
+        newAccountPassword.setLogin(login);
+        newAccountPassword.setCode(code);
+
+        return new ModelAndView("front/forgotpassword-setpassword", Map.of("forgotPassword", newAccountPassword));
+    }
+
+    @PostMapping("/app/forgotpassword/setpassword")
+    public ModelAndView forgotPasswordSetNewPasswordPost(@ModelAttribute("newAccountPassword") @Valid SetAccountPassword setAccountPassword,
+                                                         BindingResult bindingResult) {
+        log.info("Perform set forgotten password account checks");
+
+        if (bindingResult.hasErrors())
+            return new ModelAndView("front/forgotpassword-setpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+
+        Account account;
+        try {
+            account = accountService._setAccountForgottenNewPassword(setAccountPassword.getLogin().toLowerCase(), setAccountPassword.getPassword());
+        } catch (NotFoundAccountServiceException e) {
+            return new ModelAndView("error/custom-error",
+                    Map.of("message", "Account with login " + setAccountPassword.getLogin() + " not found"),
+                    HttpStatus.BAD_REQUEST);
+        } catch (WrongConfirmStatusAccountServiceException e) {
+            return new ModelAndView("error/custom-error",
+                    Map.of("message", "Account with login " + setAccountPassword.getLogin() + " have wrong confirmation status"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        return new ModelAndView("front/forgotpassword-setpassword-success", Map.of("account", account));
     }
 
 }
