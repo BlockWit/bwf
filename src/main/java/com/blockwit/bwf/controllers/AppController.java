@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AppController {
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String appHome(Model model) {
         model.addAttribute("title", "Main page");
         return "front/home";
+    }
+
+    @GetMapping("/panel")
+    public String panelHome(Model model) {
+        model.addAttribute("title", "Main page");
+        return "panel/home";
     }
 
 }
