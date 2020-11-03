@@ -21,4 +21,10 @@ public class AppController {
         return "panel/home";
     }
 
+    @GetMapping("/panel/profile")
+    public String panelProfile(Model model) {
+        model.addAttribute("title", "Main page");
+        return "panel/profile";
+    }
+
 }

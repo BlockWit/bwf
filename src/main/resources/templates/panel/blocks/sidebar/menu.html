@@ -4,7 +4,7 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li sec:authorize="isAuthenticated()"
-            th:replace="/panel/blocks/sidebar/item :: item(info = 'account', targetUrl = '/panel/account', menuItemIcon = 'user')"/>
+            th:replace="/panel/blocks/sidebar/item :: item(info = 'account', targetUrl = '/panel/profile', menuItemIcon = 'user')"/>
         <li sec:authorize="hasAuthority('ADMIN')"
             th:replace="/panel/blocks/sidebar/delimeterLine"/>
         <li sec:authorize="hasAuthority('ADMIN')"

@@ -1,9 +1,14 @@
 package com.blockwit.bwf.controllers;
 
+import com.blockwit.bwf.models.entity.Account;
+import com.blockwit.bwf.models.service.AccountService;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,6 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class AppControllerAdvice {
+
+    private final AccountService accountService;
+
+    public AppControllerAdvice(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @ModelAttribute("authAccount")
+    public Account getCurrentUser(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            String username = ((User) principal).getUsername();
+            return accountService.findByEmailOrLogin(username).orElse(null);
+        }
+        return null;
+    }
 
     @ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
