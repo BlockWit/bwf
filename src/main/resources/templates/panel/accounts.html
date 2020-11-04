@@ -53,14 +53,14 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <th:block th:each="option : ${pageContent}">
+                                            <th:block th:each="target : ${pageContent}">
                                                 <tr>
-                                                    <td th:text="${option.getId()}"></td>
-                                                    <td th:text="${option.getLogin()}"></td>
-                                                    <td th:text="${option.getEmail()}"></td>
-                                                    <td th:text="${option.getRolesHR()}"></td>
+                                                    <td th:text="${target.getId()}"></td>
+                                                    <td th:text="${target.getLogin()}"></td>
+                                                    <td th:text="${target.getEmail()}"></td>
+                                                    <td th:text="${target.getRolesHR()}"></td>
                                                     <td></td>
-                                                    <td th:text="${option.isApproved()}"></td>
+                                                    <td th:text="${target.isApproved()}"></td>
                                                     <td></td>
                                                 </tr>
                                             </th:block>
