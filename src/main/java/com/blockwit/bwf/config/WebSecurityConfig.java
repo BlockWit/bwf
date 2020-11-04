@@ -24,7 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/",
                         "/img/**",
@@ -35,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/app/registration/**",
                         "/app/forgotpassword",
                         "/app/forgotpassword/**").anonymous()
+                .antMatchers("/panel/options").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
