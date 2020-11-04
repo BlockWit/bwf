@@ -34,7 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/app/registration/**",
                         "/app/forgotpassword",
                         "/app/forgotpassword/**").anonymous()
-                .antMatchers("/panel/options").hasAuthority("ADMIN")
+                .antMatchers("/panel/options/**",
+                        "/panel/roles/**",
+                        "/panel/accounts/**",
+                        "/panel/permissions/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
