@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -49,5 +50,13 @@ public class Account implements Serializable {
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions;
+
+    public boolean isApproved() {
+        return confirmationStatus == ConfirmationStatus.CONFIRMED;
+    }
+
+    public String getRolesHR() {
+        return getRoles().stream().map(t->t.getName()).collect(Collectors.joining(","));
+    }
 
 }
