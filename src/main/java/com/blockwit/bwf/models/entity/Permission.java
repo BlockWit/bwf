@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "permissions")
-public class Permission {
+public class Permission implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

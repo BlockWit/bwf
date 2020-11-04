@@ -1,9 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <footer class="main-footer">
-    <strong>Copyright &copy; 2018 <a href="/">APP_NAME</a>.</strong>
+    <strong>Copyright &copy; 2018 <a href="/">[[${appCtx.getAppName()}]]</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> APP_VERSION
+        <b>Version</b> [[${appCtx.getAppVersion()}]]
     </div>
 </footer>

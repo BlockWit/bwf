@@ -1,7 +1,9 @@
 package com.blockwit.bwf.controllers;
 
 import com.blockwit.bwf.models.entity.Account;
+import com.blockwit.bwf.models.entity.AppContext;
 import com.blockwit.bwf.models.service.AccountService;
+import com.blockwit.bwf.models.service.OptionService;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -13,18 +15,33 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @ControllerAdvice
 public class AppControllerAdvice {
 
     private final AccountService accountService;
 
-    public AppControllerAdvice(AccountService accountService) {
+    private final OptionService optionService;
+
+    public AppControllerAdvice(AccountService accountService, OptionService optionService) {
         this.accountService = accountService;
+        this.optionService = optionService;
+    }
+
+    @ModelAttribute("appCtx")
+    public AppContext getAppContext(Authentication authentication) {
+        AppContext appContext = new AppContext();
+        Map<String, String> defaultOptions = optionService.getAllDefaultValues();
+        appContext.setAppName(defaultOptions.get(OptionService.OPTION_APP_NAME));
+        appContext.setAppVersion(defaultOptions.get(OptionService.OPTION_APP_VERSION));
+        return appContext;
     }
 
     @ModelAttribute("authAccount")
-    public Account getCurrentUser(Authentication authentication) {
+    public Account getAuthAccount(Authentication authentication) {
+        if(authentication == null)
+            return null;
         Object principal = authentication.getPrincipal();
         if (principal instanceof User) {
             String username = ((User) principal).getUsername();
@@ -44,6 +61,7 @@ public class AppControllerAdvice {
 
         // Otherwise setup and send the user to a default error-view.
         ModelAndView mav = new ModelAndView();
+        e.printStackTrace();
         mav.addObject("exception", e);
         mav.addObject("url", req.getRequestURL());
         mav.addObject("status", "500");
