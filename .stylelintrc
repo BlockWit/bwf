@@ -1,0 +1,19 @@
+{
+	"extends": [
+		"stylelint-config-twbs-bootstrap/scss"
+	],
+	"rules": {
+		"function-disallowed-list": [
+			"calc"
+		],
+		"indentation": "tab",
+		"property-disallowed-list": [
+			"border-radius",
+			"border-top-left-radius",
+			"border-top-right-radius",
+			"border-bottom-right-radius",
+			"border-bottom-left-radius",
+			"transition"
+		]
+	}
+}

@@ -1,0 +1,121 @@
+@import "~bootstrap/scss/bootstrap";
+@import "common";
+@import "main/blocks/navbar";
+
+.bs-authreg-container {
+    max-width: 400px;
+}
+
+.main-content {
+    padding-top: 56px;
+}
+
+.bs-container {
+    padding-top: 40px;
+}
+
+/* from asiator */
+
+.main-content a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #072177;
+}
+
+.main-content a:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #002fca;
+}
+
+.main-content a:visited {
+    text-decoration: none;
+    cursor: pointer;
+    color: #566492;
+}
+
+.main-content {
+    padding-top: 56px;
+}
+
+.media > img {
+    width: 180px;
+    height: 130px;
+}
+
+.bs-post-view-top-panel {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 120%;
+}
+
+.bs-post-view-header {
+    overflow: hidden;
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 240%;
+    font-weight: 600;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.05));
+}
+
+.bs-authreg-container {
+    max-width: 400px;
+}
+
+.bs-container {
+    padding-top: 40px;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+.bs-navbar-profile {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: white;
+}
+
+.widget-div {
+    margin-top: 0.1rem;
+    margin-bottom: 1rem;
+}
+
+.crop {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+}
+
+.posts-widget {
+    display: none;
+}
+
+// For comments
+.media-content {
+    padding: 5px 0px;
+    min-height: 35px;
+}
+
+.media:first-child {
+    padding-top: 15px;
+}
+
+.comment-icon {
+    padding: 2px;
+    margin-left: 7px;
+}
+
+.comment-menu {
+    display: inline;
+    padding: 2px;
+}
+
+.media-create-comment {
+    display: none;
+}
