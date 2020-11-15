@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
-    <div th:fragment="compositeInput(label, fieldName, placeholder, iid, iname, iclass)" class="form-group">
+    <div th:fragment="text(label, fieldName, placeholder, iid, iname, iclass)" class="form-group">
         <label th:attr="for=${iid}" th:text="${label}">stub label</label>
         <input
             type="text"
