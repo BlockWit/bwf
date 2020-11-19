@@ -8,20 +8,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class PasswordServiceImpl implements PasswordService {
 
-    @Autowired
-    RandomService randomService;
+	@Autowired
+	RandomService randomService;
 
-    @Override
-    public String generateRegistrationToken(String login) {
+	@Override
+	public String generateRegistrationToken(String login) {
 
-        String hashString = BCrypt.hashpw(randomService.nextString5() + login + System.currentTimeMillis(), BCrypt.gensalt())
-                .replaceAll("\\.", "s")
-                .replaceAll("\\\\", "d")
-                .replaceAll("\\$", "g");
+		String hashString = BCrypt.hashpw(randomService.nextString5() + login + System.currentTimeMillis(), BCrypt.gensalt())
+			.replaceAll("\\.", "s")
+			.replaceAll("\\\\", "d")
+			.replaceAll("\\$", "g");
 
-        String hexString = HexUtils.toHexString(hashString.getBytes()).substring(0, 99);
-        return hexString;
-    }
+		String hexString = HexUtils.toHexString(hashString.getBytes()).substring(0, 99);
+		return hexString;
+	}
 
 
 }

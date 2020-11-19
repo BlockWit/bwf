@@ -17,35 +17,35 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RolesController {
 
-    private final RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
 
-    public RolesController(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+	public RolesController(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
 
-    @GetMapping("/panel/roles")
-    public ModelAndView appPanelRoles() {
-        return new ModelAndView("redirect:/panel/roles/page/1");
-    }
+	@GetMapping("/panel/roles")
+	public ModelAndView appPanelRoles() {
+		return new ModelAndView("redirect:/panel/roles/page/1");
+	}
 
-    @GetMapping("/panel/roles/page/{pageNumber}")
-    public ModelAndView appPanelRolessPage(@PathVariable("pageNumber") int pageNumber) {
-        ModelAndView modelAndView = new ModelAndView("panel/roles");
+	@GetMapping("/panel/roles/page/{pageNumber}")
+	public ModelAndView appPanelRolessPage(@PathVariable("pageNumber") int pageNumber) {
+		ModelAndView modelAndView = new ModelAndView("panel/roles");
+		// TODO move prev and next page url calculation logic to views
+		Pageable pageRequest =
+			PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
+		Page<Role> page = roleRepository.findAll(pageRequest);
+		int totalPages = page.getTotalPages();
 
-        Pageable pageRequest =
-                PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
-        Page<Role> page = roleRepository.findAll(pageRequest);
-        int totalPages = page.getTotalPages();
+		if (pageNumber > 1)
+			modelAndView.addObject("prevPageUrl", pageNumber - 1);
+		if (pageNumber < totalPages)
+			modelAndView.addObject("nextPageUrl", pageNumber + 1);
 
-        if (pageNumber > 1)
-            modelAndView.addObject("prevPageUrl", pageNumber - 1);
-        if (pageNumber < totalPages)
-            modelAndView.addObject("nextPageUrl", pageNumber + 1);
+		modelAndView.addObject("pageContent", page.getContent());
+		modelAndView.addObject("title", "Main page");
 
-        modelAndView.addObject("pageContent", page.getContent());
-        modelAndView.addObject("title", "Main page");
-
-        return modelAndView;
-    }
+		return modelAndView;
+	}
 
 }

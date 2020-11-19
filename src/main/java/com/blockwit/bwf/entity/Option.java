@@ -16,20 +16,20 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Option implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String name;
+	@Column(length = 100, nullable = false, unique = true)
+	private String name;
 
-    @Column(length = 100, nullable = false)
-    private String type;
+	@Column(length = 100, nullable = false)
+	private String type;
 
-    @Column(columnDefinition = "TEXT", length = 100, nullable = false)
-    private String value;
+	@Column(columnDefinition = "TEXT", length = 100, nullable = false)
+	private String value;
 
-    @Column
-    private String descr;
+	@Column
+	private String descr;
 
 }

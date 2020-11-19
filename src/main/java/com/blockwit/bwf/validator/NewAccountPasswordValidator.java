@@ -7,17 +7,17 @@ import org.springframework.validation.Errors;
 @Service
 public class NewAccountPasswordValidator extends CommonValidator {
 
-    public NewAccountPasswordValidator(javax.validation.Validator javaxValidator) {
-        super(javaxValidator, SetAccountPassword.class);
-    }
+	public NewAccountPasswordValidator(javax.validation.Validator javaxValidator) {
+		super(javaxValidator, SetAccountPassword.class);
+	}
 
-    @Override
-    public void performValidate(Object o, Errors errors) {
-        SetAccountPassword newAccountPassword = (SetAccountPassword) o;
+	@Override
+	public void performValidate(Object o, Errors errors) {
+		SetAccountPassword newAccountPassword = (SetAccountPassword) o;
 
-        if (!newAccountPassword.getPassword().equals(newAccountPassword.getRepassword()))
-            errors.rejectValue("repassword",
-                    "Passwords not equals");
-    }
+		if (!newAccountPassword.getPassword().equals(newAccountPassword.getRepassword()))
+			errors.rejectValue("repassword",
+				"Passwords not equals");
+	}
 
 }

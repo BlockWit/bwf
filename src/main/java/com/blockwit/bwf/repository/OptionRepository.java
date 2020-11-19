@@ -13,10 +13,10 @@ import java.util.Set;
 @Repository
 public interface OptionRepository extends JpaRepository<Option, Long> {
 
-    Optional<Option> findByName(String login);
+	Optional<Option> findByName(String login);
 
-    Set<Option> findByNameIn(List<String> names);
+	Set<Option> findByNameIn(List<String> names);
 
-    Page<Option> findAll(Pageable pageable);
+	Page<Option> findAll(Pageable pageable);
 
 }

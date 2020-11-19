@@ -17,35 +17,35 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class OptionController {
 
-    private final OptionRepository optionRepository;
+	private final OptionRepository optionRepository;
 
-    public OptionController(OptionRepository optionRepository) {
-        this.optionRepository = optionRepository;
-    }
+	public OptionController(OptionRepository optionRepository) {
+		this.optionRepository = optionRepository;
+	}
 
-    @GetMapping("/panel/options")
-    public ModelAndView appPanelOptions() {
-        return new ModelAndView("redirect:/panel/options/page/1");
-    }
+	@GetMapping("/panel/options")
+	public ModelAndView appPanelOptions() {
+		return new ModelAndView("redirect:/panel/options/page/1");
+	}
 
-    @GetMapping("/panel/options/page/{pageNumber}")
-    public ModelAndView appPanelOptionsPage(@PathVariable("pageNumber") int pageNumber) {
-        ModelAndView modelAndView = new ModelAndView("panel/options");
+	@GetMapping("/panel/options/page/{pageNumber}")
+	public ModelAndView appPanelOptionsPage(@PathVariable("pageNumber") int pageNumber) {
+		ModelAndView modelAndView = new ModelAndView("panel/options");
+		// TODO move prev and next page url calculation logic to views
+		Pageable pageRequest =
+			PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
+		Page<Option> page = optionRepository.findAll(pageRequest);
+		int totalPages = page.getTotalPages();
 
-        Pageable pageRequest =
-                PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
-        Page<Option> page = optionRepository.findAll(pageRequest);
-        int totalPages = page.getTotalPages();
+		if (pageNumber > 1)
+			modelAndView.addObject("prevPageUrl", pageNumber - 1);
+		if (pageNumber < totalPages)
+			modelAndView.addObject("nextPageUrl", pageNumber + 1);
 
-        if (pageNumber > 1)
-            modelAndView.addObject("prevPageUrl", pageNumber - 1);
-        if (pageNumber < totalPages)
-            modelAndView.addObject("nextPageUrl", pageNumber + 1);
+		modelAndView.addObject("pageContent", page.getContent());
+		modelAndView.addObject("title", "Main page");
 
-        modelAndView.addObject("pageContent", page.getContent());
-        modelAndView.addObject("title", "Main page");
-
-        return modelAndView;
-    }
+		return modelAndView;
+	}
 
 }

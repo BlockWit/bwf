@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AppController {
 
-    @GetMapping("/")
-    public String appHome(Model model) {
-        model.addAttribute("title", "Main page");
-        return "front/home";
-    }
+	@GetMapping("/")
+	public String appHome(Model model) {
+		model.addAttribute("title", "Main page");
+		return "front/home";
+	}
 
-    @GetMapping("/panel")
-    public String panelHome(Model model) {
-        model.addAttribute("title", "Main page");
-        return "panel/home";
-    }
+	@GetMapping("/panel")
+	public String panelHome(Model model) {
+		model.addAttribute("title", "Main page");
+		return "panel/home";
+	}
 
-    @GetMapping("/panel/profile")
-    public String panelProfile(Model model) {
-        model.addAttribute("title", "Main page");
-        return "panel/profile";
-    }
+	@GetMapping("/panel/profile")
+	public String panelProfile(Model model) {
+		model.addAttribute("title", "Main page");
+		return "panel/profile";
+	}
 
 }

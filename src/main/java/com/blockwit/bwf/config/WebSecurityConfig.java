@@ -12,46 +12,46 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService appUserDetailsService;
+	private final UserDetailsService appUserDetailsService;
+	private final PasswordEncoder passwordEncoder;
 
-    private final PasswordEncoder passwordEncoder;
+	public WebSecurityConfig(UserDetailsService appUserDetailsService, PasswordEncoder passwordEncoder) {
+		this.appUserDetailsService = appUserDetailsService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
-    public WebSecurityConfig(UserDetailsService appUserDetailsService, PasswordEncoder passwordEncoder) {
-        this.appUserDetailsService = appUserDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.authorizeRequests()
+			.antMatchers("/",
+				"/img/**",
+				"/js/**",
+				"/css/**",
+				"/webjars/**").permitAll()
+			.antMatchers("/app/login",
+				"/app/registration/**",
+				"/app/forgotpassword",
+				"/app/forgotpassword/**").anonymous()
+			.antMatchers("/panel/options/**",
+				"/panel/roles/**",
+				"/panel/accounts/**",
+				"/panel/permissions/**").hasAuthority("ADMIN")
+			.anyRequest().authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/app/login")
+			.defaultSuccessUrl("/")
+			.and()
+			.logout()
+			.logoutUrl("/app/logout");
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/",
-                        "/img/**",
-                        "/js/**",
-                        "/css/**",
-                        "/webjars/**").permitAll()
-                .antMatchers("/app/login",
-                        "/app/registration/**",
-                        "/app/forgotpassword",
-                        "/app/forgotpassword/**").anonymous()
-                .antMatchers("/panel/options/**",
-                        "/panel/roles/**",
-                        "/panel/accounts/**",
-                        "/panel/permissions/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/app/login")
-                .defaultSuccessUrl("/")
-                .and()
-                .logout()
-                .logoutUrl("/app/logout");
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserDetailsService)
-                .passwordEncoder(passwordEncoder);
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth
+			.userDetailsService(appUserDetailsService)
+			.passwordEncoder(passwordEncoder);
+	}
 
 }

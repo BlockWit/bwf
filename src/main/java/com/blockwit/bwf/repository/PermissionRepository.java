@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
 
-    Optional<Permission> findByName(String permission);
+	Optional<Permission> findByName(String permission);
 
-    Page<Permission> findAll(Pageable pageable);
+	Page<Permission> findAll(Pageable pageable);
 
 }

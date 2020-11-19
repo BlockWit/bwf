@@ -12,11 +12,11 @@ import java.io.Serializable;
 @Table(name = "permissions")
 public class Permission implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(length = 150, nullable = false)
-    private String name;
+	@Column(length = 150, nullable = false)
+	private String name;
 
 }

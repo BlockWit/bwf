@@ -11,18 +11,18 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    Page<Account> findAll(Pageable pageable);
+	Page<Account> findAll(Pageable pageable);
 
-    Optional<Account> findByLogin(String login);
+	Optional<Account> findByLogin(String login);
 
-    Optional<Account> findByEmail(String email);
+	Optional<Account> findByEmail(String email);
 
-    Optional<Account> findByLoginAndConfirmCode(String login, String confirmCode);
+	Optional<Account> findByLoginAndConfirmCode(String login, String confirmCode);
 
-    Optional<Account> findByLoginAndAndPasswordRecoveryCode(String login, String passwordRecoveryCode);
+	Optional<Account> findByLoginAndAndPasswordRecoveryCode(String login, String passwordRecoveryCode);
 
-    boolean existsByEmail(String email);
+	boolean existsByEmail(String email);
 
-    boolean existsByLogin(String login);
+	boolean existsByLogin(String login);
 
 }

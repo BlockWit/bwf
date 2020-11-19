@@ -4,14 +4,14 @@ import com.blockwit.bwf.entity.ConfirmationStatus;
 
 public class WrongConfirmStatusAccountServiceException extends AccountServiceException {
 
-    ConfirmationStatus actualConfirmStatus;
+	ConfirmationStatus actualConfirmStatus;
 
-    ConfirmationStatus expectedConfirmStatus;
+	ConfirmationStatus expectedConfirmStatus;
 
-    public WrongConfirmStatusAccountServiceException(ConfirmationStatus actualConfirmStatus, ConfirmationStatus expectedConfirmStatus) {
-        super("Expected confirm status " + expectedConfirmStatus.name() + " when actual " + actualConfirmStatus.name());
-        this.actualConfirmStatus = actualConfirmStatus;
-        this.expectedConfirmStatus = expectedConfirmStatus;
-    }
+	public WrongConfirmStatusAccountServiceException(ConfirmationStatus actualConfirmStatus, ConfirmationStatus expectedConfirmStatus) {
+		super("Expected confirm status " + expectedConfirmStatus.name() + " when actual " + actualConfirmStatus.name());
+		this.actualConfirmStatus = actualConfirmStatus;
+		this.expectedConfirmStatus = expectedConfirmStatus;
+	}
 
 }

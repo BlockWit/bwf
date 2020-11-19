@@ -16,10 +16,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class ForgotPassword {
 
-    @NotNull
-    @Size(min = 3, max = 50)
-    @Pattern(regexp = Constants.REGEXP_LOGIN,
-            message = "{model.newaccount.login.regexp.error}")
-    private String login;
+	@NotNull
+	@Size(min = 3, max = 50)
+	@Pattern(regexp = Constants.REGEXP_LOGIN, message = "{model.newaccount.login.regexp.error}")
+	private String login;
 
 }

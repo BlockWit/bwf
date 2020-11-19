@@ -9,37 +9,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService {
 
-    public final static String ROLE_ADMIN = "ADMIN";
+	public final static String ROLE_ADMIN = "ADMIN";
+	public final static String ROLE_USER = "USER";
 
-    public final static String ROLE_USER = "USER";
+	private final RoleRepository roleRepository;
+	private final PermissionsService permissionsService;
 
-    private final RoleRepository roleRepository;
+	public RoleService(RoleRepository roleRepository, PermissionsService permissionsService) {
+		this.roleRepository = roleRepository;
+		this.permissionsService = permissionsService;
+	}
 
-    private final PermissionsService permissionsService;
+	private static Role getOrCreateRole(
+		RoleRepository roleRepository,
+		DefaultPermissionsProvider defaultPermissionsProvider,
+		String name
+	) {
+		return roleRepository.findByName(name).orElseGet(() -> {
+			Role role = new Role();
+			role.setName(name);
+			role.setPermissions(defaultPermissionsProvider.getPermissions());
+			return roleRepository.save(role);
+		});
+	}
 
-    public RoleService(RoleRepository roleRepository,
-                       PermissionsService permissionsService) {
-        this.roleRepository = roleRepository;
-        this.permissionsService = permissionsService;
-    }
+	public Role getDefaultAdminRole() {
+		return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultAdminPermissions(), ROLE_ADMIN);
+	}
 
-    private static Role getOrCreateRole(RoleRepository roleRepository,
-                                        DefaultPermissionsProvider defaultPermissionsProvider,
-                                        String name) {
-        return roleRepository.findByName(name).orElseGet(() -> {
-            Role role = new Role();
-            role.setName(name);
-            role.setPermissions(defaultPermissionsProvider.getPermissions());
-            return roleRepository.save(role);
-        });
-    }
-
-    public Role getDefaultAdminRole() {
-        return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultAdminPermissions(), ROLE_ADMIN);
-    }
-
-    public Role getDefaultUserRole() {
-        return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultUserPermissions(), ROLE_USER);
-    }
+	public Role getDefaultUserRole() {
+		return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultUserPermissions(), ROLE_USER);
+	}
 
 }

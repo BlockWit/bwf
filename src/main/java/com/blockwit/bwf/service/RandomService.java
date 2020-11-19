@@ -2,6 +2,6 @@ package com.blockwit.bwf.service;
 
 public interface RandomService {
 
-    String nextString5();
+	String nextString5();
 
 }

@@ -13,30 +13,29 @@ import java.util.Set;
 @Service
 public class PermissionsService {
 
-    public final static String PERMISSION_ADMIN = "ADMIN";
+	public final static String PERMISSION_ADMIN = "ADMIN";
+	public final static String PERMISSION_USER = "USER";
 
-    public final static String PERMISSION_USER = "USER";
+	private final PermissionRepository permissionRepository;
 
-    private final PermissionRepository permissionRepository;
+	public PermissionsService(PermissionRepository permissionRepository) {
+		this.permissionRepository = permissionRepository;
+	}
 
-    public PermissionsService(PermissionRepository permissionRepository) {
-        this.permissionRepository = permissionRepository;
-    }
+	private static Permission getOrCreatePermission(PermissionRepository permissionRepository, String name) {
+		return permissionRepository.findByName(name).orElseGet(() -> {
+			Permission permission = new Permission();
+			permission.setName(name);
+			return permissionRepository.save(permission);
+		});
+	}
 
-    private static Permission getOrCreatePermission(PermissionRepository permissionRepository, String name) {
-        return permissionRepository.findByName(name).orElseGet(() -> {
-            Permission permission = new Permission();
-            permission.setName(name);
-            return permissionRepository.save(permission);
-        });
-    }
+	public Set<Permission> getDefaultAdminPermissions() {
+		return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_ADMIN)));
+	}
 
-    public Set<Permission> getDefaultAdminPermissions() {
-        return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_ADMIN)));
-    }
-
-    public Set<Permission> getDefaultUserPermissions() {
-        return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_USER)));
-    }
+	public Set<Permission> getDefaultUserPermissions() {
+		return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_USER)));
+	}
 
 }

@@ -17,35 +17,35 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PermissionController {
 
-    private final PermissionRepository permissionRepository;
+	private final PermissionRepository permissionRepository;
 
-    public PermissionController(PermissionRepository permissionRepository) {
-        this.permissionRepository = permissionRepository;
-    }
+	public PermissionController(PermissionRepository permissionRepository) {
+		this.permissionRepository = permissionRepository;
+	}
 
-    @GetMapping("/panel/permissions")
-    public ModelAndView appPanelPermissions() {
-        return new ModelAndView("redirect:/panel/permissions/page/1");
-    }
+	@GetMapping("/panel/permissions")
+	public ModelAndView appPanelPermissions() {
+		return new ModelAndView("redirect:/panel/permissions/page/1");
+	}
 
-    @GetMapping("/panel/permissions/page/{pageNumber}")
-    public ModelAndView appPanelPermissionsPage(@PathVariable("pageNumber") int pageNumber) {
-        ModelAndView modelAndView = new ModelAndView("panel/permissions");
+	@GetMapping("/panel/permissions/page/{pageNumber}")
+	public ModelAndView appPanelPermissionsPage(@PathVariable("pageNumber") int pageNumber) {
+		ModelAndView modelAndView = new ModelAndView("panel/permissions");
+		// TODO move prev and next page url calculation logic to views
+		Pageable pageRequest =
+			PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
+		Page<Permission> page = permissionRepository.findAll(pageRequest);
+		int totalPages = page.getTotalPages();
 
-        Pageable pageRequest =
-                PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
-        Page<Permission> page = permissionRepository.findAll(pageRequest);
-        int totalPages = page.getTotalPages();
+		if (pageNumber > 1)
+			modelAndView.addObject("prevPageUrl", pageNumber - 1);
+		if (pageNumber < totalPages)
+			modelAndView.addObject("nextPageUrl", pageNumber + 1);
 
-        if (pageNumber > 1)
-            modelAndView.addObject("prevPageUrl", pageNumber - 1);
-        if (pageNumber < totalPages)
-            modelAndView.addObject("nextPageUrl", pageNumber + 1);
+		modelAndView.addObject("pageContent", page.getContent());
+		modelAndView.addObject("title", "Main page");
 
-        modelAndView.addObject("pageContent", page.getContent());
-        modelAndView.addObject("title", "Main page");
-
-        return modelAndView;
-    }
+		return modelAndView;
+	}
 
 }

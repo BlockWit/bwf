@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface DefaultPermissionsProvider {
 
-    Set<Permission> getPermissions();
+	Set<Permission> getPermissions();
 
 }

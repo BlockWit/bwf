@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForgotpasswordValidator extends CommonValidator {
 
-    public ForgotpasswordValidator(javax.validation.Validator javaxValidator) {
-        super(javaxValidator, ForgotPassword.class);
-    }
+	public ForgotpasswordValidator(javax.validation.Validator javaxValidator) {
+		super(javaxValidator, ForgotPassword.class);
+	}
 
 }
