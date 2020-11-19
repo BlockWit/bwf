@@ -1,7 +1,7 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.entity.Account;
-import com.blockwit.bwf.entity.ConfirmationStatus;
+import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.exception.*;
 import com.blockwit.bwf.form.ForgotPassword;
 import com.blockwit.bwf.form.NewAccount;

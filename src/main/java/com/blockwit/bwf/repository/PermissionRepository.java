@@ -1,6 +1,6 @@
 package com.blockwit.bwf.repository;
 
-import com.blockwit.bwf.entity.Permission;
+import com.blockwit.bwf.model.Permission;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

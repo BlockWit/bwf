@@ -1,6 +1,6 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.entity.Option;
+import com.blockwit.bwf.model.Option;
 import com.blockwit.bwf.repository.OptionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

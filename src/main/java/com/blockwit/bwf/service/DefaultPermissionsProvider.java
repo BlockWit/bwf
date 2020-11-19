@@ -1,6 +1,6 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.entity.Permission;
+import com.blockwit.bwf.model.Permission;
 
 import java.util.Set;
 

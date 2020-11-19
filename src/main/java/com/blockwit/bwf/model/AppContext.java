@@ -1,4 +1,4 @@
-package com.blockwit.bwf.entity;
+package com.blockwit.bwf.model;
 
 import lombok.Getter;
 import lombok.Setter;

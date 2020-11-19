@@ -1,7 +1,7 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.entity.Account;
-import com.blockwit.bwf.entity.ConfirmationStatus;
+import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.exception.*;
 import com.blockwit.bwf.repository.AccountRepository;
 import lombok.extern.log4j.Log4j2;

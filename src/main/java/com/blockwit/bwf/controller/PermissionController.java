@@ -1,7 +1,7 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.entity.AppContext;
-import com.blockwit.bwf.entity.Permission;
+import com.blockwit.bwf.model.AppContext;
+import com.blockwit.bwf.model.Permission;
 import com.blockwit.bwf.repository.PermissionRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

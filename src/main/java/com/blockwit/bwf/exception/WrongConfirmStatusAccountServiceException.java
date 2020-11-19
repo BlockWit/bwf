@@ -1,6 +1,6 @@
 package com.blockwit.bwf.exception;
 
-import com.blockwit.bwf.entity.ConfirmationStatus;
+import com.blockwit.bwf.model.ConfirmationStatus;
 
 public class WrongConfirmStatusAccountServiceException extends AccountServiceException {
 

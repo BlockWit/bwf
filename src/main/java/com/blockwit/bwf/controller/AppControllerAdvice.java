@@ -1,7 +1,7 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.entity.Account;
-import com.blockwit.bwf.entity.AppContext;
+import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.AppContext;
 import com.blockwit.bwf.service.AccountService;
 import com.blockwit.bwf.service.OptionService;
 import org.springframework.core.annotation.AnnotationUtils;

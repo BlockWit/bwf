@@ -1,7 +1,7 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.entity.Account;
-import com.blockwit.bwf.entity.AppContext;
+import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.AppContext;
 import com.blockwit.bwf.repository.AccountRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

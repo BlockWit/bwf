@@ -1,7 +1,7 @@
 package com.blockwit.bwf.service;
 
 
-import com.blockwit.bwf.entity.Account;
+import com.blockwit.bwf.model.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
