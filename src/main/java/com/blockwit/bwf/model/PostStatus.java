@@ -1,4 +1,4 @@
-package com.blockwit.bwf.models.entity;
+package com.blockwit.bwf.model;
 
 public enum PostStatus {
     DRAFT,

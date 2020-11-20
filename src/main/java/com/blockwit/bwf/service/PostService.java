@@ -1,6 +1,6 @@
-package com.blockwit.bwf.models.service;
+package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.models.entity.Post;
+import com.blockwit.bwf.model.Post;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

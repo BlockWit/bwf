@@ -1,4 +1,4 @@
-package com.blockwit.bwf.controllers.model;
+package com.blockwit.bwf.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

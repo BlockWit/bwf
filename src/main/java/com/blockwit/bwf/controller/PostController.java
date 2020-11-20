@@ -1,8 +1,8 @@
-package com.blockwit.bwf.controllers;
+package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.controllers.model.NewPostForm;
+import com.blockwit.bwf.form.NewPostForm;
 import com.blockwit.bwf.models.entity.Account;
-import com.blockwit.bwf.models.repository.PostRepository;
+import com.blockwit.bwf.repository.PostRepository;
 import com.blockwit.bwf.models.service.AccountService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

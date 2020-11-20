@@ -1,6 +1,6 @@
-package com.blockwit.bwf.models.repository;
+package com.blockwit.bwf.repository;
 
-import com.blockwit.bwf.models.entity.Post;
+import com.blockwit.bwf.model.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
