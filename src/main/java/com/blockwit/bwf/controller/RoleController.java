@@ -1,8 +1,8 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.model.Account;
 import com.blockwit.bwf.model.AppContext;
-import com.blockwit.bwf.repository.AccountRepository;
+import com.blockwit.bwf.model.Role;
+import com.blockwit.bwf.repository.RoleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,27 +15,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Log4j2
 @Controller
-public class AccountsController {
+public class RoleController {
 
-	private final AccountRepository accountRepository;
+	private final RoleRepository roleRepository;
 
-	public AccountsController(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
+	public RoleController(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
 	}
 
-	@GetMapping("/panel/accounts")
-	public ModelAndView appPanelAccounts() {
-		return new ModelAndView("redirect:/panel/accounts/page/1");
+	@GetMapping("/panel/roles")
+	public ModelAndView appPanelRoles() {
+		return new ModelAndView("redirect:/panel/roles/page/1");
 	}
 
-	@GetMapping("/panel/accounts/page/{pageNumber}")
-	public ModelAndView appPanelAccountsPage(@PathVariable("pageNumber") int pageNumber) {
-		ModelAndView modelAndView = new ModelAndView("panel/accounts");
-
+	@GetMapping("/panel/roles/page/{pageNumber}")
+	public ModelAndView appPanelRolessPage(@PathVariable("pageNumber") int pageNumber) {
+		ModelAndView modelAndView = new ModelAndView("panel/roles");
+		// TODO move prev and next page url calculation logic to views
 		Pageable pageRequest =
 			PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
-		Page<Account> page = accountRepository.findAll(pageRequest);
-		// TODO move prev and next page url calculation logic to views
+		Page<Role> page = roleRepository.findAll(pageRequest);
 		int totalPages = page.getTotalPages();
 
 		if (pageNumber > 1)

@@ -13,11 +13,11 @@ public class RoleService {
 	public final static String ROLE_USER = "USER";
 
 	private final RoleRepository roleRepository;
-	private final PermissionsService permissionsService;
+	private final PermissionService permissionService;
 
-	public RoleService(RoleRepository roleRepository, PermissionsService permissionsService) {
+	public RoleService(RoleRepository roleRepository, PermissionService permissionService) {
 		this.roleRepository = roleRepository;
-		this.permissionsService = permissionsService;
+		this.permissionService = permissionService;
 	}
 
 	private static Role getOrCreateRole(
@@ -34,11 +34,11 @@ public class RoleService {
 	}
 
 	public Role getDefaultAdminRole() {
-		return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultAdminPermissions(), ROLE_ADMIN);
+		return getOrCreateRole(roleRepository, () -> permissionService.getDefaultAdminPermissions(), ROLE_ADMIN);
 	}
 
 	public Role getDefaultUserRole() {
-		return getOrCreateRole(roleRepository, () -> permissionsService.getDefaultUserPermissions(), ROLE_USER);
+		return getOrCreateRole(roleRepository, () -> permissionService.getDefaultUserPermissions(), ROLE_USER);
 	}
 
 }

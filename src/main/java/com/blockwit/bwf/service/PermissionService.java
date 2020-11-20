@@ -11,14 +11,14 @@ import java.util.Set;
 
 @Log4j2
 @Service
-public class PermissionsService {
+public class PermissionService {
 
 	public final static String PERMISSION_ADMIN = "ADMIN";
 	public final static String PERMISSION_USER = "USER";
 
 	private final PermissionRepository permissionRepository;
 
-	public PermissionsService(PermissionRepository permissionRepository) {
+	public PermissionService(PermissionRepository permissionRepository) {
 		this.permissionRepository = permissionRepository;
 	}
 
