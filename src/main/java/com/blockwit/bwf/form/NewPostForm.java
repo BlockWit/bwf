@@ -14,11 +14,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class NewPostForm {
 
-    @NotNull
-    private String body;
+	@NotNull
+	private String body;
 
-    @NotNull
-    @Size(min = 3, max = 256)
-    private String title;
+	@NotNull
+	@Size(min = 3, max = 256)
+	private String title;
 
 }
