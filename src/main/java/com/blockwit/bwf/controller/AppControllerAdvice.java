@@ -1,13 +1,11 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.model.Account;
 import com.blockwit.bwf.model.AppContext;
 import com.blockwit.bwf.service.AccountService;
 import com.blockwit.bwf.service.OptionService;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,18 +33,6 @@ public class AppControllerAdvice {
 		appContext.setAppName(defaultOptions.get(OptionService.OPTION_APP_NAME));
 		appContext.setAppVersion(defaultOptions.get(OptionService.OPTION_APP_VERSION));
 		return appContext;
-	}
-
-	@ModelAttribute("authAccount")
-	public Account getAuthAccount(Authentication authentication) {
-		if (authentication == null)
-			return null;
-		Object principal = authentication.getPrincipal();
-		if (principal instanceof User) {
-			String username = ((User) principal).getUsername();
-			return accountService.findByEmailOrLogin(username).orElse(null);
-		}
-		return null;
 	}
 
 	@ExceptionHandler(value = Exception.class)
