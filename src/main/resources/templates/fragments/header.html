@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="ru"
+>
+<body>
+
+<!-- navbar ----------------------------------------------------------------------------------------------------------->
+<nav class="navbar navbar-expand-md navbar-light bg-light" th:fragment="navbar">
+	<div class="container">
+		<a class="navbar-brand" href="/">
+			<img th:src="@{/img/logo.png}" alt="BlockWit" class="navbar-brand-logo"/>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+						aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				<li sec:authorize="hasAnyAuthority('ADMIN', 'USER')" th:replace="this::item(targetName = 'panel', targetUrl = '/panel', menuItemIcon = 'fa-th')"/>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li sec:authorize="!isAuthenticated()" th:replace="this::item(targetName = 'регистрация', targetUrl = '/app/registration/new', menuItemIcon = 'fa-user-plus')"/>
+				<li sec:authorize="!isAuthenticated()" th:replace="this::item(targetName = 'войти', targetUrl = '/app/login', menuItemIcon = 'fa-sign-in-alt')"/>
+				<li sec:authorize="isAuthenticated()" th:replace="this::item(targetName = 'выйти', targetUrl = '/app/logout', menuItemIcon = 'fa-sign-out-alt')"/>
+			</ul>
+		</div>
+	</div>
+</nav>
+<!--------------------------------------------------------------------------------------------------------------------->
+
+<!-- item ------------------------------------------------------------------------------------------------------------->
+<li class="nav-item" th:fragment="item(targetName, targetUrl, menuItemIcon)">
+	<a class="nav-link" th:href="${targetUrl}">
+		<i th:class="'fa ' + ${menuItemIcon}"></i>
+		<span th:text="${targetName}"></span>
+	</a>
+</li>
+<!--------------------------------------------------------------------------------------------------------------------->
+
+</body>
+</html>

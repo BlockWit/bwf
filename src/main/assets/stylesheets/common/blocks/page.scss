@@ -1,0 +1,11 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	&__header {
+		box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+	}
+	&__content {
+		flex: 1;
+	}
+}
