@@ -20,7 +20,6 @@ public class AppUserDetailsService implements UserDetailsService {
 		Account account = accountService
 			.findByEmailOrLogin(userNameOrLogin)
 			.orElseThrow(() -> new UsernameNotFoundException("Email or login " + userNameOrLogin + " not found"));
-		System.out.println(account.getId());
 		return new User(account);
 	}
 
