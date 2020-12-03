@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layouts/main}"
+	lang="ru"
+>
+<head>
+	<title th:text="${'Posts | BlockWit'}"></title>
+</head>
+<body>
+
+<div layout:fragment="content">
+	<div class="container py-5">
+		<ul th:each="post, iStat: ${page.getContent()}">
+			<li th:text="${post.title}"></li>
+		</ul>
+		<div th:insert="fragments/pagination::pagination(${page}, ${#mvc.url('PC#viewPosts')})"></div>
+	</div>
+</div>
+
+<script layout:fragment="scripts">
+
+</script>
+
+</body>
+</html>

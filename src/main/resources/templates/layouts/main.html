@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" media="screen" th:href="@{/css/main.css}"/>
+	<title>BWF</title>
+</head>
+<body class="page">
+	<header class="page__header" th:insert="fragments/header::navbar"></header>
+	<main class="page__content" layout:fragment="content"></main>
+	<footer class="page__footer" th:insert="fragments/footer::footer"></footer>
+	<script th:src="@{/js/main.js}"></script>
+	<script layout:fragment="scripts"></script>
+</body>
+</html>

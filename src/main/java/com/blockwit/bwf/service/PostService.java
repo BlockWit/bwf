@@ -1,15 +1,14 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.dto.PostDTO;
 import com.blockwit.bwf.model.Post;
-import com.blockwit.bwf.model.Role;
-import com.blockwit.bwf.repository.AccountRepository;
 import com.blockwit.bwf.repository.PostRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.expression.AccessException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,31 +17,25 @@ import java.util.Optional;
 @Service
 public class PostService {
 
+	private final ModelMapper modelMapper = new ModelMapper();
 	private final PostRepository postRepository;
 
-	public PostService(AccountRepository accountRepository, PostRepository postRepository) {
+	public PostService(PostRepository postRepository) {
 		this.postRepository = postRepository;
 	}
 
-	public Optional<Post> findById(Long id) {
-		return postRepository.findById(id);
+	public Page<PostDTO> findAll(int pageNumber, int pageSize, Sort sort) {
+		Pageable pageRequest = PageRequest.of(pageNumber, pageSize, sort != null ? sort : Sort.by("id").descending());
+		return postRepository.findAll(pageRequest).map(post -> modelMapper.map(post, PostDTO.class));
 	}
 
-	public Post create(String body, String title, Long ownerId) {
-		Post post = new Post();
-		post.setBody(body);
-		post.setTitle(title);
-		Account owner = new Account();
-		owner.setId(ownerId);
-		post.setOwner(owner);
-		return postRepository.save(post);
+	public Optional<PostDTO> findById(Long id) {
+		return postRepository.findById(id).map(post -> modelMapper.map(post, PostDTO.class));
 	}
 
-	public Post update(Long id, String body, String title, Long ownerId) {
-		Post post = postRepository.findById(id).orElseThrow();
-		if (!post.getOwner().getId().equals(ownerId)) throw new AccessDeniedException("You have no permission to perform this action");
-		post.setBody(body);
-		post.setTitle(title);
-		return postRepository.save(post);
+	public PostDTO save(PostDTO postDTO) {
+		Post post = postRepository.save(modelMapper.map(postDTO, Post.class));
+		return modelMapper.map(post, PostDTO.class);
 	}
+
 }
