@@ -12,7 +12,7 @@ public class AppController {
 	@GetMapping("/")
 	public String appHome(Model model) {
 		model.addAttribute("title", "Main page");
-		return "pages/index";
+		return "front/home";
 	}
 
 	@GetMapping("/panel")
