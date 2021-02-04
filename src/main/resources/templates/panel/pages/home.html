@@ -1,33 +1,11 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/main}">
 <head>
-	<div th:replace="panel/fragments/header :: header"></div>
 </head>
-
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-	<div th:replace="panel/fragments/navbar/navbar :: navbar"></div>
-	<div th:replace="panel/fragments/sidebar/sidebar :: sidebar"></div>
-
-	<div class="content-wrapper">
-		<div class="content-header">
-			<div class="container-fluid">
-			</div>
-		</div>
-		<section class="content">
-			<div class="container-fluid">
-
-				Панель администратора
-
-			</div>
-		</section>
-	</div>
-
-	<div th:replace="panel/fragments/footer :: footer"></div>
+<body>
+<div layout:fragment="content">
+	<p>Control panel</p>
 </div>
-<div th:replace="panel/fragments/scripts :: scripts"></div>
 </body>
-
 </html>

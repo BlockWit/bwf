@@ -1,101 +1,75 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:th="https://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/main}">
 <head>
-	<div th:replace="panel/fragments/header :: header"></div>
 </head>
-
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-	<div th:replace="panel/fragments/navbar/navbar :: navbar"></div>
-	<div th:replace="panel/fragments/sidebar/sidebar :: sidebar"></div>
-
-	<div class="content-wrapper">
-		<div class="content-header">
-			<div class="container-fluid">
-			</div>
+<body>
+<div layout:fragment="content">
+	<div class="card">
+		<div class="card-header">
+			<h3 class="card-title">accounts</h3>
 		</div>
-		<section class="content">
-			<div class="container-fluid">
+		<div class="card-body">
 
-				<div class="row">
-					<div class="col-12">
-
-						<div class="card">
-							<div class="card-header">
-								<h3 class="card-title">accounts</h3>
-							</div>
-							<div class="card-body">
-
-								<div classes="row">
-									<div classes="col-12">
-										<div class="btn-group float-right mb-3 admin-options-table-pag-ctrl">
-											<a th:if="${prevPageUrl}" th:href="${prevPageUrl}"
-												 class="btn btn-outline-info pagination-control-prev">prev</a>
-											<a th:if="${nextPageUrl}" th:href="${nextPageUrl}"
-												 class="btn btn-outline-info pagination-control-next">next</a>
-										</div>
-									</div>
-								</div>
-
-								<div classes="row">
-									<div classes="col-12">
-
-										<table id="admin-options-table" class="table table-bordered table-hover">
-											<thead>
-											<tr>
-												<th>id</th>
-												<th>логин</th>
-												<th>email</th>
-												<th>роли</th>
-												<th>статус</th>
-												<th>подтвержден</th>
-												<th>действия</th>
-											</tr>
-											</thead>
-											<tbody>
-											<th:block th:each="target : ${pageContent}">
-												<tr>
-													<td th:text="${target.getId()}"></td>
-													<td th:text="${target.getLogin()}"></td>
-													<td th:text="${target.getEmail()}"></td>
-													<td th:text="${target.getRolesHR()}"></td>
-													<td></td>
-													<td th:text="${target.isApproved()}"></td>
-													<td></td>
-												</tr>
-											</th:block>
-											</tbody>
-											<tfoot>
-											<tr>
-												<th>id</th>
-												<th>логин</th>
-												<th>email</th>
-												<th>роли</th>
-												<th>статус</th>
-												<th>подтвержден</th>
-												<th>действия</th>
-											</tr>
-											</tfoot>
-										</table>
-
-									</div>
-								</div>
-
-							</div>
-						</div>
-
+			<div classes="row">
+				<div classes="col-12">
+					<div class="btn-group float-right mb-3 admin-options-table-pag-ctrl">
+						<a th:if="${prevPageUrl}" th:href="${prevPageUrl}"
+							 class="btn btn-outline-info pagination-control-prev">prev</a>
+						<a th:if="${nextPageUrl}" th:href="${nextPageUrl}"
+							 class="btn btn-outline-info pagination-control-next">next</a>
 					</div>
 				</div>
-
-
 			</div>
-		</section>
+
+			<div classes="row">
+				<div classes="col-12">
+
+					<table id="admin-options-table" class="table table-bordered table-hover">
+						<thead>
+						<tr>
+							<th>id</th>
+							<th>логин</th>
+							<th>email</th>
+							<th>роли</th>
+							<th>статус</th>
+							<th>подтвержден</th>
+							<th>действия</th>
+						</tr>
+						</thead>
+						<tbody>
+						<th:block th:each="target : ${pageContent}">
+							<tr>
+								<td th:text="${target.getId()}"></td>
+								<td th:text="${target.getLogin()}"></td>
+								<td th:text="${target.getEmail()}"></td>
+								<td th:text="${target.getRolesHR()}"></td>
+								<td></td>
+								<td th:text="${target.isApproved()}"></td>
+								<td></td>
+							</tr>
+						</th:block>
+						</tbody>
+						<tfoot>
+						<tr>
+							<th>id</th>
+							<th>логин</th>
+							<th>email</th>
+							<th>роли</th>
+							<th>статус</th>
+							<th>подтвержден</th>
+							<th>действия</th>
+						</tr>
+						</tfoot>
+					</table>
+
+				</div>
+			</div>
+
+		</div>
 	</div>
 
-	<div th:replace="panel/fragments/footer :: footer"></div>
 </div>
-<div th:replace="panel/fragments/scripts :: scripts"></div>
 </body>
-
 </html>

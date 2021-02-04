@@ -1,52 +1,39 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:th="https://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{front/layouts/main}">
 <head>
-	<div th:replace="/front/fragments/header :: header"></div>
 </head>
 <body>
+<div layout:fragment="content">
+	<div class="container bs-authreg-container">
+		<h2>Шаг 1 из 3</h2>
+		<h4 class="mb-4 mt-4">Добро пожаловать!</h4>
+		<p>Для того чтобы начать регистрацию, вам необходимо указать логин. Он доллжен состоять из латинских букв
+			нижнего регистра и цифр. Не меннее 3 символов.</p>
+		<p class="mb-5">После того как Вы укажите логин и email мы отправим Вам письмо для подтверждения электронной
+			почты.</p>
 
-<div th:replace="/front/fragments/navbar/navbar :: navbar"></div>
-
-<main role="main" class="main-content">
-	<div class="container bs-container">
-
-		<div class="container bs-authreg-container">
-			<h2>Шаг 1 из 3</h2>
-			<h4 class="mb-4 mt-4">Добро пожаловать!</h4>
-			<p>Для того чтобы начать регистрацию, вам необходимо указать логин. Он доллжен состоять из латинских букв
-				нижнего регистра и цифр. Не меннее 3 символов.</p>
-			<p class="mb-5">После того как Вы укажите логин и email мы отправим Вам письмо для подтверждения электронной
-				почты.</p>
-
-			<form th:action="@{/app/registration/new}" method="POST" class="form-vertical" role="form"
-						th:object="${newAccount}">
-				<div class="form-group" id="login_field">
-					<label for="login">Логин</label>
-					<input type="text" id="login" name="login" th:value="*{login}" minlength="3" maxlength="50"
-								 required="true"
-								 class="form-control">
-					<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</td>
-				</div>
-				<div class="form-group" id="email_field">
-					<label for="email">Email</label>
-					<input type="text" id="email" name="email" th:value="*{email}" class="form-control">
-					<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</td>
-				</div>
-				<div class="form-group mt-5">
-					<button type="submit" class="btn btn-outline-primary btn-block"> Регистрация</button>
-				</div>
-			</form>
-			<p class="text-secondary mt-5">Уже имеете аккаунт? <a href="/app/login">Войти</a></p>
-		</div>
-
+		<form th:action="@{/app/registration/new}" method="POST" class="form-vertical" role="form"
+					th:object="${newAccount}">
+			<div class="form-group" id="login_field">
+				<label for="login">Логин</label>
+				<input type="text" id="login" name="login" th:value="*{login}" minlength="3" maxlength="50"
+							 required="true"
+							 class="form-control">
+				<td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</td>
+			</div>
+			<div class="form-group" id="email_field">
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" th:value="*{email}" class="form-control">
+				<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</td>
+			</div>
+			<div class="form-group mt-5">
+				<button type="submit" class="btn btn-outline-primary btn-block"> Регистрация</button>
+			</div>
+		</form>
+		<p class="text-secondary mt-5">Уже имеете аккаунт? <a href="/app/login">Войти</a></p>
 	</div>
-</main>
-
-<div th:replace="/front/fragments/footer :: footer"></div>
-<div th:replace="/front/fragments/scripts :: scripts"></div>
-
+</div>
 </body>
 </html>
-
-
-
