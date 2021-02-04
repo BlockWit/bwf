@@ -1,5 +1,6 @@
 package com.blockwit.bwf.model;
 
+import com.blockwit.bwf.model.account.Account;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,8 @@
 package com.blockwit.bwf.controller;
 
 import com.blockwit.bwf.model.AppContext;
+import com.blockwit.bwf.model.account.AccountHelper;
+import com.blockwit.bwf.model.account.IAccountInfoProvider;
 import com.blockwit.bwf.service.AccountService;
 import com.blockwit.bwf.service.OptionService;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -19,11 +21,17 @@ import java.util.Map;
 public class AppControllerAdvice {
 
 	private final AccountService accountService;
+
 	private final OptionService optionService;
 
 	public AppControllerAdvice(AccountService accountService, OptionService optionService) {
 		this.accountService = accountService;
 		this.optionService = optionService;
+	}
+
+	@ModelAttribute("authAccount")
+	public IAccountInfoProvider getAccount(Authentication authentication) {
+		return AccountHelper.getAccountInfoProvider(authentication);
 	}
 
 	@ModelAttribute("appCtx")
@@ -56,15 +64,4 @@ public class AppControllerAdvice {
 		return mav;
 	}
 
-/*
-    @ExceptionHandler(value = DefaultAdminRoleNotExistsServiceException.class)
-    public ModelAndView exception(DefaultAdminRoleNotExistsServiceException e) {
-        return new ModelAndView("error/customError", Map.of("description", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(value = DefaultUserRoleNotExistsServiceException.class)
-    public ModelAndView exception(DefaultUserRoleNotExistsServiceException e) {
-        return new ModelAndView("error/customError", Map.of("description", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-*/
 }

@@ -1,6 +1,6 @@
 package com.blockwit.bwf.dto;
 
-import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.PostStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

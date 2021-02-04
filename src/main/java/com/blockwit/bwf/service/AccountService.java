@@ -1,6 +1,6 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.exception.*;
 import com.blockwit.bwf.repository.AccountRepository;

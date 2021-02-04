@@ -4,7 +4,7 @@ import com.blockwit.bwf.dto.PostDTO;
 import com.blockwit.bwf.model.PostStatus;
 import com.blockwit.bwf.model.User;
 import com.blockwit.bwf.service.PostService;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
-@Log4j2
+@Slf4j
 @Controller
 public class PostController implements WebMvcConfigurer {
 
@@ -51,7 +51,7 @@ public class PostController implements WebMvcConfigurer {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public ModelAndView processCreatePost(@Valid PostDTO postDTO, BindingResult bindingResult, Authentication authentication) {
 		if (bindingResult.hasErrors()) return new ModelAndView("pages/post-create", HttpStatus.BAD_REQUEST);
-		User user = (User)authentication.getPrincipal();
+		User user = (User) authentication.getPrincipal();
 		postDTO.setOwner(user.getAccount());
 		postDTO.setStatus(PostStatus.SANDBOX);
 		PostDTO createdPost = postService.save(postDTO);

@@ -1,15 +1,15 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.model.Account;
-import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.exception.*;
 import com.blockwit.bwf.form.ForgotPassword;
 import com.blockwit.bwf.form.NewAccount;
 import com.blockwit.bwf.form.SetAccountPassword;
+import com.blockwit.bwf.model.ConfirmationStatus;
+import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.service.AccountService;
 import com.blockwit.bwf.service.EmailService;
 import com.blockwit.bwf.service.RoleService;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-@Log4j2
+@Slf4j
 @Controller
 public class SecurityController {
 
@@ -74,7 +74,7 @@ public class SecurityController {
 		newAccountPassword.setLogin(login);
 		newAccountPassword.setCode(code);
 
-		return new ModelAndView("front/reg-setpassword", Map.of("newAccountPassword", newAccountPassword));
+		return new ModelAndView("front/pages/reg-setpassword", Map.of("newAccountPassword", newAccountPassword));
 	}
 
 	@PostMapping("/app/registration/setpassword")
@@ -86,7 +86,7 @@ public class SecurityController {
 		log.info("Perform set password account checks");
 
 		if (bindingResult.hasErrors())
-			return new ModelAndView("front/setpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/setpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 
 		Account account;
 		try {
@@ -101,12 +101,12 @@ public class SecurityController {
 				HttpStatus.BAD_REQUEST);
 		}
 
-		return new ModelAndView("front/reg-setpassword-success", Map.of("account", account));
+		return new ModelAndView("front/pages/reg-setpassword-success", Map.of("account", account));
 	}
 
 	@GetMapping("/app/registration/new")
 	public ModelAndView registration() {
-		return new ModelAndView("front/reg-new", Map.of("newAccount", new NewAccount()));
+		return new ModelAndView("front/pages/reg-new", Map.of("newAccount", new NewAccount()));
 	}
 
 	@PostMapping("/app/registration/new")
@@ -118,7 +118,7 @@ public class SecurityController {
 		log.info("Perform new account form checks");
 
 		if (bindingResult.hasErrors())
-			return new ModelAndView("front/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 
 		log.info("Create account");
 		Account account;
@@ -126,10 +126,10 @@ public class SecurityController {
 			account = accountService._registerUnconfirmedAccount(newAccount.getLogin(), newAccount.getEmail());
 		} catch (LoginBusyAccountServiceException e) {
 			bindingResult.rejectValue("login", "model.newaccount.login.exists.error");
-			return new ModelAndView("front/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 		} catch (EmailBusyAccountServiceException e) {
 			bindingResult.rejectValue("email", "model.newaccount.email.exists.error");
-			return new ModelAndView("front/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/reg-new", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 		}
 
 		emailService.sendVerificationToken(account.getEmail(), account.getLogin(), account.getConfirmCode());
@@ -138,7 +138,7 @@ public class SecurityController {
 		accountService._setConfirmationStatusTokenSended(account);
 		log.info("New account created");
 
-		return new ModelAndView("front/reg-new-success");
+		return new ModelAndView("front/pages/reg-new-success");
 	}
 
 	@PostMapping("/app/forgotpassword")
@@ -150,7 +150,7 @@ public class SecurityController {
 		log.info("Prepare to forgotpassword");
 
 		if (bindingResult.hasErrors())
-			return new ModelAndView("front/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 
 		Optional<Account> accountOpt;
 		try {
@@ -158,7 +158,7 @@ public class SecurityController {
 		} catch (AttemptTimelimitAccountServiceException e) {
 			bindingResult.rejectValue("login", "model.forgotpassword.timelimit.error");
 			//bindingResult.rejectValue("login", "Attempts time limit not exceeded " + e.getLimit() + " millisecond");
-			return new ModelAndView("front/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/forgotpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 		}
 
 		accountOpt.stream().forEach(account -> {
@@ -166,12 +166,12 @@ public class SecurityController {
 			accountService._recoveryTokenSended(account);
 		});
 
-		return new ModelAndView("front/forgotpassword-success");
+		return new ModelAndView("front/pages/forgotpassword-success");
 	}
 
 	@GetMapping("/app/forgotpassword")
 	public ModelAndView forgotPassword() {
-		return new ModelAndView("front/forgotpassword", Map.of("forgotPassword", new ForgotPassword()));
+		return new ModelAndView("front/pages/forgotpassword", Map.of("forgotPassword", new ForgotPassword()));
 	}
 
 	@GetMapping("/app/forgotpassword/setpassword/{login}/{code}")
@@ -206,7 +206,7 @@ public class SecurityController {
 		newAccountPassword.setLogin(login);
 		newAccountPassword.setCode(code);
 
-		return new ModelAndView("front/forgotpassword-setpassword", Map.of("forgotPassword", newAccountPassword));
+		return new ModelAndView("front/pages/forgotpassword-setpassword", Map.of("forgotPassword", newAccountPassword));
 	}
 
 	@PostMapping("/app/forgotpassword/setpassword")
@@ -218,7 +218,7 @@ public class SecurityController {
 		log.info("Perform set forgotten password account checks");
 
 		if (bindingResult.hasErrors())
-			return new ModelAndView("front/forgotpassword-setpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
+			return new ModelAndView("front/pages/forgotpassword-setpassword", bindingResult.getModel(), HttpStatus.BAD_REQUEST);
 
 		Account account;
 		try {
@@ -233,7 +233,7 @@ public class SecurityController {
 				HttpStatus.BAD_REQUEST);
 		}
 
-		return new ModelAndView("front/forgotpassword-setpassword-success", Map.of("account", account));
+		return new ModelAndView("front/pages/forgotpassword-setpassword-success", Map.of("account", account));
 	}
 
 }

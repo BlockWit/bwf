@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<body>
+
+<th:block th:fragment="badge (badgeType, msg)">
+	<small th:class="'badge badge-' + ${badgeType}" th:text="${msg}"></small>
+</th:block>
+
+</body>
+</html>
+

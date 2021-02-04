@@ -1,8 +1,0 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
-<li class="nav-item" th:fragment="item (targetUrl, menuItemIcon, info)">
-    <a th:href="${targetUrl}" class="nav-link">
-        <i th:class="'fa fa-' + ${menuItemIcon} + ' nav-icon'"></i>
-        <p th:text="${info}"></p>
-    </a>
-</li>

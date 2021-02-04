@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<body>
+
+<th:block th:fragment="flashMessage (msgType, msg)">
+	<div th:class="'alert alert-' + ${msgType} + ' alert-dismissible fade show'" role="alert">
+		<p th:text="${msg}"></p>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</th:block>
+
+<div id="flash-messages" th:fragment="flashMessages">
+	<th:block th:if="${message_primary}">
+		<div th:replace="common/blocks/flash :: flashMessage('primary', ${message_primary})"></div>
+	</th:block>
+	<th:block th:if="${message_secondary}">
+		<div th:replace="common/blocks/flash :: flashMessage('secondary', ${message_secondary})"></div>
+	</th:block>
+	<th:block th:if="${message_success}">
+		<div th:replace="common/blocks/flash :: flashMessage('success', ${message_success})"></div>
+	</th:block>
+	<th:block th:if="${message_error}">
+		<div th:replace="common/blocks/flash :: flashMessage('danger', ${message_error})"></div>
+	</th:block>
+	<th:block th:if="${message_warning}">
+		<div th:replace="common/blocks/flash :: flashMessage('warning', ${message_warning})"></div>
+	</th:block>
+	<th:block th:if="${message_info}">
+		<div th:replace="common/blocks/flash :: flashMessage('info', ${message_info})"></div>
+	</th:block>
+	<th:block th:if="${message_light}">
+		<div th:replace="common/blocks/flash :: flashMessage('light', ${message_light})"></div>
+	</th:block>
+	<th:block th:if="${message_dark}">
+		<div th:replace="common/blocks/flash :: flashMessage('dark', ${message_dark})"></div>
+	</th:block>
+</div>
+
+</body>
+</html>
+

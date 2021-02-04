@@ -1,6 +1,6 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.model.Account;
+import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
