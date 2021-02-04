@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
 
-<div class="sidebar">
-	<div th:replace="panel/fragments/sidebar/account"></div>
-	<div th:replace="panel/fragments/sidebar/menu"></div>
+<div class="sidebar" th:fragment="body">
+	<div th:replace="panel/fragments/sidebar/account :: account"></div>
+	<div th:replace="panel/fragments/sidebar/menu :: menu"></div>
 </div>
 
 </body>

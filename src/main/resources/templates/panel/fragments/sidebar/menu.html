@@ -3,12 +3,12 @@
 			xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 
-<nav class="mt-2">
+<nav class="mt-2" th:fragment="menu">
 	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 		<li sec:authorize="isAuthenticated()"
 				th:replace="panel/fragments/sidebar/item :: item(info = 'account', targetUrl = '/panel/profile', menuItemIcon = 'user')"/>
 		<li sec:authorize="hasAuthority('ADMIN')"
-				th:replace="panel/fragments/sidebar/delimeterLine"/>
+				th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
 		<li sec:authorize="hasAuthority('ADMIN')"
 				th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'administration')"/>
 		<li sec:authorize="hasAuthority('ADMIN')"

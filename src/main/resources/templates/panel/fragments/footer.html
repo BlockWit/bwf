@@ -1,9 +1,14 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
 
-<footer class="main-footer">
-    <strong>Copyright &copy; 2018 <a href="/">[[${appCtx.getAppName()}]]</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> [[${appCtx.getAppVersion()}]]
-    </div>
+<footer class="main-footer" th:fragment="footer">
+	<strong>Copyright &copy; 2018 <a href="/">[[${appCtx.getAppName()}]]</a>.</strong>
+	All rights reserved.
+	<div class="float-right d-none d-sm-inline-block">
+		<b>Version</b> [[${appCtx.getAppVersion()}]]
+	</div>
 </footer>
+
+</body>
+</html>

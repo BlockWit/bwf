@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<div th:replace="panel/fragments/header"></div>
+	<div th:replace="panel/fragments/header :: header"></div>
 </head>
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-	<div th:replace="panel/fragments/navbar/navbar"></div>
-	<div th:replace="panel/fragments/sidebar/sidebar"></div>
+	<div th:replace="panel/fragments/navbar/navbar :: navbar"></div>
+	<div th:replace="panel/fragments/sidebar/sidebar :: sidebar"></div>
 
 	<div class="content-wrapper">
 		<div class="content-header">
@@ -46,9 +46,9 @@
 		</section>
 	</div>
 
-	<div th:replace="panel/fragments/footer"></div>
+	<div th:replace="panel/fragments/footer :: footer"></div>
 </div>
-<div th:replace="panel/fragments/scripts"></div>
+<div th:replace="panel/fragments/scripts :: scripts"></div>
 </body>
 
 </html>
