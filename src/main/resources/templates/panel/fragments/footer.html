@@ -3,7 +3,7 @@
 <body>
 
 <footer class="main-footer" th:fragment="footer">
-	<strong>Copyright &copy; 2018 <a href="/">[[${appCtx.getAppName()}]]</a>.</strong>
+	<strong>Copyright &copy; [[${appCtx.getAppYear()}]] <a href="/">[[${appCtx.getAppName()}]]</a>.</strong>
 	All rights reserved.
 	<div class="float-right d-none d-sm-inline-block">
 		<b>Version</b> [[${appCtx.getAppVersion()}]]

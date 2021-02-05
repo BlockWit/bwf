@@ -1,5 +1,6 @@
 package com.blockwit.bwf.model.account;
 
+import com.blockwit.bwf.model.User;
 import org.springframework.security.core.Authentication;
 
 import java.util.stream.Collectors;
@@ -13,8 +14,10 @@ public class AccountHelper {
 			return anonymousAccountInfoProvider;
 
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof Account)
-			return getAccountInfoProvider((Account) principal);
+		if (principal instanceof User) {
+			Account account = ((User) principal).getAccount();
+			return getAccountInfoProvider(account);
+		}
 		return anonymousAccountInfoProvider;
 	}
 

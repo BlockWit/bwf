@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/panel/accounts/**",
 				"/panel/permissions/**"
 			).hasAuthority("ADMIN")
+			.antMatchers("/app/logout").authenticated()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

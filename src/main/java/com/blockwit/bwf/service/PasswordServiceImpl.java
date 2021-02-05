@@ -2,14 +2,16 @@ package com.blockwit.bwf.service;
 
 import org.apache.tomcat.util.buf.HexUtils;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordServiceImpl implements PasswordService {
 
-	@Autowired
-	RandomService randomService;
+	final RandomService randomService;
+
+	public PasswordServiceImpl(RandomService randomService) {
+		this.randomService = randomService;
+	}
 
 	@Override
 	public String generateRegistrationToken(String login) {

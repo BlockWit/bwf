@@ -15,4 +15,8 @@ public class AppContext {
 
 	String appVersion;
 
+	String appYear;
+
+	String appShortName;
+
 }

@@ -2,14 +2,14 @@ package com.blockwit.bwf.service;
 
 import com.blockwit.bwf.model.Permission;
 import com.blockwit.bwf.repository.PermissionRepository;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Log4j2
+@Slf4j
 @Service
 public class PermissionService {
 

@@ -35,11 +35,13 @@ public class AppControllerAdvice {
 	}
 
 	@ModelAttribute("appCtx")
-	public AppContext getAppContext(Authentication authentication) {
+	public AppContext getAppContext() {
 		AppContext appContext = new AppContext();
 		Map<String, String> defaultOptions = optionService.getAllDefaultValues();
 		appContext.setAppName(defaultOptions.get(OptionService.OPTION_APP_NAME));
 		appContext.setAppVersion(defaultOptions.get(OptionService.OPTION_APP_VERSION));
+		appContext.setAppShortName(defaultOptions.get(OptionService.OPTION_APP_SHORT_NAME));
+		appContext.setAppYear(defaultOptions.get(OptionService.OPTION_APP_YEAR));
 		return appContext;
 	}
 
