@@ -7,7 +7,7 @@
 		<img th:src="@{/img/avatar_light.png}" class="img-circle" alt="Account Image">
 	</div>
 	<div class="info">
-		<a href="#" class="d-block">login</a>
+		<a href="/panel/profile" class="d-block" th:text="${authAccount.getUsername()}">login</a>
 	</div>
 </div>
 
