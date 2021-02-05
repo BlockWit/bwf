@@ -4,9 +4,11 @@ import com.blockwit.bwf.model.Option;
 import com.blockwit.bwf.repository.OptionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -58,6 +60,14 @@ public class OptionService {
 		}
 
 		return namesToValues;
+	}
+
+	@Transactional
+	public Optional<Option> update(Option option) {
+		return optionRepository.findById(option.getId()).flatMap(t -> {
+			optionRepository.save(option);
+			return Optional.of(option);
+		});
 	}
 
 }

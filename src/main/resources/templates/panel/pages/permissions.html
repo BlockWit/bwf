@@ -7,38 +7,21 @@
 <body>
 <div layout:fragment="cardTitle">permissions</div>
 <div layout:fragment="cardBody">
-	<div classes="row">
-		<div classes="col-12">
-			<div class="btn-group float-right mb-3 admin-options-table-pag-ctrl">
-				<a th:if="${prevPageUrl}" th:href="${prevPageUrl}"
-					 class="btn btn-outline-info pagination-control-prev">prev</a>
-				<a th:if="${nextPageUrl}" th:href="${nextPageUrl}"
-					 class="btn btn-outline-info pagination-control-next">next</a>
-			</div>
-		</div>
-	</div>
-	<div classes="row">
-		<div classes="col-12">
-			<table id="admin-options-table" class="table table-unbordered table-hover table-admin-instances">
-				<thead>
-				<tr>
-					<th>id</th>
-					<th>название</th>
-					<th>описание</th>
-				</tr>
-				</thead>
-				<tbody>
-				<th:block th:each="target : ${pageContent}">
-					<tr>
-						<td th:text="${target.getId()}"></td>
-						<td th:text="${target.getName()}"></td>
-						<td></td>
-					</tr>
-				</th:block>
-				</tbody>
-			</table>
-		</div>
-	</div>
+	<th:block
+		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('permissions', ${prevPageUrl}, ${nextPageUrl})">
+		<tr class="tl-inner-headers">
+			<th>id</th>
+			<th>название</th>
+			<th>описание</th>
+		</tr>
+		<th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+			<tr>
+				<td th:text="${target.getId()}"></td>
+				<td th:text="${target.getName()}"></td>
+				<td></td>
+			</tr>
+		</th:block>
+	</th:block>
 </div>
 </body>
 </html>

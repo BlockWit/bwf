@@ -59,7 +59,7 @@ public class Account implements Serializable {
 	private Set<Permission> permissions;
 
 	public boolean isApproved() {
-		return confirmationStatus == ConfirmationStatus.CONFIRMED;
+		return getConfirmationStatus() == ConfirmationStatus.CONFIRMED;
 	}
 
 	public String getRolesHR() {

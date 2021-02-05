@@ -1,5 +1,6 @@
 package com.blockwit.bwf.model;
 
+import com.blockwit.bwf.form.EditOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,5 +32,21 @@ public class Option implements Serializable {
 
 	@Column
 	private String descr;
+
+	public static final EditOption editOptionForm(Option option) {
+		return new EditOption(option.getId(),
+			option.getName(),
+			option.getType(),
+			option.getValue(),
+			option.getDescr());
+	}
+
+	public static final Option fromEditOptionForm(EditOption editOption) {
+		return new Option(editOption.getId(),
+			editOption.getName(),
+			editOption.getType(),
+			editOption.getValue(),
+			editOption.getDescr());
+	}
 
 }

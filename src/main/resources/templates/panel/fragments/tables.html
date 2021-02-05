@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="unborderedBasicTable (tblId, headers, fields)">
+	<table th:id="${tblId}" class="table table-unbordered table-hover table-admin-instances">
+		<thead>
+		<tr th:replace="${headers}">
+		</tr>
+		</thead>
+		<tbody th:insert="${fields}">
+		</tbody>
+	</table>
+</th:block>
+
+<th:block th:fragment="unborderedBasicTableWithPag12 (tblIdSuffix, prevPageUrl, nextPageUrl)">
+	<th:block th:if="${prevPageUrl} or ${nextPageUrl}">
+		<div classes="row">
+			<div classes="col-12">
+				<div th:class="${'btn-group float-right mb-3 admin-table-pag-ctrl-' + tblIdSuffix}">
+					<a th:if="${prevPageUrl}" th:href="${prevPageUrl}"
+						 class="btn btn-outline-info pagination-control-prev">prev</a>
+					<a th:if="${nextPageUrl}" th:href="${nextPageUrl}"
+						 class="btn btn-outline-info pagination-control-next">next</a>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	<div classes="row">
+		<div classes="col-12">
+			<table
+				th:replace="panel/fragments/tables :: unborderedBasicTable(${'admin-table-' + tblIdSuffix}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+			</table>
+		</div>
+	</div>
+</th:block>
+
+</body>
+</html>
+
+
+
+
+
