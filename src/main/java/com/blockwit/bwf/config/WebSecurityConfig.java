@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -46,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/panel/accounts/**",
 				"/panel/permissions/**"
 			).hasAuthority("ADMIN")
-			.antMatchers("/app/logout").authenticated()
+			.antMatchers("/logout").authenticated()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -54,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.defaultSuccessUrl("/")
 			.and()
 			.logout()
-			.logoutUrl("/app/logout");
+			.logoutRequestMatcher(new AntPathRequestMatcher("/app/logout", "GET"));
+		//.logoutUrl("/logout"); TODO: logout should be POST with CSRF token
 	}
 
 	@Override
