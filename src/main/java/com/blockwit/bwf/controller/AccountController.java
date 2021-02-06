@@ -1,18 +1,18 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.model.AppContext;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.repository.AccountRepository;
+import com.blockwit.bwf.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -21,8 +21,11 @@ public class AccountController {
 
 	private final AccountRepository accountRepository;
 
-	public AccountController(AccountRepository accountRepository) {
+	private final AccountService accountService;
+
+	public AccountController(AccountRepository accountRepository, AccountService accountService) {
 		this.accountRepository = accountRepository;
+		this.accountService = accountService;
 	}
 
 	@GetMapping
@@ -32,23 +35,31 @@ public class AccountController {
 
 	@GetMapping("/page/{pageNumber}")
 	public ModelAndView appPanelAccountsPage(@PathVariable("pageNumber") int pageNumber) {
-		ModelAndView modelAndView = new ModelAndView("panel/pages/accounts");
+		return ControllerHelper.addPageableResult(new ModelAndView("panel/pages/accounts"), pageNumber, accountRepository);
+	}
 
-		Pageable pageRequest =
-			PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
-		Page<Account> page = accountRepository.findAll(pageRequest);
-		// TODO move prev and next page url calculation logic to views
-		int totalPages = page.getTotalPages();
+	@GetMapping("/account/{accountId}/roles")
+	public ModelAndView accountRoles(HttpServletRequest request,
+																	 RedirectAttributes redirectAttributes,
+																	 @PathVariable("accountId") long accountId) {
+		return new OptionalExecutor<Account>().perform("Account",
+			accountId,
+			accountRepository,
+			request,
+			redirectAttributes,
+			account -> new ModelAndView("panel/pages/accountRoles", Map.of("targetAccount", account)));
+	}
 
-		if (pageNumber > 1)
-			modelAndView.addObject("prevPageUrl", pageNumber - 1);
-		if (pageNumber < totalPages)
-			modelAndView.addObject("nextPageUrl", pageNumber + 1);
-
-		modelAndView.addObject("pageContent", page.getContent());
-		modelAndView.addObject("title", "Main page");
-
-		return modelAndView;
+	@GetMapping("/account/{accountId}/permissions")
+	public ModelAndView accountPermissions(HttpServletRequest request,
+																				 RedirectAttributes redirectAttributes,
+																				 @PathVariable("accountId") long accountId) {
+		return new OptionalExecutor<Account>().perform("Account",
+			accountId,
+			accountRepository,
+			request,
+			redirectAttributes,
+			account -> new ModelAndView("panel/pages/accountPermissions", Map.of("targetAccount", account)));
 	}
 
 }

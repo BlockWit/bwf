@@ -14,6 +14,9 @@ public interface IAccountInfoProvider {
 
 	Set<String> getAllPermissions();
 
+	Set<String> getPermissions();
+
 	Set<String> getRoles();
 
 }
+

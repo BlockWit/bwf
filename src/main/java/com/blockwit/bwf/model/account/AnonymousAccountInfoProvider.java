@@ -38,6 +38,11 @@ public class AnonymousAccountInfoProvider implements IAccountInfoProvider {
 	}
 
 	@Override
+	public Set<String> getPermissions() {
+		return Collections.emptySet();
+	}
+
+	@Override
 	public Set<String> getRoles() {
 		return Collections.emptySet();
 	}

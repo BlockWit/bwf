@@ -13,6 +13,16 @@
 	</table>
 </th:block>
 
+<th:block th:fragment="unborderedBasicTable12 (tblIdSuffix)">
+	<div classes="row">
+		<div classes="col-12">
+			<table
+				th:replace="panel/fragments/tables :: unborderedBasicTable(${'admin-table-' + tblIdSuffix}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+			</table>
+		</div>
+	</div>
+</th:block>
+
 <th:block th:fragment="unborderedBasicTableWithPag12 (tblIdSuffix, prevPageUrl, nextPageUrl)">
 	<th:block th:if="${prevPageUrl} or ${nextPageUrl}">
 		<div classes="row">

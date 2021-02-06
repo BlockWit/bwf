@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:th="https://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">account permissions</div>
+<div layout:fragment="cardBody">
+	<th:block
+		th:replace="panel/fragments/tables :: unborderedBasicTable12 ('account permissions')">
+		<tr class="tl-inner-headers">
+			<th>id</th>
+			<th>название</th>
+			<th>описание</th>
+		</tr>
+		<th:block class="tl-inner-fields" th:each="target : ${targetAccount.getPermissions()}">
+			<tr>
+				<td th:text="${target.getId()}"></td>
+				<td th:text="${target.getName()}"></td>
+				<td></td>
+			</tr>
+		</th:block>
+	</th:block>
+</div>
+</body>
+</html>

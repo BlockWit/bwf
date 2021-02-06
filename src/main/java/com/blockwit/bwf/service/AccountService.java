@@ -43,6 +43,10 @@ public class AccountService {
 		this.randomService = randomService;
 	}
 
+	public Optional<Account> findById(long accountId) {
+		return accountRepository.findById(accountId);
+	}
+
 	public Optional<Account> findByLoginAndConfirmCode(String login, String confirmCode) {
 		return accountRepository.findByLoginAndConfirmCode(login, confirmCode);
 	}

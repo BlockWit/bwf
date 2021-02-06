@@ -15,13 +15,15 @@ public class SimpleAccountInfoProvider implements ISourceBasedAccountInfoProvide
 
 	private AccountType accountType;
 
-	private Account accountInfoSource;
+	private Account source;
 
 	private String username;
 
 	private String email;
 
 	private Set<String> allPermissions;
+
+	private Set<String> permissions;
 
 	private Set<String> roles;
 
