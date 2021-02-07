@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 			xmlns:th="https://www.thymeleaf.org"
-			xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
 <head>
 </head>
@@ -9,12 +8,15 @@
 <div layout:fragment="cardTitle">role permissions</div>
 <div layout:fragment="cardBody">
 	<th:block
-		th:replace="panel/fragments/tables :: unborderedBasicTable12 ('role permissions')">
+		th:replace="panel/fragments/tables :: unborderedBasicTable12 (${'Permissions for role ' + targetRole.getId() +
+		' ' + targetRole.getName()}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
 		<tr class="tl-inner-headers">
 			<th>id</th>
 			<th>название</th>
-			<th>описание</th>
+			<th></th>
 		</tr>
+		<!--/*@thymesVar id="targetRole" type="com.blockwit.bwf.model.Role"*/-->
+		<!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Permission"*/-->
 		<th:block class="tl-inner-fields" th:each="target : ${targetRole.getPermissions()}">
 			<tr>
 				<td th:text="${target.getId()}"></td>

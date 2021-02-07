@@ -7,21 +7,8 @@
 <body>
 <div layout:fragment="cardTitle">account roles</div>
 <div layout:fragment="cardBody">
-	<th:block
-		th:replace="panel/fragments/tables :: unborderedBasicTable12 ('account roles')">
-		<tr class="tl-inner-headers">
-			<th>id</th>
-			<th>название</th>
-			<th>описание</th>
-		</tr>
-		<th:block class="tl-inner-fields" th:each="target : ${targetAccount.getRoles()}">
-			<tr>
-				<td th:text="${target.getId()}"></td>
-				<td th:text="${target.getName()}"></td>
-				<td></td>
-			</tr>
-		</th:block>
-	</th:block>
+	<!--/*@thymesVar id="targetAccount" type="com.blockwit.bwf.model.account.Account"*/-->
+	<th:block th:replace="panel/fragments/roles :: roles(${targetAccount.getRoles()})"></th:block>
 </div>
 </body>
 </html>

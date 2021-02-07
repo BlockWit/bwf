@@ -8,8 +8,10 @@
 <body>
 <div layout:fragment="cardTitle">options</div>
 <div layout:fragment="cardBody">
+	<!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+	<!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
 	<th:block
-		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('options', ${prevPageUrl}, ${nextPageUrl})">
+		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('options', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
 		<tr class="tl-inner-headers">
 			<th>id</th>
 			<th>название</th>
@@ -18,6 +20,8 @@
 			<th>значение</th>
 			<th></th>
 		</tr>
+		<!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.Option>"*/-->
+		<!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Option"*/-->
 		<th:block class="tl-inner-fields" th:each="target : ${pageContent}">
 			<tr>
 				<td th:text="${target.getId()}"></td>
@@ -27,10 +31,10 @@
 				<td th:text="${target.getValue()}"></td>
 				<td
 					th:insert="panel/fragments/toolbars :: tableLineToolbar ('Options toolbar', ~{ :: .tl-inner-button-group})">
-					<div class="tl-inner-button-group">
+					<th:block class="tl-inner-button-group">
 						<a sec:authorize="hasAuthority('ADMIN')"
 							 th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/options/option/' + target.getId() + '/edit'},'Edit option','fas fa-edit')"></a>
-					</div>
+					</th:block>
 				</td>
 			</tr>
 		</th:block>

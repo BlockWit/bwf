@@ -7,8 +7,10 @@
 <body>
 <div layout:fragment="cardTitle">accounts</div>
 <div layout:fragment="cardBody">
+	<!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+	<!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
 	<th:block
-		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('accounts', ${prevPageUrl}, ${nextPageUrl})">
+		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('accounts', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
 		<tr class="tl-inner-headers">
 			<th>id</th>
 			<th>логин</th>
@@ -17,6 +19,8 @@
 			<th>статус</th>
 			<th></th>
 		</tr>
+		<!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.account.Account>"*/-->
+		<!--/*@thymesVar id="target" type="com.blockwit.bwf.model.account.Account"*/-->
 		<th:block class="tl-inner-fields" th:each="target : ${pageContent}">
 			<tr>
 				<td th:text="${target.getId()}"></td>

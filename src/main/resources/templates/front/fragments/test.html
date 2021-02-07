@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="testInside (content)">
+	<div style="background-color: #1fc8e3; margin: 10px; padding: 10px;">
+		<th:block th:include="${content}"></th:block>
+	</div>
+</th:block>
+
+<th:block th:fragment="testOutside (contentIn)">
+	<div style="background-color: #00cd5a; margin: 10px; padding: 10px;">
+		<th:block th:replace="front/fragments/test :: testInside (~{ :: .tl-inner-content-1})">
+			<div class="tl-inner-content-1">
+				<div th:replace="${contentIn}"></div>
+			</div>
+		</th:block>
+	</div>
+</th:block>
+
+</body>
+</html>
+
+
+
+
+

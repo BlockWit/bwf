@@ -4,8 +4,7 @@
 
 <th:block th:fragment="tableLineToolbar (label, content)">
 	<div class="btn-toolbar" role="toolbar" th:aria-label="${label}">
-		<div class="btn-group mr-2" role="group" th:aria-label="${label}">
-			<th:block th:replace="${content}"></th:block>
+		<div class="btn-group mr-2" role="group" th:aria-label="${label}" th:insert="${content}">
 		</div>
 	</div>
 </th:block>

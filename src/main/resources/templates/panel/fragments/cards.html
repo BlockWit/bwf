@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<th:block class="card" th:fragment="card (classes, title, body)">
+	<div th:class="${'card ' + classes}">
+		<div class="card-header">
+			<h3 class="card-title" th:text="${title}"></h3>
+		</div>
+		<div class="card-body" th:insert="${body}"></div>
+	</div>
+</th:block>
+
+<th:block th:fragment="cardDefault (title, body)"
+					th:insert="panel/fragments/cards :: card('', ${title}, ${body})"></th:block>
+
+</body>
+</html>
+
+
+
+
+

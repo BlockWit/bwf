@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="permissions(permissionsList)"
+					th:insert="panel/fragments/permissions :: permissionsPagebale(${permissionsList}, null, null)">
+</th:block>
+
+<th:block th:fragment="permissionsPagebale(permissionsList, prevPageUrl, nextPageUrl)">
+	<th:block
+		th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('permissions', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers-permissions}, ~{ :: .tl-inner-fields-permissions})">
+		<th:block class="tl-inner-headers-permissions">
+			<tr>
+				<th>id</th>
+				<th>название</th>
+				<th></th>
+			</tr>
+		</th:block>
+		<!--/*@thymesVar id="rolesList" type="java.util.List<com.blockwit.bwf.model.Permission>"*/-->
+		<!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Permission"*/-->
+		<th:block class="tl-inner-fields-permissions" th:each="target : ${permissionsList}">
+			<tr>
+				<td th:text="${target.getId()}"></td>
+				<td th:text="${target.getName()}"></td>
+				<td></td>
+			</tr>
+		</th:block>
+	</th:block>
+</th:block>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.blockwit.bwf.controller;
 
-import com.blockwit.bwf.model.account.Account;
+import com.blockwit.bwf.model.Role;
 import com.blockwit.bwf.repository.RoleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class RoleController {
 	public ModelAndView rolePermissions(HttpServletRequest request,
 																			RedirectAttributes redirectAttributes,
 																			@PathVariable("roleId") long roleId) {
-		return new OptionalExecutor<Account>().perform("Role",
+		return new OptionalExecutor<Role>().perform("Role",
 			roleId,
 			roleRepository,
 			request,
