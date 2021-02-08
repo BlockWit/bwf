@@ -1,5 +1,5 @@
 .hidden {
-    display: none;
+	display: none;
 }
 
 
@@ -15,7 +15,6 @@
 .table-bordered {
 	margin-bottom: 0px;
 }
-
 
 
 .bs-list-group-item {
@@ -40,4 +39,17 @@
 
 table thead th {
 	border: 0px !important;
+}
+
+.sidebar-delimiter-item {
+	border-bottom: 1px solid #c0c1c1;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.sidebar-delimiter-item1 {
+	text-transform: uppercase;
+	font-weight: bold;
+	padding-top: 7px;
+	color: #dedfe0;
 }

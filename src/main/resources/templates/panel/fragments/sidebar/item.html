@@ -3,8 +3,9 @@
 <body>
 
 <li class="nav-item" th:fragment="item (targetUrl, menuItemIcon, info)">
-	<a th:href="${targetUrl}" class="nav-link">
-		<i th:class="'fa fa-' + ${menuItemIcon} + ' nav-icon'"></i>
+	<a th:href="${targetUrl}" class="nav-link"
+		 th:classappend="${#httpServletRequest.requestURI == targetUrl} ? 'active'">
+		<i th:class="${menuItemIcon} + ' nav-icon'"></i>
 		<p th:text="${info}"></p>
 	</a>
 </li>
