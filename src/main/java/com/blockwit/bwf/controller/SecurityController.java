@@ -42,6 +42,16 @@ public class SecurityController {
 		this.accountService = accountService;
 	}
 
+	@GetMapping("/app/login")
+	public String login() {
+		return "front/pages/login";
+	}
+
+//	@PostMapping("/app/login")
+//	public String loginProcess() {
+//		return "front/pages/login";
+//	}
+
 	@GetMapping("/app/registration/setpassword/{login}/{code}")
 	public ModelAndView registrationSetPassword(
 		@PathVariable("login") String login,

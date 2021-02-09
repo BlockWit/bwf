@@ -36,6 +36,10 @@ public class AppControllerAdvice {
 
 	@ModelAttribute("appCtx")
 	public AppContext getAppContext() {
+		return createAppContext(optionService);
+	}
+
+	public static final AppContext createAppContext(OptionService optionService) {
 		AppContext appContext = new AppContext();
 		Map<String, String> defaultOptions = optionService.getAllDefaultValues();
 		appContext.setAppName(defaultOptions.get(OptionService.OPTION_APP_NAME));

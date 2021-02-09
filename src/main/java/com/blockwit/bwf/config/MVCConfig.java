@@ -1,10 +1,9 @@
 package com.blockwit.bwf.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -12,10 +11,15 @@ import java.util.List;
 @Configuration
 public class MVCConfig implements WebMvcConfigurer {
 
+	private final AppInterceptor appInterceptor;
+
+	public MVCConfig(AppInterceptor appInterceptor) {
+		this.appInterceptor = appInterceptor;
+	}
+
 	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/app/login").setViewName("front/pages/login");
-		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(appInterceptor).addPathPatterns("/app/**", "/panel/**");
 	}
 
 	@Override

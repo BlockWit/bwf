@@ -1,7 +1,7 @@
 package com.blockwit.bwf.service;
 
-import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.User;
+import com.blockwit.bwf.model.account.Account;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +15,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	public AppUserDetailsService(AccountService accountService) {
 		this.accountService = accountService;
 	}
+
 	@Override
 	public UserDetails loadUserByUsername(String userNameOrLogin) throws UsernameNotFoundException {
 		Account account = accountService
