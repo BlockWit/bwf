@@ -2,11 +2,14 @@ package com.blockwit.bwf.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.http.CacheControl;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class MVCConfig implements WebMvcConfigurer {
@@ -19,6 +22,12 @@ public class MVCConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		WebContentInterceptor interceptor = new WebContentInterceptor();
+		interceptor.addCacheMapping(CacheControl.maxAge(365, TimeUnit.DAYS)
+			.noTransform()
+			.mustRevalidate(), "/css/*", "/js/**", "/img/**", "/webjars/**");
+		registry.addInterceptor(interceptor);
+
 		registry.addInterceptor(appInterceptor).addPathPatterns("/app/**", "/panel/**");
 	}
 

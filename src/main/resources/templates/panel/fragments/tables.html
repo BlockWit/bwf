@@ -3,14 +3,16 @@
 <body>
 
 <th:block th:fragment="unborderedBasicTable (tblId, headers, fields)">
-	<table th:id="${tblId}" class="table table-unbordered table-hover table-admin-instances">
-		<thead>
-		<tr th:replace="${headers}">
-		</tr>
-		</thead>
-		<tbody th:insert="${fields}">
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table th:id="${tblId}" class="table table-unbordered table-hover table-admin-instances">
+			<thead>
+			<tr th:replace="${headers}">
+			</tr>
+			</thead>
+			<tbody th:insert="${fields}">
+			</tbody>
+		</table>
+	</div>
 </th:block>
 
 <th:block th:fragment="unborderedBasicTable12 (tblIdSuffix, headers, fields)">
