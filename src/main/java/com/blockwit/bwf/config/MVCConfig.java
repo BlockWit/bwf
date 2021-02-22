@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.CacheControl;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
@@ -37,5 +38,12 @@ public class MVCConfig implements WebMvcConfigurer {
 		resolver.setOneIndexedParameters(true);
 		argumentResolvers.add(resolver);
 	}
+
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/api/**")
+//			.allowedOrigins("http://localhost:3000")
+//			.allowCredentials(false).maxAge(3600);
+//	}
 
 }

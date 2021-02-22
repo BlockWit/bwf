@@ -9,6 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+			.cors().configurationSource(request -> {
+			CorsConfiguration configuration = new CorsConfiguration();
+			List<String> allowOrigins = Arrays.asList("*");
+			configuration.setAllowedOrigins(allowOrigins);
+			configuration.setAllowedMethods(Arrays.asList("*"));
+			configuration.setAllowedHeaders(Arrays.asList("*"));
+			//in case authentication is enabled this flag MUST be set, otherwise CORS requests will fail
+			configuration.setAllowCredentials(true);
+			UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+			source.registerCorsConfiguration("/**", configuration);
+			return configuration;
+		})
+			.and()
 			.authorizeRequests()
 			.antMatchers(
 				"/",
@@ -33,7 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/img/**",
 				"/js/**",
 				"/posts/**",
-				"/webjars/**"
+				"/webjars/**",
+				"/api/v1/**"
 			).permitAll()
 			.antMatchers(
 				"/app/login",
