@@ -27,7 +27,7 @@ public class Properties {
 	}
 
 	@GetMapping(value = "/properties", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ListResponse<PropertyRestDTO> accounts(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+	public ListResponse<PropertyRestDTO> list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 																								@RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 		PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by("id").descending());
 		Page<Option> page = optionRepository.findAll(pageRequest);

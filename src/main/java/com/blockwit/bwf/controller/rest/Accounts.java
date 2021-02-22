@@ -27,7 +27,7 @@ public class Accounts {
 	}
 
 	@GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ListResponse<AccountRestDTO> accounts(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+	public ListResponse<AccountRestDTO> list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 																							 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 		PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by("id").descending());
 		Page<Account> page = accountRepository.findAll(pageRequest);
