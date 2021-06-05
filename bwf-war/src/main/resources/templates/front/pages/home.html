@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{front/layouts/main}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+
+        <th:block
+                th:replace="panel/fragments/tables :: unborderedBasicTable12 ('last-swaps', ~{ :: .tl-inner-headers-last-swaps}, ~{ :: .tl-inner-fields-last-swaps})">
+            <th:block class="tl-inner-headers-last-swaps">
+                <tr class="tl-inner-row">
+                    <th>id</th>
+                    <th>address</th>
+                    <th class="field_status">direction</th>
+                    <th>amount</th>
+                    <th class="field_status">status</th>
+                    <th class="descr_field">created</th>
+                </tr>
+            </th:block>
+            <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.mapping.SwapView>"*/-->
+            <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.mapping.SwapView"*/-->
+            <th:block class="tl-inner-fields-last-swaps" th:each="target : ${pageContent}">
+                <tr class="tl-inner-row">
+                    <td th:text="${target.getId()}"></td>
+                    <td><div th:replace="common/fragments/badges :: addressHR (${target.getAddress()}, ${target.getAddressLink()})"></div></td>
+                    <td class="field_status"><div th:replace="common/fragments/badges :: directionHR (${target.getDirection()})"></div></td>
+                    <td><div th:replace="common/fragments/badges :: amountTokenHR (${target.getAmount()})"></div></td>
+                    <td class="field_status"><div th:replace="common/fragments/badges :: swapStatusHR (${target.getStatus()})"></div></td>
+                    <td class="descr_field" th:text="${target.getCreateTime()}"></td>
+                </tr>
+            </th:block>
+        </th:block>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Binance Smart Chain Tokens</h5>
+                        <!--/*@thymesVar id="BSC_ALL_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                        <p class="card-text" th:text="${BSC_ALL_TOKENS.getFormattedString(18, 3) + ' 10Set'}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ethereum Tokens</h5>
+                        <!--/*@thymesVar id="ETH_ALL_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                        <p class="card-text" th:text="${ETH_ALL_TOKENS.getFormattedString(18, 3) + ' 10Set'} "></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Swap pull Binance Smart Chain Tokens</h5>
+                        <!--/*@thymesVar id="BSC_FREE_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                        <p class="card-text" th:text="${BSC_FREE_TOKENS.getFormattedString(18, 3) + ' 10Set'}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Swap pull Ethereum Tokens</h5>
+                        <!--/*@thymesVar id="ETH_FREE_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                        <p class="card-text" th:text="${ETH_FREE_TOKENS.getFormattedString(18, 3) + ' 10Set'} "></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Binance Smart Chain sync progress</h5>
+                        <!--/*@thymesVar id="BSC_SYNC_PROGRESS" type="java.lang.Long"*/-->
+                        <p class="card-text" th:text="${BSC_SYNC_PROGRESS + ' blocks needs to sync'}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Ethereum Tokens sync progress</h5>
+                        <!--/*@thymesVar id="ETH_SYNC_PROGRESS" type="java.lang.Long"*/-->
+                        <p class="card-text" th:text="${ETH_SYNC_PROGRESS + ' blocks needs to sync'} "></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<footer class="front-footer" th:fragment="footer">
+	<div class="container">
+		<strong>Copyright &copy; [[${appCtx.getAppYear()}]] <a href="https://tenset.io">[[${appCtx.getAppName()}]]</a>.</strong>
+		All rights reserved.
+		<div class="float-right d-none d-sm-inline-block">
+			<b>Version</b> [[${appCtx.getAppVersion()}]]
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>

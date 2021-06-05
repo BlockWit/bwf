@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">Transactions</div>
+<div layout:fragment="cardBody">
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('txs', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th>chain</th>
+            <th>from</th>
+            <th>to</th>
+            <th>amount</th>
+            <th>gas</th>
+            <th>gas price</th>
+            <th>nonce</th>
+            <th>txHash</th>
+            <th>block hash</th>
+            <th>block number</th>
+            <th class="field_status">status</th>
+            <th>create time</th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.mapping.TxView>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.mapping.TxView"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="field_chain"><div th:replace="common/fragments/badges :: chainHR (${target.getChain()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: addressHR (${target.getFromAddr()}, ${target.getFromAddrLink()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: addressHR (${target.getToAddr()}, ${target.getToAddrLink()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: amountTokenHR (${target.getAmount()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: amountHR (${target.getGas()}, ${target.getChain()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: amountHR (${target.getGasPrice()}, ${target.getChain()})"></div></td>
+                <td th:text="${target.getNonce()}"></td>
+                <td><div th:replace="common/fragments/badges :: txHashHR (${target.getTxHash()}, ${target.getTxHashLink()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: blockHashHR (${target.getBlockHash()}, ${target.getBlockHashLink()})"></div></td>
+                <td><div th:replace="common/fragments/badges :: blockHeightHR (${target.getBlockNumber()}, ${target.getBlockNumberLink()})"></div></td>
+                <td class="field_status"><div th:replace="common/fragments/badges :: txStatusHR (${target.getStatus()})"></div></td>
+                <td th:text="${target.getCreateTime()}"></td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>
+
+

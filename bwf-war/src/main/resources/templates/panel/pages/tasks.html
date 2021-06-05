@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">Tasks</div>
+<div layout:fragment="cardBody">
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="margin mt-3 mb-3">
+                <div class="btn-toolbar" role="toolbar"
+                     aria-label="Accounts toolbar">
+                    <div class="btn-group mr-2" role="group" aria-label="Common tasks control">
+                        <a th:href="@{/panel/tasks/all/stop}"
+                           class="btn btn-outline-success"
+                           data-toggle="tooltip" title="Stop all tasks">
+                            <i th:class="'fas fa-stop'"></i>
+                        </a>
+                        <a th:href="@{/panel/tasks/all/run}"
+                           class="btn btn-outline-success"
+                           data-toggle="tooltip" title="Run all tasks">
+                            <i th:class="'fas fa-play'"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('tasks', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">name</th>
+            <th class="descr_field">descr</th>
+            <th class="field_status">status</th>
+            <th></th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.mapping.TaskView>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.mapping.TaskView"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getTaskName()}"></td>
+                <td class="descr_field" th:text="${target.getTaskDescr()}"></td>
+                <td class="field_status"><div th:replace="common/fragments/badges :: taskStatusHR (${target.getTaskStatus()})"></div></td>
+                <td
+                        th:insert="panel/fragments/toolbars :: tableLineToolbar ('Tasks toolbar', ~{ :: .tl-inner-button-group})">
+                    <th:block class="tl-inner-button-group">
+                        <th:block
+                                th:if="${target.getTaskStatus() == 'STS_RUNNING'}">
+                            <a sec:authorize="hasAuthority('ADMIN')"
+                               th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/tasks/task/' + target.getId() + '/stop'},'Stop','fas fa-stop')"></a>
+                        </th:block>
+                        <th:block
+                                th:if="${target.getTaskStatus() == 'STS_STOPPED'}">
+                            <a sec:authorize="hasAuthority('ADMIN')"
+                               th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/tasks/task/' + target.getId() + '/run'},'Run','fas fa-play')"></a>
+                        </th:block>
+                    </th:block>
+                </td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>
+

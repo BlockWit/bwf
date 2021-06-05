@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">accounts</div>
+<div layout:fragment="cardBody">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="margin mt-3 mb-3">
+                <div class="btn-toolbar" role="toolbar"
+                     aria-label="Accounts toolbar">
+                    <div class="btn-group mr-2" role="group" aria-label="Create new account">
+                        <a th:href="@{/panel/accounts/create}"
+                           class="btn btn-outline-success"
+                           data-toggle="tooltip" title="Create new access">
+                            <i th:class="'fas fa-user-plus'"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('accounts', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">login</th>
+            <th class="descr_field">email</th>
+            <th>roles</th>
+            <th>status</th>
+            <th></th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.account.Account>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.account.Account"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getLogin()}"></td>
+                <td class="descr_field" th:text="${target.getEmail()}"></td>
+                <td th:text="${target.getRolesHR()}"></td>
+                <td
+                        th:insert="panel/fragments/badges :: accountConfirmationStatusBadge (${target.getConfirmationStatus()})"></td>
+                <td
+                        th:insert="panel/fragments/toolbars :: tableLineToolbar ('Account toolbar', ~{ :: .tl-inner-button-group})">
+                    <th:block class="tl-inner-button-group">
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/edit'},'Edit','fas fa-edit')"></a>
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/setpass'},'Set new password','fas fa-key')"></a>
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/delete'},'Delete','fas fa-trash-alt')"></a>
+                    </th:block>
+                </td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+  <parent>
+    <groupId>com.blockwit</groupId>
+    <artifactId>bwf-rpm</artifactId>
+    <version>2.0.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>bwf-rpm</artifactId>
+  <name>bwf-rpm</name>
+  <packaging>rpm</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>bwf-war</artifactId>
+			<version>${project.version}</version>
+      <type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.2.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<group>${project.groupId}</group>
+					<mappings>
+						<mapping>
+							<directory>/opt/bwf</directory>
+							<filemode>755</filemode>
+							<username>bwf</username>
+							<groupname>bwf</groupname>
+							<directoryIncluded>false</directoryIncluded>
+							<dependency>
+								<stripVersion>true</stripVersion>
+								<includes>
+									<include>${project.groupId}:bwf-war</include>
+								</includes>
+							</dependency>
+						</mapping>
+						<mapping>
+							<directory>/etc/systemd/system</directory>
+							<filemode>755</filemode>
+							<username>root</username>
+							<groupname>root</groupname>
+							<directoryIncluded>false</directoryIncluded>
+							<sources>
+								<source>
+									<location>src/main/resources/systemd</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/bwf/config</directory>
+							<filemode>755</filemode>
+							<username>bwf</username>
+							<groupname>bwf</groupname>
+							<directoryIncluded>false</directoryIncluded>
+							<sources>
+								<source>
+									<location>src/main/resources/config</location>
+								</source>
+							</sources>
+						</mapping>
+					</mappings>
+					<preinstallScriptlet>
+						<scriptFile>src/main/resources/preinstall.sh</scriptFile>
+						<fileEncoding>utf-8</fileEncoding>
+						<filter>true</filter>
+					</preinstallScriptlet>
+					<postinstallScriptlet>
+						<scriptFile>src/main/resources/postinstall.sh</scriptFile>
+						<fileEncoding>utf-8</fileEncoding>
+						<filter>true</filter>
+					</postinstallScriptlet>
+					<preremoveScriptlet>
+						<scriptFile>src/main/resources/preremove.sh</scriptFile>
+						<fileEncoding>utf-8</fileEncoding>
+						<filter>true</filter>
+					</preremoveScriptlet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

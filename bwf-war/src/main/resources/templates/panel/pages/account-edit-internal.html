@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<!--/*@thymesVar id="editAccountInternal" type="com.blockwit.bwf.form.EditAccountInternal"*/-->
+<div layout:fragment="cardTitle">Edit account with id [[${editAccountInternal.getId()}]]</div>
+<div layout:fragment="cardBody">
+
+    <form th:action="${'/panel/accounts/account/' + editAccountInternal.getId() + '/edit'}" method="POST"
+          class="form-vertical" role="form"
+          th:object="${editAccountInternal}">
+        <input type="hidden" id="id" name="id" th:value="*{id}" required="true" class="form-control">
+        <div class="form-group" id="login_field">
+            <label for="login">Login</label>
+            <input type="text" id="login" name="login" th:value="*{login}" minlength="3" maxlength="50"
+                   required="true"
+                   class="form-control">
+            <td th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login error</td>
+        </div>
+        <div class="form-group" id="email_field">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" th:value="*{email}" class="form-control">
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</td>
+        </div>
+        <div class="form-group mt-5">
+            <button type="submit" class="btn btn-outline-primary btn-block">Update</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark bs-navbar-top" th:fragment="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/img/logo.png}" alt="BlockWit" class="navbar-brand-logo"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse branding-nav-items" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li><span class="nav-link brand-top-name">ETH <=> BSC tokens controller</span></li>
+                <li sec:authorize="hasAnyAuthority('ADMIN', 'USER')"
+                    th:replace="front/fragments/navbar/item :: item(targetName = 'panel', targetUrl = '/panel', menuItemIcon = 'fa-th')"/>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li sec:authorize="!isAuthenticated()"
+                    th:replace="front/fragments/navbar/item :: item(targetName = 'login', targetUrl = '/app/login', menuItemIcon = 'fa-sign-in-alt')"/>
+                <li sec:authorize="isAuthenticated()"
+                    th:replace="front/fragments/navbar/item :: item(targetName = 'logout', targetUrl = '/app/logout', menuItemIcon = 'fa-sign-out-alt')"/>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

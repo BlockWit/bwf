@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">role permissions</div>
+<div layout:fragment="cardBody">
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTable12 (${'Permissions for role ' + targetRole.getId() +
+		' ' + targetRole.getName()}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">name</th>
+            <th></th>
+        </tr>
+        <!--/*@thymesVar id="targetRole" type="com.blockwit.bwf.model.Role"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Permission"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${targetRole.getPermissions()}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getName()}"></td>
+                <td></td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>

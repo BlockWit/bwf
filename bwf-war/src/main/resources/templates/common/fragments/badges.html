@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<body>
+
+<th:block th:fragment="badge (badgeType, msg)">
+    <small th:class="'badge badge-' + ${badgeType}" th:text="${msg}"></small>
+</th:block>
+
+<th:block th:fragment="amountTokenHR (amount)">
+    <span th:text="${amount}"></span>&nbsp;<img src="/img/10set_icon_64x64.png" class="chain_small_icon_token">
+</th:block>
+
+<th:block th:fragment="amountHR (amount, chain)">
+    <th:block th:if="${chain == 'ETH'}">
+        <span th:text="${amount}"></span>&nbsp;<img src="/img/eth_icon_64x64.png" class="chain_small_icon_token">
+    </th:block>
+    <th:block th:if="${chain == 'BSC'}">
+        <span th:text="${amount}"></span>&nbsp;<img src="/img/bnb_icon_64x64.png" class="chain_small_icon_token">
+    </th:block>
+</th:block>
+
+<th:block th:fragment="directionHR (chain)">
+    <th:block th:if="${chain == 'ETH_TO_BSC'}">
+        <img src="/img/eth_icon_64x64.png" class="chain_small_icon_token"><span style="font-weight: bold;">&#8594;</span><img src="/img/bnb_icon_64x64.png" class="chain_small_icon_token">
+    </th:block>
+    <th:block th:if="${chain == 'BSC_TO_ETH'}">
+        <img src="/img/bnb_icon_64x64.png" class="chain_small_icon_token"><span style="font-weight: bold;">&#8594;</span><img src="/img/eth_icon_64x64.png" class="chain_small_icon_token">
+    </th:block>
+</th:block>
+
+<th:block th:fragment="chainHR (chain)">
+    <th:block th:if="${chain == 'ETH'}">
+        <img src="/img/eth_icon_64x64.png" class="chain_small_icon_chain">
+    </th:block>
+    <th:block th:if="${chain == 'BSC'}">
+        <img src="/img/bnb_icon_64x64.png" class="chain_small_icon_chain">
+    </th:block>
+</th:block>
+
+<th:block th:fragment="tokenHR (addr, link)">
+    <!--/*@thymesVar id="addr" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="link" type="java.lang.String"*/-->
+    <th:block th:if= "${addr != null && link != null && addr != '' && link != ''}">
+        <a th:href="${link}" th:text="${addr.substring(0, 6) + '...' +  addr.substring(38)}" target="_blank"></a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="addressHR (addr, link)">
+    <!--/*@thymesVar id="addr" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="link" type="java.lang.String"*/-->
+    <th:block th:if= "${addr != null && link != null && addr != '' && link != ''}">
+        <a th:href="${link}" th:text="${addr.substring(0, 6) + '...' +  addr.substring(38)}" target="_blank"></a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="txHashHR (hash, link)">
+    <!--/*@thymesVar id="hash" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="block" type="java.lang.String"*/-->
+    <th:block th:if= "${hash != null && link != null && hash != '' && link != ''}">
+        <a th:href="${link}" th:text="${hash.substring(0, 8) + '...' +  hash.substring(60)}" target="_blank"></a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="blockHashHR (hash, link)">
+    <!--/*@thymesVar id="hash" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="link" type="java.lang.String"*/-->
+    <th:block th:if= "${hash != null && link != null && hash != '' && link != ''}">
+        <a th:href="${link}" th:text="${hash.substring(0, 8) + '...' +  hash.substring(60)}" target="_blank"></a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="blockHeightHR (height, link)">
+    <!--/*@thymesVar id="hash" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="height" type="java.lang.String"*/-->
+    <th:block th:if= "${height != null && link != null && height != '' && link != ''}">
+        <a th:href="${link}" th:text="${height}" target="_blank"></a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="txStatusHR (status)">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <th:block th:if="${status == 'INIT'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'received')"/>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="taskStatusHR (status)">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <th:block th:if="${status == 'STS_RUNNING'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'running')"/>
+    </th:block>
+    <th:block th:if="${status == 'STS_STOPPED'}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'stopped')"/>
+    </th:block>
+    <th:block th:if="${status == 'STS_PREPARING_STOP'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'preapring for stop')"/>
+    </th:block>
+    <th:block th:if="${status == 'STS_PREPARING_RUN'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'preparing for run')"/>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="swapPairStatusHR (status)">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <th:block th:if="${status == 'SWAP_PAIR_STOPPED'}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'inactive')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_PAIR_ACTIVE'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'active')"/>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="swapStatusHR (status)">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <th:block th:if="${status == 'SWAP_START_EVENT_RECEIVED'}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'received')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_REJECTED'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'rejected')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_TX_SENDING'}">
+        <div th:replace="common/fragments/badges :: badge ('primary', 'sending')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_TX_SENDING_FAILED'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'send failed')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_TX_RECEIPT_FAILED'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'receipt failed')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_TX_SENT'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'tx sent')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_HASH_IS_NULL'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'hash is null')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_TX_FAILED'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'tx failed')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_FINALIZED_RECHECK'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'finalize recheck')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_FINISHED'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'finished')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OLD'}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'old')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_OPPOSITE_CHAIN_WAITING_FINALIZE_EVENT'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'wait final event')"/>
+    </th:block>
+    <th:block th:if="${status == 'SWAP_FINALIZATION_RETRY'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'finalize retry')"/>
+    </th:block>
+
+</th:block>
+
+<th:block th:fragment="logStatusHR (status)">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <th:block th:if="${status == 'WAIT_STORE_TX'}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'received')"/>
+    </th:block>
+    <th:block th:if="${status == 'STORE_TX_ERROR'}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'store error')"/>
+    </th:block>
+    <th:block th:if="${status == 'INIT'}">
+        <div th:replace="common/fragments/badges :: badge ('primary', 'initialized')"/>
+    </th:block>
+    <th:block th:if="${status == 'RESTORE_INIT'}">
+        <div th:replace="common/fragments/badges :: badge ('warning', 'return init')"/>
+    </th:block>
+    <th:block th:if="${status == 'PROCESSED'}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'processed')"/>
+    </th:block>
+</th:block>
+
+</body>
+</html>
+

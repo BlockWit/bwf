@@ -1,0 +1,13 @@
+[Unit]
+Description=BlockWit BSC<->ETH Bridge
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/bsc-eth-bridge/bsc-eth-bridge.war --spring.config.location=/opt/bsc-eth-bridge/config/application.properties
+SuccessExitStatus=143
+TimeoutStopSec=2
+
+User=bsc-eth-bridge
+Group=bsc-eth-bridge
+
+[Install]
+WantedBy=multi-user.target

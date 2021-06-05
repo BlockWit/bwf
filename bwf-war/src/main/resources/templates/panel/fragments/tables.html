@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="unborderedBasicTable (tblId, headers, fields)">
+	<div class="table-responsive">
+		<table th:id="${tblId}" class="table table-unbordered table-hover table-admin-instances">
+			<thead>
+				<block th:replace="${headers}">
+				</block>
+			</thead>
+			<tbody>
+				<block th:replace="${fields}">
+				</block>
+			</tbody>
+		</table>
+	</div>
+</th:block>
+
+<th:block th:fragment="unborderedBasicTable12 (tblIdSuffix, headers, fields)">
+	<div classes="row">
+		<div classes="col-12">
+			<table
+				th:replace="panel/fragments/tables :: unborderedBasicTable(${'admin-table-' + tblIdSuffix}, ${headers}, ${fields})">
+			</table>
+		</div>
+	</div>
+</th:block>
+
+<th:block th:fragment="unborderedBasicTableWithPag12 (tblIdSuffix, prevPageUrl, nextPageUrl, headers, fields)">
+	<th:block th:if="${prevPageUrl} or ${nextPageUrl}">
+		<div classes="row">
+			<div classes="col-12">
+				<div th:class="${'btn-group float-right mb-3 admin-table-pag-ctrl-' + tblIdSuffix}">
+					<a th:if="${prevPageUrl}" th:href="${prevPageUrl}"
+						 class="btn btn-outline-info pagination-control-prev">prev</a>
+					<a th:if="${nextPageUrl}" th:href="${nextPageUrl}"
+						 class="btn btn-outline-info pagination-control-next">next</a>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	<div classes="row">
+		<div classes="col-12">
+			<table
+				th:replace="panel/fragments/tables :: unborderedBasicTable(${'admin-table-' + tblIdSuffix}, ${headers}, ${fields})">
+			</table>
+		</div>
+	</div>
+</th:block>
+
+</body>
+</html>
+
+
+
+
+

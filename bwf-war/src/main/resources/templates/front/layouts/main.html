@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<div th:replace="front/fragments/header :: header"></div>
+</head>
+
+<body class="background-overlay">
+
+<div th:replace="front/fragments/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content">
+	<div class="container bs-container" layout:fragment="content">
+
+	</div>
+</main>
+
+<div th:replace="front/fragments/footer :: footer"></div>
+<div th:replace="front/fragments/scripts :: scripts"></div>
+
+</body>
+</html>
