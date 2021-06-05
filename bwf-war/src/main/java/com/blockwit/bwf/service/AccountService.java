@@ -5,7 +5,7 @@ import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.model.Error;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.repository.AccountRepository;
-import com.blockwit.bwf.service.chains.common.utils.WithOptional;
+import com.blockwit.bwf.service.utils.WithOptional;
 import io.vavr.control.Either;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;

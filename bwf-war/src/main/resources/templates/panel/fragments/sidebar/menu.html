@@ -9,15 +9,8 @@
 		<li sec:authorize="isAuthenticated()" th:replace="panel/fragments/sidebar/item :: item(info = 'dashboard', targetUrl = '/panel', menuItemIcon = 'fas fa-tachometer-alt')"/>
 		<li sec:authorize="isAuthenticated()" th:replace="panel/fragments/sidebar/item :: item(info = 'account', targetUrl = '/panel/profile', menuItemIcon = 'fa fa-user')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'swaps monitoring')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'start swap logs', targetUrl = '/panel/startswaplogs', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'finalize swap logs', targetUrl = '/panel/finswaplogs', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'swap pairs', targetUrl = '/panel/swappairs', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'swaps', targetUrl = '/panel/swaps', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'txs', targetUrl = '/panel/txs', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'tasks', targetUrl = '/panel/tasks', menuItemIcon = 'fas fa-stream')"/>
-		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'administration')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'tasks', targetUrl = '/panel/tasks', menuItemIcon = 'fas fa-stream')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'accounts', targetUrl = '/panel/accounts', menuItemIcon = 'fa fa-users')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'IP login attempts', targetUrl = '/panel/ip-login-attempts', menuItemIcon = 'fas fa-stream')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'permissions', targetUrl = '/panel/permissions', menuItemIcon = 'fa fa-key')"/>

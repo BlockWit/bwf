@@ -3,7 +3,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark bs-navbar-top" th:fragment="navbar">
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light bs-navbar-top" th:fragment="navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img th:src="@{/img/logo.png}" alt="BlockWit" class="navbar-brand-logo"/>
@@ -14,7 +14,7 @@
         </button>
         <div class="collapse navbar-collapse branding-nav-items" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li><span class="nav-link brand-top-name">ETH <=> BSC tokens controller</span></li>
+<!--                <li><span class="nav-link brand-top-name">BWF</span></li>-->
                 <li sec:authorize="hasAnyAuthority('ADMIN', 'USER')"
                     th:replace="front/fragments/navbar/item :: item(targetName = 'panel', targetUrl = '/panel', menuItemIcon = 'fa-th')"/>
             </ul>

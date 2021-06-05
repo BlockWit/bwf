@@ -6,7 +6,7 @@ import com.blockwit.bwf.form.UpdateAccountPasswordInternal;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.repository.AccountRepository;
 import com.blockwit.bwf.service.AccountService;
-import com.blockwit.bwf.service.chains.common.utils.WithOptional;
+import com.blockwit.bwf.service.utils.WithOptional;
 import com.blockwit.bwf.validator.EditAccountInternalValidator;
 import com.blockwit.bwf.validator.NewAccountInternalValidator;
 import com.blockwit.bwf.validator.UpdateAccountPasswordValidatorInternal;

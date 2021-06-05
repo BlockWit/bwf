@@ -1,7 +1,6 @@
 package com.blockwit.bwf.service;
 
 import com.blockwit.bwf.model.Error;
-import com.blockwit.bwf.model.chain.Chains;
 import com.blockwit.bwf.model.tasks.SchedTask;
 import com.blockwit.bwf.model.tasks.SchedTaskStatus;
 import com.blockwit.bwf.model.tasks.SchedTaskType;
@@ -31,22 +30,6 @@ public class SchedTasksService {
 
     defaultScheds.addAll(List.of(
         new SchedTask(0L, SystemSchedTasks.TASK_ID_COMMON_INFO_UPDATER, SystemSchedTasks.TASK_DESCR_COMMON_INFO_UPDATER, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null)
-    ));
-
-    defaultScheds.addAll(List.of(
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_LOGS_SCANNER + Chains.Ethereum, SystemSchedTasks.TASK_DESCR_LOGS_SCANNER + Chains.Ethereum, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_LOGS_SYNC + Chains.Ethereum, SystemSchedTasks.TASK_DESCR_SWAP_LOGS_SYNC + Chains.Ethereum, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_PROCESS + Chains.Ethereum, SystemSchedTasks.TASK_DESCR_SWAP_PROCESS + Chains.Ethereum, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_TX_UPDATER + Chains.Ethereum, SystemSchedTasks.TASK_DESCR_TX_UPDATER + Chains.Ethereum, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_FIXER + Chains.Ethereum, SystemSchedTasks.TASK_DESCR_SWAP_FIXER + Chains.Ethereum, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null)
-    ));
-
-    defaultScheds.addAll(List.of(
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_LOGS_SCANNER + Chains.BinanceSmartChain, SystemSchedTasks.TASK_DESCR_LOGS_SCANNER + Chains.BinanceSmartChain, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_LOGS_SYNC + Chains.BinanceSmartChain, SystemSchedTasks.TASK_DESCR_SWAP_LOGS_SYNC + Chains.BinanceSmartChain, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_PROCESS + Chains.BinanceSmartChain, SystemSchedTasks.TASK_DESCR_SWAP_PROCESS + Chains.BinanceSmartChain, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_TX_UPDATER + Chains.BinanceSmartChain, SystemSchedTasks.TASK_DESCR_TX_UPDATER + Chains.BinanceSmartChain, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_SWAP_FIXER + Chains.BinanceSmartChain, SystemSchedTasks.TASK_DESCR_SWAP_FIXER + Chains.BinanceSmartChain, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null)
     ));
 
     Set<String> tasksInRepo = StreamEx.of(schedTasksRepository.findByTaskNameIn(StreamEx.of(defaultScheds)

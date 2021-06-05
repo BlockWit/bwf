@@ -10,10 +10,10 @@
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
-                <!--/*@thymesVar id="BSC_HEIGHT" type="java.lang.Long"*/-->
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">BSC height</span>
-                    <span class="info-box-number" th:text="${BSC_HEIGHT + ' '} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -22,10 +22,37 @@
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
-                <!--/*@thymesVar id="ETH_HEIGHT" type="java.lang.Long"*/-->
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">ETH height</span>
-                    <span class="info-box-number" th:text="${ETH_HEIGHT + ' '} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
+                </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix hidden-md-up"></div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
+                <div class="info-box-content">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
+                </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
+                <div class="info-box-content">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -35,11 +62,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-th"></i></span>
-                <!--/*@thymesVar id="BSC_SYNC_PROGRESS" type="java.lang.Long"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">BSC blocks to sync</span>
-                    <span class="info-box-number" th:text="${BSC_SYNC_PROGRESS + ' blocks needs to sync'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -47,37 +74,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-th"></i></span>
-                <!--/*@thymesVar id="ETH_SYNC_PROGRESS" type="java.lang.Long"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">ETH blocks to sync</span>
-                    <span class="info-box-number" th:text="${ETH_SYNC_PROGRESS + ' blocks needs to sync'} ">
-                </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="clearfix hidden-md-up"></div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-coins"></i></span>
-                <!--/*@thymesVar id="BSC_FREE_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
-                <div class="info-box-content">
-                    <span class="info-box-text">BSC swap pull</span>
-                    <span class="info-box-number" th:text="${BSC_FREE_TOKENS.getFormattedString(18, 3) + ' 10Set'} ">
-                </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-coins"></i></span>
-                <!--/*@thymesVar id="ETH_FREE_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
-                <div class="info-box-content">
-                    <span class="info-box-text">ETH swap pull</span>
-                    <span class="info-box-number" th:text="${ETH_FREE_TOKENS.getFormattedString(18, 3) + ' 10Set'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -87,11 +88,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-coins"></i></span>
-                <!--/*@thymesVar id="BSC_ALL_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">BSC all tokens</span>
-                    <span class="info-box-number" th:text="${BSC_ALL_TOKENS.getFormattedString(18, 3) + ' 10Set'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -99,11 +100,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-coins"></i></i></span>
-                <!--/*@thymesVar id="ETH_ALL_TOKENS" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">ETH all tokens</span>
-                    <span class="info-box-number" th:text="${ETH_ALL_TOKENS.getFormattedString(18, 3) + ' 10Set'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -113,11 +114,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-coins"></i></span>
-                <!--/*@thymesVar id="BSC_INVOKER_BALANCE" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">BSC invoker balance</span>
-                    <span class="info-box-number" th:text="${BSC_INVOKER_BALANCE.getFormattedString(18, 3) + ' BNB'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>
@@ -125,11 +126,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-coins"></i></i></span>
-                <!--/*@thymesVar id="ETH_INVOKER_BALANCE" type="com.blockwit.bwf.model.chain.fields.IChainNumber"*/-->
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cubes"></i></span>
+                <!--/*@thymesVar id="APP_EXAMPLE_INFO" type="java.lang.String"*/-->
                 <div class="info-box-content">
-                    <span class="info-box-text">ETH invoker balance</span>
-                    <span class="info-box-number" th:text="${ETH_INVOKER_BALANCE.getFormattedString(18, 3) + ' ETH'} ">
+                    <span class="info-box-text">Example info</span>
+                    <span class="info-box-number" th:text="${APP_EXAMPLE_INFO + ' '} ">
                 </span>
                 </div>
             </div>

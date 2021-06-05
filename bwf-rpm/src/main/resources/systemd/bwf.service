@@ -1,0 +1,11 @@
+[Unit]
+Description=BlockWit Web Service
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/bsc-eth-bridge/bwf.war --spring.config.location=/opt/bwf/config/application.properties
+SuccessExitStatus=143
+TimeoutStopSec=2
+User=bwf
+
+[Install]
+WantedBy=multi-user.target

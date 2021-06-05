@@ -44,14 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(
             "/panel/options/**",
             "/panel/roles/**",
-            "/panel/txs/**",
-            "/panel/swaps/**",
-            "/panel/finswaplogs/**",
-            "/panel/startswaplogs/**",
             "/panel/accounts/**",
             "/panel/permissions/**",
-            "/panel/tasks/**",
-            "/panel/swappairs/**"
+            "/panel/tasks/**"
         ).hasAuthority("ADMIN")
         .antMatchers("/logout").authenticated()
         .anyRequest().authenticated()

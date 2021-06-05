@@ -2,7 +2,7 @@ package com.blockwit.bwf.service;
 
 import com.blockwit.bwf.model.LoginAttempts;
 import com.blockwit.bwf.repository.IpLoginAttemptsRepository;
-import com.blockwit.bwf.service.chains.common.utils.WithOptional;
+import com.blockwit.bwf.service.utils.WithOptional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

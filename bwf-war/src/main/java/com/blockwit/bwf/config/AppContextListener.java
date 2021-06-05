@@ -1,7 +1,6 @@
 package com.blockwit.bwf.config;
 
-import com.blockwit.bwf.service.chains.bsc.BSCChainScanner;
-import com.blockwit.bwf.service.chains.eth.ETHChainScanner;
+import com.blockwit.bwf.service.CommonInfoUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
@@ -14,10 +13,7 @@ import javax.servlet.ServletContextListener;
 public class AppContextListener implements ServletContextListener {
 
   @Autowired
-  private BSCChainScanner bscChainScanner;
-
-  @Autowired
-  private ETHChainScanner ethChainScanner;
+  CommonInfoUpdater commonInfoUpdater;
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
@@ -26,8 +22,7 @@ public class AppContextListener implements ServletContextListener {
 
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
-    ethChainScanner.waitDestroy();
-    bscChainScanner.waitDestroy();
+    commonInfoUpdater.waitDestroy();
   }
 
 }

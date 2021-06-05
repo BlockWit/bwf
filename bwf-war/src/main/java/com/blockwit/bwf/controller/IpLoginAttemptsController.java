@@ -3,7 +3,7 @@ package com.blockwit.bwf.controller;
 import com.blockwit.bwf.model.mapping.IpLoginAttemptViewMapper;
 import com.blockwit.bwf.repository.IpLoginAttemptsRepository;
 import com.blockwit.bwf.service.IpLoginAttemptService;
-import com.blockwit.bwf.service.chains.common.utils.WithOptional;
+import com.blockwit.bwf.service.utils.WithOptional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
