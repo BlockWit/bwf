@@ -1,5 +1,14 @@
 #!/bin/bash
 # Ensure our service is enabled
+echo "";
+echo "____  _            _  __          ___ __   ";
+echo "|  _ \| |          | | \ \        / (_) |  ";
+echo "| |_) | | ___   ___| | _\ \  /\  / / _| |_ ";
+echo "|  _ <| |/ _ \ / __| |/ /\ \/  \/ / | | __|";
+echo "| |_) | | (_) | (__|   <  \  /\  /  | | |_ ";
+echo "|____/|_|\___/ \___|_|\_\  \/  \/   |_|\__|";
+echo "";
+
 COMMON_NAME="bwf";
 USER_NAME=$COMMON_NAME;
 GROUP_NAME=$COMMON_NAME;
@@ -45,5 +54,6 @@ if [ $1 -eq 1 ]; then
   echo "You should configure service properties in this file $PROJECT_HOME_CONFIG.";
   echo "And then run start service command: sudo systemctl start $SERVICE";
 fi
+
 
 
