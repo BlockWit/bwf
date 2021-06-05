@@ -18,8 +18,8 @@
   <description>BlockWit Web Framework</description>
 
 	<modules>
-		<module>bwf-war</module>
-		<module>bwf-rpm</module>
+		<module>bwf-service</module>
+		<module>bwf-package</module>
 	</modules>
 
     <distributionManagement>

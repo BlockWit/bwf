@@ -11,8 +11,8 @@
 
   <packaging>war</packaging>
 
-  <artifactId>bwf-war</artifactId>
-  <name>bwf-war</name>
+  <artifactId>bwf-service</artifactId>
+  <name>bwf-service</name>
 
   <scm>
     <developerConnection>scm:git:https://github.com/BlockWit/bwf</developerConnection>

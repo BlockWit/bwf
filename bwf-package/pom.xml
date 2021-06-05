@@ -10,14 +10,14 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>bwf-rpm</artifactId>
-  <name>bwf-rpm</name>
+  <artifactId>bwf-package</artifactId>
+  <name>bwf-package</name>
   <packaging>rpm</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>bwf-war</artifactId>
+			<artifactId>bwf-service</artifactId>
 			<version>${project.version}</version>
       <type>war</type>
 		</dependency>
@@ -42,7 +42,7 @@
 							<dependency>
 								<stripVersion>true</stripVersion>
 								<includes>
-									<include>${project.groupId}:bwf-war</include>
+									<include>${project.groupId}:bwf-service</include>
 								</includes>
 							</dependency>
 						</mapping>
