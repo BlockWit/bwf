@@ -9,6 +9,9 @@
 		<li sec:authorize="isAuthenticated()" th:replace="panel/fragments/sidebar/item :: item(info = 'dashboard', targetUrl = '/panel', menuItemIcon = 'fas fa-tachometer-alt')"/>
 		<li sec:authorize="isAuthenticated()" th:replace="panel/fragments/sidebar/item :: item(info = 'account', targetUrl = '/panel/profile', menuItemIcon = 'fa fa-user')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'notifications')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'notifications', targetUrl = '/panel/notifications', menuItemIcon = 'fas fa-stream')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'administration')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'tasks', targetUrl = '/panel/tasks', menuItemIcon = 'fas fa-stream')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'accounts', targetUrl = '/panel/accounts', menuItemIcon = 'fa fa-users')"/>

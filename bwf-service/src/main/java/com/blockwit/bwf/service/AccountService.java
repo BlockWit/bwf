@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2017-present BlockWit, LLC. or BlockWit Team All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -204,7 +204,7 @@ public class AccountService {
   @Transactional
   public Either<Error, Account> updateAccountPasswordInternal(long accountId, String password) {
     return WithOptional.process(accountRepository.findById(accountId),
-        () -> Either.left(new Error(Error.EC_ACCOUNT_NO_FOUND, Error.EM_ACCOUNT_NO_FOUND + accountId)), account ->
+        () -> Either.left(new Error(Error.EC_ACCOUNT_NOT_FOUND, Error.EM_ACCOUNT_NOT_FOUND + accountId)), account ->
             WithOptional.process(Optional.ofNullable(accountRepository.save(
                 account.toBuilder().hash(passwordEncoder.encode(password)).build())),
                 () -> Either.left(new Error(Error.EC_CAN_NOT_UPDATE_ACCOUNT_PASSWORD, Error.EM_CAN_NOT_UPDATE_ACCOUNT + accountId)),
@@ -215,7 +215,7 @@ public class AccountService {
   @Transactional
   public Either<Error, Account> updateAccountInternal(long accountId, String inLogin, String inEmail) {
     return WithOptional.process(accountRepository.findById(accountId),
-        () -> Either.left(new Error(Error.EC_ACCOUNT_NO_FOUND, Error.EM_ACCOUNT_NO_FOUND + accountId)), account -> {
+        () -> Either.left(new Error(Error.EC_ACCOUNT_NOT_FOUND, Error.EM_ACCOUNT_NOT_FOUND + accountId)), account -> {
           String login = inLogin.trim().toLowerCase();
           String email = inEmail.trim().toLowerCase();
 

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2017-present BlockWit, LLC. or BlockWit Team All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.function.Function;
 
 @Slf4j
 public class ControllerHelper {
@@ -121,6 +122,24 @@ public class ControllerHelper {
                                                           IMapper<FROM, TO> mapper) {
     PageRequest pageRequest = PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
     Page page = repository.findAll(pageRequest);
+    // TODO move prev and next page url calculation logic to views
+    int totalPages = page.getTotalPages();
+
+    if (pageNumber > 1)
+      modelAndView.addObject("prevPageUrl", pageNumber - 1);
+    if (pageNumber < totalPages)
+      modelAndView.addObject("nextPageUrl", pageNumber + 1);
+
+    modelAndView.addObject("pageContent", mapper == null ? page.getContent() : mapper.map(page.getContent(), null));
+    return modelAndView;
+  }
+
+  public static <FROM, TO> ModelAndView addPageableResult(ModelAndView modelAndView,
+                                                          int pageNumber,
+                                                          Function<PageRequest, Page<FROM>> pageProvider,
+                                                          IMapper<FROM, TO> mapper) {
+    PageRequest pageRequest = PageRequest.of(pageNumber - 1, AppContext.DEFAULT_PAGE_SIZE, Sort.by("id").descending());
+    Page<FROM> page = pageProvider.apply(pageRequest);
     // TODO move prev and next page url calculation logic to views
     int totalPages = page.getTotalPages();
 

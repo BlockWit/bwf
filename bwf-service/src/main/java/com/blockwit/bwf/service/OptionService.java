@@ -37,10 +37,6 @@ public class OptionService {
   public static final String OPTION_LOGIN_LOCK_PERIOD = "OPTION_LOGIN_LOCK_PERIOD";
   public static final String OPTION_LOGIN_TRY_PERIOD = "OPTION_LOGIN_TRY_PERIOD";
 
-  public final static String OPTION_Chain_ADDRESS_LINK = "_CHAIN_ADDRESS_LINK";
-  public final static String OPTION_Chain_BLOCK_NUMBER_LINK = "_BLOCK_NUMBER_LINK";
-  public final static String OPTION_Chain_TX_HASH_LINK = "_TX_HASH_LINK";
-
   public final static String OPTION_PROFILE = "OPTION_PROFILE";
 
   public final static String OPTION_TYPE_STRING = "string";
