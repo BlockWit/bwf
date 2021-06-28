@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">Create new notification assign</div>
+<div layout:fragment="cardBody">
+
+
+    <!--/*@thymesVar id="newNotificationAssign" type="com.blockwit.bwf.form.NewNotificationAssign"*/-->
+    <form th:action="@{/panel/notifications/parts/assigns/create}" method="POST" class="form-vertical" role="form"
+          th:object="${newNotificationAssign}">
+        <div class="form-group" id="notificationTypeName_field">
+            <label for="notificationTypeName">Notification type</label>
+            <!--/*@thymesVar id="notificationTypes" type="java.util.List<com.blockwit.bwf.model.notifications.NotificationType>"*/-->
+            <select th:field="*{notificationTypeName}" class="form-control" required="true" id="notificationTypeName" name="notificationTypeName">
+                <option th:each="notificationType : ${notificationTypes}"
+                        th:value="${notificationType.getName()}"
+                        th:text="${notificationType.getName()}"
+                        ></option>
+            </select>
+            <td th:if="${#fields.hasErrors('notificationTypeName')}" th:errors="*{notificationTypeName}">Notification type name error</td>
+        </div>
+        <div class="form-group" id="notificationExecutorName_field">
+            <label for="notificationExecutorName">Notification executor</label>
+            <!--/*@thymesVar id="notificationExecutors" type="java.util.List<com.blockwit.bwf.model.notifications.NotificationExecutorDescr>"*/-->
+            <select th:field="*{notificationExecutorName}" class="form-control" required="true" id="notificationExecutorName" name="notificationExecutorName">
+                <option th:each="notificationExecutor : ${notificationExecutors}"
+                        th:value="${notificationExecutor.getName()}"
+                        th:text="${notificationExecutor.getName()}"
+                ></option>
+            </select>
+            <td th:if="${#fields.hasErrors('notificationExecutorName')}" th:errors="*{notificationExecutorName}">Notification executor name error</td>
+        </div>
+        <div class="form-group" id="order_field">
+            <label for="order">Order</label>
+            <input type="text" id="order" name="order" th:value="*{order}" class="form-control">
+            <td th:if="${#fields.hasErrors('order')}" th:errors="*{order}">Order error</td>
+        </div>
+        <div class="form-group mt-5">
+            <button type="submit" class="btn btn-outline-primary btn-block">Create</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+

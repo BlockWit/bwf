@@ -13,29 +13,18 @@
  *
  */
 
-package com.blockwit.bwf.model.notifications;
+package com.blockwit.bwf.repository.notifications;
 
-import lombok.*;
+import com.blockwit.bwf.model.notifications.ExecutorToNotificationTypeAssign;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import java.util.Optional;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "notification_executors_descrs")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder(toBuilder = true)
-public class NotificationExecutorDescr {
+@Repository
+public interface ExecutorsToNotificationsTypeAssignRepository extends JpaRepository<ExecutorToNotificationTypeAssign, Long> {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-
-  @Column(nullable = false, unique = true)
-  private String name;
-
-  @Column
-  private String description;
+  Optional<ExecutorToNotificationTypeAssign> findById(Long id);
 
 }
+

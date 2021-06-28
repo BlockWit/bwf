@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">executor to notification type assigns</div>
+<div layout:fragment="cardBody">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="margin mt-3 mb-3">
+                <div class="btn-toolbar" role="toolbar"
+                     aria-label="Accounts toolbar">
+                    <div class="btn-group mr-2" role="group" aria-label="assigns">
+                        <a th:href="@{/panel/notifications/parts/assigns/create}"
+                           class="btn btn-outline-success"
+                           data-toggle="tooltip" title="Create new assign">
+                            <i th:class="'fas fa-plus'"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('etnta', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">notification type</th>
+            <th class="descr_field">executor</th>
+            <th>order</th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.notifications.mapping.AssignsView>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.notifications.mapping.AssignsView"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getNotificationTypeName()}"></td>
+                <td class="descr_field" th:text="${target.getNotificationExecutorName()}"></td>
+                <td th:text="${target.getOrder()}"></td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>

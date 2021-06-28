@@ -19,6 +19,8 @@ import com.blockwit.bwf.model.Error;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.notifications.*;
 import com.blockwit.bwf.repository.AccountRepository;
+import com.blockwit.bwf.repository.notifications.ExecutorsToNotificationsTypeAssignRepository;
+import com.blockwit.bwf.repository.notifications.NotificationExecutorsRepository;
 import com.blockwit.bwf.repository.notifications.NotificationTypesRepository;
 import com.blockwit.bwf.repository.notifications.NotificationsRepository;
 import com.blockwit.bwf.service.utils.WithOptional;
@@ -42,13 +44,21 @@ public class NotificationService {
 
   private final NotificationTypesRepository notificationTypesRepository;
 
+  private final NotificationExecutorsRepository notificationExecutorsRepository;
+
+  private final ExecutorsToNotificationsTypeAssignRepository executorsToNotificationsTypeAssignRepository;
+
   public NotificationService(NotificationsRepository notificationsRepository,
                              AccountRepository accountRepository,
-                             NotificationTypesRepository notificationTypesRepository
+                             NotificationTypesRepository notificationTypesRepository,
+                             NotificationExecutorsRepository notificationExecutorsRepository,
+                             ExecutorsToNotificationsTypeAssignRepository executorsToNotificationsTypeAssignRepository
   ) {
     this.notificationTypesRepository = notificationTypesRepository;
     this.accountRepository = accountRepository;
     this.notificationsRepository = notificationsRepository;
+    this.notificationExecutorsRepository = notificationExecutorsRepository;
+    this.executorsToNotificationsTypeAssignRepository = executorsToNotificationsTypeAssignRepository;
 
     Map<String, String> notificationsMap = new HashMap();
 
@@ -119,6 +129,29 @@ public class NotificationService {
                     .notificationType(notificationType)
                     .build())));
   }
+
+  @Transactional
+  public Either<Error, ExecutorToNotificationTypeAssign> createNotificationAssign(
+      String notificationTypeName,
+      String notificationExecutorName,
+      Integer order) {
+    return WithOptional.process(notificationTypesRepository.findByName(notificationTypeName),
+        () -> Either.left(new Error(Error.EC_NOTIFICATION_TYPE_NOT_FOUND, Error.EM_NOTIFICATION_TYPE_NOT_FOUND + ": " + notificationTypeName)),
+        notificationType -> WithOptional.process(notificationExecutorsRepository.findByName(notificationExecutorName),
+            () -> Either.left(new Error(Error.EC_NOTIFICATION_EXECUTOR_NOT_FOUND, Error.EM_NOTIFICATION_EXECUTOR_NOT_FOUND + ": " + notificationExecutorName)),
+            notificationExecutor ->
+                Either.right(executorsToNotificationsTypeAssignRepository.save(ExecutorToNotificationTypeAssign.builder()
+                    .notificationType(notificationType)
+                    .notificationExecutor(notificationExecutor)
+                    .notificationTypeId(notificationType.getId())
+                    .executorId(notificationExecutor.getId())
+                    .order(order)
+                    .build()).toBuilder()
+                    .notificationType(notificationType)
+                    .notificationExecutor(notificationExecutor)
+                    .build())));
+  }
+
 
 }
 

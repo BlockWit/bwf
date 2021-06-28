@@ -43,6 +43,8 @@ public class Error {
 
   public static final int EC_CAN_NOT_GET_OPTIONS = 11;
 
+  public static final int EC_NOTIFICATION_EXECUTOR_NOT_FOUND = 12;
+
   public static final String EM_LOGIN_EXISTS = "Login already exists ";
 
   public static final String EM_EMAIL_EXISTS = "Email already exists ";
@@ -58,6 +60,8 @@ public class Error {
   public static final String EM_CAN_NOT_GET_OPTIONS = "Can't get options  ";
 
   public static final String EM_NOTIFICATION_TYPE_NOT_FOUND = "Notification type not found ";
+
+  public static final String EM_NOTIFICATION_EXECUTOR_NOT_FOUND = "Notification executor not found ";
 
   private int code;
 

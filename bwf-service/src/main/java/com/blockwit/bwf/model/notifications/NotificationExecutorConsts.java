@@ -15,27 +15,10 @@
 
 package com.blockwit.bwf.model.notifications;
 
-import lombok.*;
+public class NotificationExecutorConsts {
 
-import javax.persistence.*;
+  public static final String NEI_CONSOLE = "NEI_CONSOLE";
 
-@Getter
-@Setter
-@Entity
-@Table(name = "notification_executors_descrs")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder(toBuilder = true)
-public class NotificationExecutorDescr {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-
-  @Column(nullable = false, unique = true)
-  private String name;
-
-  @Column
-  private String description;
+  public static final String NED_CONSOLE = "Print content to console";
 
 }

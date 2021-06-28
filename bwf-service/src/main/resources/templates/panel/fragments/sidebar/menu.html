@@ -11,6 +11,9 @@
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'notifications')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'notifications', targetUrl = '/panel/notifications', menuItemIcon = 'fas fa-stream')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'notification types', targetUrl = '/panel/notifications/parts/notifytypes', menuItemIcon = 'fas fa-stream')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'executors', targetUrl = '/panel/notifications/parts/executors', menuItemIcon = 'fas fa-stream')"/>
+		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'assigns', targetUrl = '/panel/notifications/parts/assigns', menuItemIcon = 'fas fa-stream')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterLine :: delimeterLine"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/delimeterItem :: item(info = 'administration')"/>
 		<li sec:authorize="hasAuthority('ADMIN')" th:replace="panel/fragments/sidebar/item :: item(info = 'tasks', targetUrl = '/panel/tasks', menuItemIcon = 'fas fa-stream')"/>

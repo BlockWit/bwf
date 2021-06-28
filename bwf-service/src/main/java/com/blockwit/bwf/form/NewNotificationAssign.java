@@ -1,28 +1,43 @@
 /**
  * Copyright (c) 2017-present BlockWit, LLC. or BlockWit Team All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
 
-package com.blockwit.bwf.model.tasks;
+package com.blockwit.bwf.form;
 
-public class SystemSchedTasks {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-  public static final String TASK_ID_COMMON_INFO_UPDATER = "TASK_ID_COMMON_INFO_UPDATER";
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-  public static final String TASK_ID_NOTIFICATIONS_PERFORMER = "TASK_ID_NOTIFICATIONS_PERFORMER";
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class NewNotificationAssign {
 
-  public static final String TASK_DESCR_COMMON_INFO_UPDATER = "Update info about chains, invoker accounts and platform state";
+  @NotNull
+  @Min(0)
+  @Max(100)
+  private Integer order;
 
-  public static final String TASK_DESCR_NOTIFICATIONS_PERFORMER = "Read all notifications which waiting for prepare." +
-      " Generate for each notification state corresponding to executor.";
+  @NotNull
+  private String notificationTypeName;
+
+  @NotNull
+  private String notificationExecutorName;
 
 }

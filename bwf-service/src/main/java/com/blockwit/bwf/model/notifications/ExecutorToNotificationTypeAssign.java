@@ -47,4 +47,7 @@ public class ExecutorToNotificationTypeAssign {
   @Transient
   private NotificationType notificationType;
 
+  @Transient
+  private NotificationExecutorDescr notificationExecutor;
+
 }
