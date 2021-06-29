@@ -13,30 +13,8 @@
  *
  */
 
-package com.blockwit.bwf.model.notifications;
+package com.blockwit.bwf.model.posts;
 
-import lombok.*;
-
-import javax.persistence.*;
-import java.io.Serializable;
-
-@Getter
-@Setter
-@Entity
-@Table(name = "notification_types")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder(toBuilder = true)
-public class NotificationType implements Serializable {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-
-  @Column(nullable = false, unique = true)
-  private String name;
-
-  @Column
-  private String descr;
-
+public enum PostStatus {
+  DRAFT, PUBLISHED
 }

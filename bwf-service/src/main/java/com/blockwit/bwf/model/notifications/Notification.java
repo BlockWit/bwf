@@ -19,6 +19,7 @@ import com.blockwit.bwf.model.account.Account;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -28,7 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class Notification {
+public class Notification implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

@@ -13,8 +13,9 @@
  *
  */
 
-package com.blockwit.bwf.model.notifications;
+package com.blockwit.bwf.model.posts;
 
+import com.blockwit.bwf.model.account.Account;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,20 +24,49 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "notification_types")
+@Table(name = "posts")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class NotificationType implements Serializable {
+public class Post implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String name;
+  @Column(nullable = false)
+  private Long ownerId;
+
+  @Column(nullable = false)
+  private String title;
 
   @Column
-  private String descr;
+  private String thumbnail;
+
+  @Column(nullable = false)
+  private String content;
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.ORDINAL)
+  private PostStatus postStatus;
+
+  @Column(nullable = false)
+  private Long created;
+
+  @Column
+  private String metaTitle;
+
+  @Column
+  private String metaDescr;
+
+  @Column
+  private String metaKeywords;
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.ORDINAL)
+  private PostType postType;
+
+  @Transient
+  private Account owner;
 
 }

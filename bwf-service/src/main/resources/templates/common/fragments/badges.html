@@ -39,6 +39,9 @@
     <th:block th:if="${status == T(com.blockwit.bwf.model.notifications.NotificationStatus).FAIL}">
         <div th:replace="common/fragments/badges :: badge ('danger', 'fail')"/>
     </th:block>
+    <th:block th:if="${status == T(com.blockwit.bwf.model.notifications.NotificationStatus).PARTIAL_FAIL}">
+        <div th:replace="common/fragments/badges :: badge ('danger', 'partial fail')"/>
+    </th:block>
 </th:block>
 
 <th:block th:fragment="notifyExecStatusHR (status)">
@@ -54,6 +57,26 @@
     </th:block>
     <th:block th:if="${status == T(com.blockwit.bwf.model.notifications.ExecutorNotificationStateStatus).SENDING_IN_PROGRESS}">
         <div th:replace="common/fragments/badges :: badge ('warning', 'sending')"/>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="postStatusHR (status)">
+    <!--/*@thymesVar id="status" type="com.blockwit.bwf.model.posts.PostStatus"*/-->
+    <th:block th:if="${status == T(com.blockwit.bwf.model.posts.PostStatus).DRAFT}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'draft')"/>
+    </th:block>
+    <th:block th:if="${status == T(com.blockwit.bwf.model.posts.PostStatus).PUBLISHED}">
+        <div th:replace="common/fragments/badges :: badge ('success', 'published')"/>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="postTypeHR (status)">
+    <!--/*@thymesVar id="status" type="com.blockwit.bwf.model.posts.PostType"*/-->
+    <th:block th:if="${status == T(com.blockwit.bwf.model.posts.PostType).ARTICLE}">
+        <div th:replace="common/fragments/badges :: badge ('primary', 'article')"/>
+    </th:block>
+    <th:block th:if="${status == T(com.blockwit.bwf.model.posts.PostType).PAGE}">
+        <div th:replace="common/fragments/badges :: badge ('secondary', 'page')"/>
     </th:block>
 </th:block>
 

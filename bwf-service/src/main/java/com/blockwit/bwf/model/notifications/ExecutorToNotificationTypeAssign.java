@@ -18,6 +18,7 @@ package com.blockwit.bwf.model.notifications;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class ExecutorToNotificationTypeAssign {
+public class ExecutorToNotificationTypeAssign implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
