@@ -15,10 +15,13 @@
 
 package com.blockwit.bwf.service.notifications.executors;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class OutputToConsoleExecutor implements INotificationExecutor {
 
   public void send(String to, String content) {
-    System.out.println(content);
+    System.out.println("MSG to " + to + " : " + content);
   }
 
 }

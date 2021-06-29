@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">Notification executors states</div>
+<div layout:fragment="cardBody">
+
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('execstates', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">target</th>
+            <th class="field_status">status</th>
+            <th class="descr_field">executor</th>
+            <th class="descr_field">type</th>
+            <th>created</th>
+            <th>updated</th>
+            <th>sent date</th>
+            <th class="descr_field">log</th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.notifications.mapping.ExecStateView>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.notifications.mapping.ExecStateView"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getTarget()}"></td>
+                <td class="field_status"><div th:replace="common/fragments/badges :: notifyExecStatusHR (${target.getExecutorNotificationStateStatus()})"></div></td>
+                <td class="descr_field" th:text="${target.getNotificationExecutorName()}"></td>
+                <td class="descr_field" th:text="${target.getNotificationTypeName()}"></td>
+                <td th:text="${target.getCreated()}"></td>
+                <td th:text="${target.getUpdated()}"></td>
+                <td th:text="${target.getSentDatetime()}"></td>
+                <td class="descr_field" th:text="${target.getLog()}"></td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>

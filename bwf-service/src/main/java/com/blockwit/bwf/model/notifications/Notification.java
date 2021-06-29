@@ -19,6 +19,7 @@ import com.blockwit.bwf.model.account.Account;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -71,5 +72,14 @@ public class Notification {
 
   @Transient
   private NotificationType notificationType;
+
+  @Transient
+  private List<NotificationExecutorState> notificationExecutorStates;
+
+  public Notification update(NotificationStatus notificationStatus) {
+    return toBuilder()
+        .notificationStatus(notificationStatus)
+        .build();
+  }
 
 }

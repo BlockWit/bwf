@@ -99,7 +99,13 @@ public class ExecutorToNotificationsTypeAssignService {
             .notificationType(StreamEx.of(notificationTypes).findFirst(t -> t.getId().equals(assign.getNotificationTypeId())).get())
             .notificationExecutor(StreamEx.of(notificationExecutors).findFirst(t -> t.getId().equals(assign.getExecutorId())).get())
             .build())
-        .toList());
+        .toList(),
+        page.getPageable(),
+        page.getTotalElements());
+  }
+
+  public List<ExecutorToNotificationTypeAssign> findAssignsForNotificationTypes(List<Long> ids) {
+    return executorsToNotificationsTypeAssignRepository.findByNotificationTypeIdIn(ids);
   }
 
 }

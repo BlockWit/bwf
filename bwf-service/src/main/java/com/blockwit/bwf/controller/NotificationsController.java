@@ -16,14 +16,13 @@ package com.blockwit.bwf.controller;
 
 import com.blockwit.bwf.form.NewNotification;
 import com.blockwit.bwf.form.NewNotificationAssign;
-import com.blockwit.bwf.model.notifications.mapping.AssignsViewMapper;
-import com.blockwit.bwf.model.notifications.mapping.NotificationExecutorViewMapper;
-import com.blockwit.bwf.model.notifications.mapping.NotificationTypeViewMapper;
-import com.blockwit.bwf.model.notifications.mapping.NotificationViewMapper;
+import com.blockwit.bwf.model.notifications.mapping.*;
 import com.blockwit.bwf.repository.notifications.ExecutorsToNotificationsTypeAssignRepository;
+import com.blockwit.bwf.repository.notifications.NotificationExecutorStatesRepository;
 import com.blockwit.bwf.repository.notifications.NotificationExecutorsRepository;
 import com.blockwit.bwf.repository.notifications.NotificationTypesRepository;
 import com.blockwit.bwf.service.notifications.ExecutorToNotificationsTypeAssignService;
+import com.blockwit.bwf.service.notifications.NotificationExecutorStatesService;
 import com.blockwit.bwf.service.notifications.NotificationService;
 import com.blockwit.bwf.validator.NewNotificationAssignValidator;
 import com.blockwit.bwf.validator.NewNotificationValidator;
@@ -50,6 +49,12 @@ public class NotificationsController {
 
   @Autowired
   AssignsViewMapper assignsViewMapper;
+
+  @Autowired
+  NotificationExecutorStatesService notificationExecutorStatesService;
+
+  @Autowired
+  ExecStatesViewMapper execStatesViewMapper;
 
   @Autowired
   NotificationService notificationService;
@@ -118,6 +123,19 @@ public class NotificationsController {
         pageNumber,
         notificationTypesRepository,
         notificationTypeMapper);
+  }
+
+  @GetMapping("/parts/execstates")
+  public ModelAndView appPanelExecStatuses() {
+    return new ModelAndView("redirect:/panel/notifications/parts/execstates/page/1");
+  }
+
+  @GetMapping("/parts/execstates/page/{pageNumber}")
+  public ModelAndView appPanelExecStatusesPage(@PathVariable("pageNumber") int pageNumber) {
+    return ControllerHelper.addPageableResult(new ModelAndView("panel/pages/notifications/execstates"),
+        pageNumber,
+        pageRequest -> notificationExecutorStatesService.findAllAssignsPageable(pageRequest),
+        execStatesViewMapper);
   }
 
   @GetMapping("/parts/assigns")

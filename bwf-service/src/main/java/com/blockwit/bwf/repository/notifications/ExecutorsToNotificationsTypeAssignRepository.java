@@ -19,12 +19,15 @@ import com.blockwit.bwf.model.notifications.ExecutorToNotificationTypeAssign;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ExecutorsToNotificationsTypeAssignRepository extends JpaRepository<ExecutorToNotificationTypeAssign, Long> {
 
   Optional<ExecutorToNotificationTypeAssign> findById(Long id);
+
+  List<ExecutorToNotificationTypeAssign> findByNotificationTypeIdIn(List<Long> ids);
 
 }
 

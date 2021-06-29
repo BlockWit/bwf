@@ -36,7 +36,7 @@ public class NotificationExecutorState {
   private Long notificationId;
 
   @Column(nullable = false)
-  private String notificationExecutorName;
+  private Long notificationExecutorId;
 
   @Column(nullable = false)
   @Enumerated(EnumType.ORDINAL)
@@ -53,5 +53,11 @@ public class NotificationExecutorState {
 
   @Column
   private String log;
+
+  @Transient
+  private NotificationExecutorDescr notificationExecutor;
+
+  @Transient
+  private Notification notification;
 
 }

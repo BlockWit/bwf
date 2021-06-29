@@ -17,6 +17,6 @@ package com.blockwit.bwf.model.notifications;
 
 public enum ExecutorNotificationStateStatus {
 
-  SENT, WAIT_FOR_SENDING, FAIL
+  SENT, WAIT_FOR_SENDING, FAIL, SENDING_IN_PROGRESS
 
 }

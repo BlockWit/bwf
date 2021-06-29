@@ -15,8 +15,8 @@
 
 package com.blockwit.bwf.repository.notifications;
 
-import com.blockwit.bwf.model.notifications.Notification;
-import com.blockwit.bwf.model.notifications.NotificationStatus;
+import com.blockwit.bwf.model.notifications.ExecutorNotificationStateStatus;
+import com.blockwit.bwf.model.notifications.NotificationExecutorState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,10 +24,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface NotificationsRepository extends JpaRepository<Notification, Long> {
+public interface NotificationExecutorStatesRepository extends JpaRepository<NotificationExecutorState, Long> {
 
-  Optional<Notification> findById(Long id);
+  Optional<NotificationExecutorState> findById(Long id);
 
-  List<Notification> findTop20NotificationsByNotificationStatus(NotificationStatus notificationStatus);
+  List<NotificationExecutorState> findNotificationExecutorStateByNotificationIdIn(List<Long> ids);
 
 }
+

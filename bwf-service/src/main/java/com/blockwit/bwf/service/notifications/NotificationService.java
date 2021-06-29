@@ -19,10 +19,7 @@ import com.blockwit.bwf.model.Error;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.notifications.*;
 import com.blockwit.bwf.repository.AccountRepository;
-import com.blockwit.bwf.repository.notifications.ExecutorsToNotificationsTypeAssignRepository;
-import com.blockwit.bwf.repository.notifications.NotificationExecutorsRepository;
-import com.blockwit.bwf.repository.notifications.NotificationTypesRepository;
-import com.blockwit.bwf.repository.notifications.NotificationsRepository;
+import com.blockwit.bwf.repository.notifications.*;
 import com.blockwit.bwf.service.utils.WithOptional;
 import io.vavr.control.Either;
 import one.util.streamex.StreamEx;
@@ -48,17 +45,21 @@ public class NotificationService {
 
   private final ExecutorsToNotificationsTypeAssignRepository executorsToNotificationsTypeAssignRepository;
 
+  private final NotificationExecutorStatesRepository notificationExecutorStatesRepository;
+
   public NotificationService(NotificationsRepository notificationsRepository,
                              AccountRepository accountRepository,
                              NotificationTypesRepository notificationTypesRepository,
                              NotificationExecutorsRepository notificationExecutorsRepository,
-                             ExecutorsToNotificationsTypeAssignRepository executorsToNotificationsTypeAssignRepository
+                             ExecutorsToNotificationsTypeAssignRepository executorsToNotificationsTypeAssignRepository,
+                             NotificationExecutorStatesRepository notificationExecutorStatesRepository
   ) {
     this.notificationTypesRepository = notificationTypesRepository;
     this.accountRepository = accountRepository;
     this.notificationsRepository = notificationsRepository;
     this.notificationExecutorsRepository = notificationExecutorsRepository;
     this.executorsToNotificationsTypeAssignRepository = executorsToNotificationsTypeAssignRepository;
+    this.notificationExecutorStatesRepository = notificationExecutorStatesRepository;
 
     Map<String, String> notificationsMap = new HashMap();
 
@@ -106,7 +107,9 @@ public class NotificationService {
             .notificationType(StreamEx.of(notificationTypes).findFirst(t -> t.getId().equals(notification.getNotificationTypeId())).get())
             .account(StreamEx.of(accounts).findFirst(t -> t.getId().equals(notification.getTargetId())).get())
             .build())
-        .toList());
+        .toList(),
+        page.getPageable(),
+        page.getTotalElements());
   }
 
   @Transactional
@@ -152,6 +155,115 @@ public class NotificationService {
                     .build())));
   }
 
+
+  public List<Notification> findNotificationsByStatus(NotificationStatus notificationStatus) {
+    List<Notification> notifications = notificationsRepository.findTop20NotificationsByNotificationStatus(notificationStatus);
+    return notifications;
+//    List<NotificationType> notificationTypes = notificationTypesRepository.findAllById(
+//        StreamEx.of(notifications)
+//            .map(t -> t.getNotificationTypeId())
+//            .distinct()
+//            .toList());
+//
+//    return StreamEx.of(notifications)
+//        .map(t -> t.toBuilder()
+//            .notificationType(notificationTypes.stream().filter(nt -> nt.getId().equals(t.getNotificationTypeId())).findAny().get())
+//            .build())
+//        .toList();
+  }
+
+  public List<Notification> findNotificationsByStatusWithStates(NotificationStatus status) {
+    List<Notification> notifications = notificationsRepository.findTop20NotificationsByNotificationStatus(status);
+
+    List<NotificationType> notificationTypes = notificationTypesRepository.findAllById(
+        StreamEx.of(notifications)
+            .map(t -> t.getNotificationTypeId())
+            .distinct()
+            .toList());
+
+    List<Account> accounts = accountRepository.findAllById(
+        StreamEx.of(notifications)
+            .map(t -> t.getTargetId())
+            .distinct()
+            .toList());
+
+    List<NotificationExecutorState> executorNotificationStates =
+        notificationExecutorStatesRepository.findNotificationExecutorStateByNotificationIdIn(
+            StreamEx.of(notifications)
+                .map(t -> t.getId())
+                .distinct()
+                .toList());
+
+    List<NotificationExecutorDescr> executors =
+        notificationExecutorsRepository.findAllById(
+            StreamEx.of(executorNotificationStates)
+                .map(t -> t.getNotificationExecutorId())
+                .distinct()
+                .toList());
+
+    List<NotificationExecutorState> updatedExecutorStates =
+        StreamEx.of(executorNotificationStates)
+            .map(s ->
+                s.toBuilder()
+                    .notificationExecutor(StreamEx.of(executors)
+                        .filter(e -> e.getId().equals(s.getNotificationExecutorId()))
+                        .findAny()
+                        .get())
+                    .build())
+            .toList();
+
+    List<Notification> newNotifications = StreamEx.of(notifications)
+        .map(n -> n.toBuilder()
+            .notificationType(StreamEx.of(notificationTypes)
+                .filter(a -> a.getId().equals(n.getNotificationTypeId()))
+                .findAny()
+                .get())
+            .account(StreamEx.of(accounts)
+                .filter(a -> a.getId().equals(n.getTargetId()))
+                .findAny()
+                .get())
+            .notificationExecutorStates(StreamEx.of(updatedExecutorStates)
+                .filter(t -> t.getNotificationId().equals(n.getId()))
+                .toList())
+            .build())
+        .toList();
+
+    newNotifications.forEach(n -> n.getNotificationExecutorStates().forEach(s -> s.setNotification(n)));
+    return newNotifications;
+  }
+
+  @Transactional
+  public Notification saveStatus(Notification notification) {
+    return notificationsRepository.save(notification).toBuilder()
+        .account(notification.getAccount())
+        .updated(System.currentTimeMillis())
+        .notificationType(notification.getNotificationType())
+        .notificationExecutorStates(notification.getNotificationExecutorStates())
+        .build();
+  }
+
+  @Transactional
+  public NotificationExecutorState saveStatus(NotificationExecutorState state) {
+    return notificationExecutorStatesRepository.save(state).toBuilder()
+        .notificationExecutor(state.getNotificationExecutor())
+        .updated(System.currentTimeMillis())
+        .notification(state.getNotification())
+        .build();
+  }
+
+  @Transactional
+  public List<Notification> saveStatus(List<Notification> notifications) {
+    return StreamEx.of(notificationsRepository.saveAll(notifications))
+        .map(n -> {
+          Notification oldNotification = StreamEx.of(notifications).filter(t -> t.getId().equals(n.getId())).findAny().get();
+          return n.toBuilder()
+              .account(oldNotification.getAccount())
+              .updated(System.currentTimeMillis())
+              .notificationType(oldNotification.getNotificationType())
+              .notificationExecutorStates(oldNotification.getNotificationExecutorStates())
+              .build();
+        }).toList();
+  }
 
 }
 

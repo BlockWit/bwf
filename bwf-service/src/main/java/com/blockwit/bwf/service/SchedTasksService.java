@@ -44,7 +44,8 @@ public class SchedTasksService {
 
     defaultScheds.addAll(List.of(
         new SchedTask(0L, SystemSchedTasks.TASK_ID_COMMON_INFO_UPDATER, SystemSchedTasks.TASK_DESCR_COMMON_INFO_UPDATER, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
-        new SchedTask(0L, SystemSchedTasks.TASK_ID_NOTIFICATIONS_PERFORMER, SystemSchedTasks.TASK_DESCR_NOTIFICATIONS_PERFORMER, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null)
+        new SchedTask(0L, SystemSchedTasks.TASK_ID_NOTIFICATIONS_PERFORMER, SystemSchedTasks.TASK_DESCR_NOTIFICATIONS_PERFORMER, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null),
+        new SchedTask(0L, SystemSchedTasks.TASK_ID_NOTIFICATIONS_EXECUTOR, SystemSchedTasks.TASK_DESCR_NOTIFICATIONS_EXECUTOR, SchedTaskType.STT_SYSTEM, SchedTaskStatus.STS_STOPPED, null)
     ));
 
     Set<String> tasksInRepo = StreamEx.of(schedTasksRepository.findByTaskNameIn(StreamEx.of(defaultScheds)

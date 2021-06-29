@@ -35,6 +35,7 @@
             <th class="descr_field">target</th>
             <th class="descr_field">content</th>
             <th class="field_status">status</th>
+            <th class="descr_field">log</th>
             <th>created</th>
         </tr>
         <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.notifications.mapping.NotificationView>"*/-->
@@ -45,6 +46,7 @@
                 <td class="descr_field" th:text="${target.getTarget()}"></td>
                 <td class="descr_field" th:text="${target.getContent()}"></td>
                 <td class="field_status"><div th:replace="common/fragments/badges :: notificationStatusHR (${target.getNotificationStatus()})"></div></td>
+                <td class="descr_field" th:text="${target.getLog()}"></td>
                 <td th:text="${target.getCreated()}"></td>
             </tr>
         </th:block>
