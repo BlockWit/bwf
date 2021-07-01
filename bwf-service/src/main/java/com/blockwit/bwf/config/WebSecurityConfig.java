@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/js/**",
             "/posts/**",
             "/media/**",
+            "/migration",
             "/webjars/**"
         ).permitAll()
         .antMatchers(

@@ -151,4 +151,13 @@ public class PostService {
     );
   }
 
+  public List<Post> all() {
+    return postRepository.findAll();
+  }
+
+  @Transactional
+  public List<Post> saveAll(List<Post> post) {
+    return postRepository.saveAll(post);
+  }
+
 }

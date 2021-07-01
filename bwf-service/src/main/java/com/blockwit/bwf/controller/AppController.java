@@ -15,21 +15,28 @@
 package com.blockwit.bwf.controller;
 
 import com.blockwit.bwf.model.mapping.PostViewMapper;
+import com.blockwit.bwf.model.media.Media;
 import com.blockwit.bwf.model.posts.PostStatus;
 import com.blockwit.bwf.model.posts.PostType;
+import com.blockwit.bwf.repository.MediaRepository;
+import com.blockwit.bwf.repository.PostRepository;
 import com.blockwit.bwf.service.AppUpdatableInfo;
 import com.blockwit.bwf.service.OptionService;
 import com.blockwit.bwf.service.PostService;
 import com.blockwit.bwf.service.utils.WithOptional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Controller
@@ -46,6 +53,42 @@ public class AppController {
 
   @Autowired
   private OptionService optionService;
+
+  // Migration only
+  @Autowired
+  private MediaRepository mediaRepository;
+
+  // Migration only
+  @Autowired
+  private PostRepository postRepository;
+
+  @GetMapping("/migration")
+  public ModelAndView migration() {
+    Pattern pattern = Pattern.compile("src=\\\"\\/app\\/media\\/(.*?)\\\"");
+//    String mediaPath = optionService.findByName(OptionService.OPTION_MEDIA_PATH).get().getValue();
+
+    postService.all().forEach(post -> {
+      Matcher matcher = pattern.matcher(post.getContent());
+      while (matcher.find()) {
+        String matched = matcher.group();
+        String relPath = matched.substring("src=\"/app/media/".length(), matched.length() - 1);
+        Media media = mediaRepository.save(
+            new Media(
+                0L,
+                post.getOwnerId(),
+                relPath,
+                System.currentTimeMillis(),
+                MediaType.IMAGE_JPEG_VALUE,
+                true,
+                null)
+        );
+        postRepository.save(post.toBuilder()
+            .content(post.getContent().replace(matched, "src=\"/media/" + media.getId() + "\""))
+            .build());
+      }
+    });
+    return new ModelAndView("front/pages/home");
+  }
 
   @GetMapping("/")
   public ModelAndView appHome() {
