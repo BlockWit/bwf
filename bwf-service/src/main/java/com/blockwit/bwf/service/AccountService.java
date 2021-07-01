@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 @Slf4j
 @Service
@@ -275,5 +276,25 @@ public class AccountService {
         Either::right);
 
   }
+
+
+  public static <R> Either<Error, R> withAccount(AccountRepository accountRepository,
+                                                 String login,
+                                                 Function<Account, Either<Error, R>> f) {
+    return WithOptional.process(
+        accountRepository.findByLogin(login),
+        () -> Either.left(new Error(Error.EC_ACCOUNT_NOT_FOUND, Error.EM_ACCOUNT_NOT_FOUND + ": " + login)),
+        t -> f.apply(t));
+  }
+
+  public static <R> Either<Error, R> withAccount(AccountRepository accountRepository,
+                                                 Long id,
+                                                 Function<Account, Either<Error, R>> f) {
+    return WithOptional.process(
+        accountRepository.findById(id),
+        () -> Either.left(new Error(Error.EC_ACCOUNT_NOT_FOUND, Error.EM_ACCOUNT_NOT_FOUND + ": " + id)),
+        t -> f.apply(t));
+  }
+
 
 }

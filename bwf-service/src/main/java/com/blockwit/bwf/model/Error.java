@@ -45,6 +45,8 @@ public class Error {
 
   public static final int EC_NOTIFICATION_EXECUTOR_NOT_FOUND = 12;
 
+  public static final int EC_POST_NOT_FOUND = 13;
+
   public static final String EM_LOGIN_EXISTS = "Login already exists ";
 
   public static final String EM_EMAIL_EXISTS = "Email already exists ";
@@ -62,6 +64,8 @@ public class Error {
   public static final String EM_NOTIFICATION_TYPE_NOT_FOUND = "Notification type not found ";
 
   public static final String EM_NOTIFICATION_EXECUTOR_NOT_FOUND = "Notification executor not found ";
+
+  public static final String EM_POST_NOT_FOUND = "Post not found ";
 
   private int code;
 

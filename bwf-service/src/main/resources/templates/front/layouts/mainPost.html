@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<div th:replace="front/fragments/header :: header"></div>
+	<link rel="stylesheet" media="screen" href="/webjars/prismjs/themes/prism.css">
+	<link rel="stylesheet" media="screen" href="/webjars/prismjs/plugins/toolbar/prism-toolbar.css">
+	<link rel="stylesheet" media="screen" href="/webjars/prismjs/plugins/line-numbers/prism-line-numbers.css">
+</head>
+
+<body class="background-overlay">
+
+<div th:replace="front/fragments/navbar/navbar :: navbar"></div>
+
+<main role="main" class="main-content main-content-app">
+	<div class="container bs-container" layout:fragment="content">
+
+	</div>
+</main>
+
+<div th:replace="front/fragments/footer :: footer"></div>
+<div th:replace="front/fragments/scripts :: scripts"></div>
+
+<script src="/webjars/prismjs/prism.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/components/prism-bash.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/components/prism-clike.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/components/prism-c.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/components/prism-cpp.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/plugins/line-numbers/prism-line-numbers.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/plugins/toolbar/prism-toolbar.min.js" type="text/javascript"></script>
+<script src="/webjars/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js" type="text/javascript"></script>
+
+</body>
+</html>

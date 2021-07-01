@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayoutCKEditor}">
+<head>
+</head>
+<body>
+<!--/*@thymesVar id="editPost" type="com.blockwit.bwf.form.EditPost"*/-->
+<div layout:fragment="cardTitle">Edit post [[${editPost.getId()}]]</div>
+<div layout:fragment="cardBody">
+
+    <form th:action="${'/panel/posts/post/' + editPost.getId() + '/edit'}" method="POST" class="form-vertical" role="form"
+          th:object="${editPost}">
+        <input type="hidden" id="id" name="id" th:value="*{id}" required="true" class="form-control">
+        <div class="form-group" id="postTitle_field">
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" name="postTitle" th:value="*{postTitle}" minlength="3" maxlength="255"
+                   required="true"
+                   class="form-control">
+            <td th:if="${#fields.hasErrors('postTitle')}" th:errors="*{postTitle}">Post title errors</td>
+        </div>
+        <div class="form-group" id="postType_field">
+            <label for="postType">type</label>
+            <select th:field="*{postType}" class="form-control" required="true" id="postType" name="postType">
+                <option th:each="selPostType : ${T(com.blockwit.bwf.model.posts.PostType).values()}"
+                        th:value="${selPostType}"
+                        th:text="${selPostType}"
+                ></option>
+            </select>
+            <td th:if="${#fields.hasErrors('postType')}" th:errors="*{postType}">Post type error</td>
+        </div>
+        <div class="form-group" id="postStatus_field">
+            <label for="postStatus">status</label>
+            <select th:field="*{postStatus}" class="form-control" required="true" id="postStatus" name="postStatus">
+                <option th:each="selPostStatus : ${T(com.blockwit.bwf.model.posts.PostStatus).values()}"
+                        th:value="${selPostStatus}"
+                        th:text="${selPostStatus}"
+                ></option>
+            </select>
+            <td th:if="${#fields.hasErrors('postStatus')}" th:errors="*{postStatus}">Post status error</td>
+        </div>
+        <div class="form-group" id="postContent_field">
+            <label for="postContent">Content</label>
+            <textarea id="postContent" name="postContent" th:utext="*{postContent}"
+                      rows="10"
+                      required="true"
+                      class="form-control"></textarea>
+            <td th:if="${#fields.hasErrors('postContent')}" th:errors="*{postContent}">Post content error</td>
+        </div>
+
+        <div class="form-group" id="metaTitle_field">
+            <label for="metaTitle">Meta title</label>
+            <input type="text" id="metaTitle" name="metaTitle" th:value="*{metaTitle}" maxlength="255"
+                   class="form-control">
+            <td th:if="${#fields.hasErrors('metaTitle')}" th:errors="*{metaTitle}">Meta title error</td>
+        </div>
+        <div class="form-group" id="metaDescr_field">
+            <label for="metaDescr">Meta description</label>
+            <input type="text" id="metaDescr" name="metaDescr" th:value="*{metaDescr}" maxlength="255"
+                   class="form-control">
+            <td th:if="${#fields.hasErrors('metaDescr')}" th:errors="*{metaDescr}">Meta description error</td>
+        </div>
+        <div class="form-group" id="metaKeywords_field">
+            <label for="metaKeywords">Meta keywords</label>
+            <input type="text" id="metaKeywords" name="metaKeywords" th:value="*{metaKeywords}" maxlength="255"
+                   class="form-control">
+            <td th:if="${#fields.hasErrors('metaKeywords')}" th:errors="*{metaKeywords}">Meta keywords error</td>
+        </div>
+        <div class="form-group mt-5">
+            <button type="submit" class="btn btn-outline-primary btn-block">Update</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+

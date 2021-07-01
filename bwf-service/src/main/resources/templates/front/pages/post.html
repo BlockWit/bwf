@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{front/layouts/mainPost}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <!--/*@thymesVar id="authAccount" type="com.blockwit.bwf.model.account.IAccountInfoProvider"*/-->
+        <!--/*@thymesVar id="post" type="com.blockwit.bwf.model.mapping.PostView"*/-->
+        <div class="bs-post-view-container">
+            <h1 class="bs-post-view-header" th:text="${post.getTitle()}"></h1>
+            <div class="bs-post-view-top-panel">
+                <img th:src="@{/img/avatar.png}" class="rounded-circle" alt="avatar" width="48" height="48">
+                <span style="font-weight: 600; margin-left: 10px;"><a href="#"
+                                                                      th:text="${post.getOwnerName()}"></a></span>
+                <span style="margin-left: 5px; color: #788187; font-weight: 600;" th:text="${post.getCreated()}"></span>
+                <th:block sec:authorize="isAuthenticated()">
+                    <th:block th:switch="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                        <th:block th:case="true">
+                            <a th:href="${'/panel/posts/post/' + post.getId() + '/edit'}">
+                                <i class="fa fa-edit" style="color: #788187; margin-left: 20px;">
+                                </i><span style="margin-left: 10px;">edit</span>
+                            </a>
+                        </th:block>
+                        <th:block th:case="false">
+                            <th:block th:if="${post.getOwnerId() == authAccount.getId()}">
+                                <a th:href="${'/panel/posts/post/' + post.getId() + '/edit'}">
+                                    <i class="fa fa-edit" style="color: #788187; margin-left: 20px;">
+                                    </i><span style="margin-left: 10px;">edit</span>
+                                </a>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+            <div class="bs-post-view-content" th:utext="${post.getContent()}"></div>
+            <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

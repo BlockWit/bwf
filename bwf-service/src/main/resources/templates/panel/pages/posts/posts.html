@@ -64,7 +64,17 @@
                 <td th:text="${target.getCreated()}"></td>
                 <td class="field_status"><div th:replace="common/fragments/badges :: postStatusHR (${target.getPostStatus()})"></div></td>
                 <td class="field_status"><div th:replace="common/fragments/badges :: postTypeHR (${target.getPostType()})"></div></td>
-                <td></td>
+                <td
+                        th:insert="panel/fragments/toolbars :: tableLineToolbar ('Post toolbar', ~{ :: .tl-inner-button-group})">
+                    <th:block class="tl-inner-button-group">
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/posts/post/' + target.getId()},'Preview post','fas fa-eye')"></a>
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/posts/post/' + target.getId() + '/edit'},'Edit post','fas fa-edit')"></a>
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/posts/post/' + target.getId() + '/delete'},'Delete post','fas fa-trash-alt')"></a>
+                    </th:block>
+                </td>
             </tr>
         </th:block>
     </th:block>

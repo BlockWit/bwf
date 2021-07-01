@@ -71,6 +71,14 @@ public class ControllerHelper {
     return new ModelAndView("redirect:" + getRefererURL(request), status);
   }
 
+  public static ModelAndView returnError404(HttpServletRequest request,
+                                            RedirectAttributes redirectAttributes,
+                                            String msg) {
+    log.error(msg);
+    redirectAttributes.addFlashAttribute("message_error", msg);
+    return new ModelAndView("redirect:" + getRefererURL(request), HttpStatus.NOT_FOUND);
+  }
+
   public static ModelAndView returnError400(HttpServletRequest request,
                                             RedirectAttributes redirectAttributes,
                                             String msg) {

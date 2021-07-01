@@ -43,7 +43,7 @@ public class Post implements Serializable {
   @Column
   private String thumbnail;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "MEDIUMTEXT")
   private String content;
 
   @Column(nullable = false)
