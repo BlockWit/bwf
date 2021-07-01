@@ -33,6 +33,8 @@ public class OptionService {
   public final static String OPTION_APP_VERSION = "APP_VERSION";
   public final static String OPTION_APP_YEAR = "APP_YEAR";
 
+  public final static String OPTION_MEDIA_PATH = "MEDIA_PATH";
+
   public static final String OPTION_LOGIN_ATTEMPTS_LIMIT = "OPTION_LOGIN_ATTEMPTS_LIMIT";
   public static final String OPTION_LOGIN_LOCK_PERIOD = "OPTION_LOGIN_LOCK_PERIOD";
   public static final String OPTION_LOGIN_TRY_PERIOD = "OPTION_LOGIN_TRY_PERIOD";
@@ -65,7 +67,8 @@ public class OptionService {
         OPTION_APP_YEAR, new Option(0L, OPTION_APP_YEAR, OPTION_TYPE_STRING, "2021", "Application year"),
         OPTION_LOGIN_ATTEMPTS_LIMIT, new Option(0L, OPTION_LOGIN_ATTEMPTS_LIMIT, OPTION_TYPE_INT, "3", "Count of bad login attempts before account locking"),
         OPTION_LOGIN_LOCK_PERIOD, new Option(0L, OPTION_LOGIN_LOCK_PERIOD, OPTION_TYPE_LONG, "86400000", "Account lock period in case of login attempts limit exceeded"),
-        OPTION_LOGIN_TRY_PERIOD, new Option(0L, OPTION_LOGIN_TRY_PERIOD, OPTION_TYPE_LONG, "3600000", "Period between two bad login attempts to increase bad attempts counter")
+        OPTION_LOGIN_TRY_PERIOD, new Option(0L, OPTION_LOGIN_TRY_PERIOD, OPTION_TYPE_LONG, "3600000", "Period between two bad login attempts to increase bad attempts counter"),
+        OPTION_MEDIA_PATH, new Option(0L, OPTION_MEDIA_PATH, OPTION_TYPE_STRING, "/opt/bwf/media", "Media path")
     ));
 
     defaultOptions.putAll(Map.of(

@@ -1,0 +1,66 @@
+<!--
+  ~ Copyright (c) 2017-present BlockWit, LLC. All rights reserved.
+  ~
+  ~  This library is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU Lesser General Public License as published by the Free
+  ~  Software Foundation; either version 2.1 of the License, or (at your option)
+  ~  any later version.
+  ~
+  ~  This library is distributed in the hope that it will be useful, but WITHOUT
+  ~  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~  FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  ~  details.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+<div layout:fragment="cardTitle">media</div>
+<div layout:fragment="cardBody">
+
+    <!--/*@thymesVar id="prevPageUrl" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="nextPageUrl" type="java.lang.String"*/-->
+    <th:block
+            th:replace="panel/fragments/tables :: unborderedBasicTableWithPag12 ('media', ${prevPageUrl}, ${nextPageUrl}, ~{ :: .tl-inner-headers}, ~{ :: .tl-inner-fields})">
+        <tr class="tl-inner-headers">
+            <th>id</th>
+            <th class="descr_field">owner</th>
+            <th class="descr_field">media type</th>
+            <th class="descr_field">path</th>
+            <th class="descr_field">created</th>
+            <th class="field_status">public</th>
+            <th></th>
+        </tr>
+        <!--/*@thymesVar id="pageContent" type="java.util.List<com.blockwit.bwf.model.mapping.MediaView>"*/-->
+        <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.mapping.MediaView"*/-->
+        <th:block class="tl-inner-fields" th:each="target : ${pageContent}">
+            <tr class="tl-inner-row">
+                <td th:text="${target.getId()}"></td>
+                <td class="descr_field" th:text="${target.getOwnerName()}"></td>
+                <td class="descr_field" th:text="${target.getMediaType()}"></td>
+                <td class="descr_field" th:text="${target.getPath()}"></td>
+                <td class="descr_field" th:text="${target.getCreated()}"></td>
+                <td class="field_status" th:text="${target.getPub()}"></td>
+                <td
+                        th:insert="panel/fragments/toolbars :: tableLineToolbar ('Media toolbar', ~{ :: .tl-inner-button-group})">
+                    <th:block class="tl-inner-button-group">
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/media/' + target.getId()},'Preview media','fas fa-eye')"></a>
+<!--                        <a sec:authorize="hasAuthority('ADMIN')"-->
+<!--                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/media/media/' + target.getId() + '/edit'},'Edit media','fas fa-edit')"></a>-->
+<!--                        <a sec:authorize="hasAuthority('ADMIN')"-->
+<!--                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/media/media/' + target.getId() + '/delete'},'Delete media','fas fa-trash-alt')"></a>-->
+                    </th:block>
+                </td>
+            </tr>
+        </th:block>
+    </th:block>
+</div>
+</body>
+</html>

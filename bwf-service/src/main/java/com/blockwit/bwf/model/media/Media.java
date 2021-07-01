@@ -13,7 +13,7 @@
  *
  */
 
-package com.blockwit.bwf.model.posts;
+package com.blockwit.bwf.model.media;
 
 import com.blockwit.bwf.model.IOwnable;
 import com.blockwit.bwf.model.account.Account;
@@ -25,11 +25,11 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "posts")
+@Table(name = "media")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class Post implements Serializable, IOwnable {
+public class Media implements Serializable, IOwnable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,33 +39,16 @@ public class Post implements Serializable, IOwnable {
   private Long ownerId;
 
   @Column(nullable = false)
-  private String title;
-
-  @Column
-  private String thumbnail;
-
-  @Column(nullable = false, columnDefinition = "MEDIUMTEXT")
-  private String content;
-
-  @Column(nullable = false)
-  @Enumerated(EnumType.ORDINAL)
-  private PostStatus postStatus;
+  private String path;
 
   @Column(nullable = false)
   private Long created;
 
-  @Column
-  private String metaTitle;
-
-  @Column
-  private String metaDescr;
-
-  @Column
-  private String metaKeywords;
+  @Column(nullable = false)
+  private String mediaType;
 
   @Column(nullable = false)
-  @Enumerated(EnumType.ORDINAL)
-  private PostType postType;
+  private Boolean pub;
 
   @Transient
   private Account owner;

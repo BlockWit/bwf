@@ -18,6 +18,7 @@ package com.blockwit.bwf.controller;
 import com.blockwit.bwf.model.User;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.service.PermissionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +31,27 @@ import java.util.function.Supplier;
 
 public class AccessContextHelper {
 
+//  public static <T> ResponseEntity<T> responseEntityAccess(Supplier<T> admin,
+//                                                        Function<Account, Optional<T>> authorizedCheckAccess,
+//                                                        Supplier<ResponseEntity<T>> otherCasesCheckAccess) {
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    if (!(authentication instanceof AnonymousAuthenticationToken)) {
+//      Object principal = authentication.getPrincipal();
+//      if (principal instanceof User) {
+//        Collection<GrantedAuthority> authorities = ((User) principal).getAuthorities();
+//        for (GrantedAuthority grantedAuthority : authorities) {
+//          if (grantedAuthority.getAuthority().equals(PermissionService.PERMISSION_ADMIN)) {
+//            return admin.get();
+//          } else if (grantedAuthority.getAuthority().equals(PermissionService.PERMISSION_USER)) {
+//            Optional<T> r = authorizedCheckAccess.apply(((User) principal).getAccount());
+//            if(r.isPresent())
+//              return r.get();
+//          }
+//        }
+//      }
+//    }
+//    return otherCasesCheckAccess.get();
+//  }
 
   public static <T> T access(Supplier<T> admin,
                              Function<Account, Optional<T>> authorizedCheckAccess,

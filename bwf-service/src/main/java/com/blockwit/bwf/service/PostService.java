@@ -96,16 +96,10 @@ public class PostService {
   }
 
   public Either<Error, Post> findById(long postId) {
-    return WithOptional.process(postRepository.findById(postId),
-        () -> Either.left(new Error(Error.EC_POST_NOT_FOUND, Error.EM_POST_NOT_FOUND + ": " + postId)),
-        post -> AccountService.withAccount(accountRepository, post.getOwnerId(), account ->
-            Either.right(
-                post.toBuilder()
-                    .owner(account)
-                    .build()
-            )
-        )
-    );
+    return ServiceHelper.findOwnableById(
+        accountRepository,
+        postRepository,
+        postId);
   }
 
   @Transactional

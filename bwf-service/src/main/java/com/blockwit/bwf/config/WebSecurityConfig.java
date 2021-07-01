@@ -47,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/js/**",
             "/posts/**",
+            "/media/**",
             "/webjars/**"
         ).permitAll()
         .antMatchers(
