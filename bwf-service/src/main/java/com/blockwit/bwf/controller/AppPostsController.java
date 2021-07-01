@@ -48,20 +48,36 @@ public class AppPostsController {
       RedirectAttributes redirectAttributes,
       @PathVariable long postId
   ) {
+    return viewPostHelper(
+        postService,
+        postViewMapper,
+        request,
+        redirectAttributes,
+        postId
+    );
+  }
+
+  public static ModelAndView viewPostHelper(
+      PostService postService,
+      PostViewMapper postViewMapper,
+      HttpServletRequest request,
+      RedirectAttributes redirectAttributes,
+      long postId
+  ) {
     return postService.findById(postId).fold(
         error -> ControllerHelper.returnError404(request, redirectAttributes, error.getDescr())
         , post -> AccessContextHelper.access(
-            () -> new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get())),
+            () -> new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, null).get())),
             account -> {
               if (post.getOwnerId().equals(account.getId())) {
                 return Optional.of(new ModelAndView(
-                    "front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get())));
+                    "front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, null).get())));
               } else
                 return Optional.empty();
             },
             () -> {
               if (post.getPostStatus().equals(PostStatus.PUBLISHED)) {
-                return new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get()));
+                return new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, null).get()));
               } else {
                 return ControllerHelper.returnError400(request, redirectAttributes, "Can't view post with id " + postId);
               }
