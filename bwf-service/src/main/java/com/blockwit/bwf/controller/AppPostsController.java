@@ -16,6 +16,7 @@ package com.blockwit.bwf.controller;
 
 import com.blockwit.bwf.model.mapping.PostViewMapper;
 import com.blockwit.bwf.model.posts.PostStatus;
+import com.blockwit.bwf.model.posts.PostType;
 import com.blockwit.bwf.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class AppPostsController {
   private PostViewMapper postViewMapper;
 
   @GetMapping("/post/{postId}")
-  public ModelAndView deletePostPOST(
+  public ModelAndView viewPostPOST(
       HttpServletRequest request,
       RedirectAttributes redirectAttributes,
       @PathVariable long postId
@@ -50,16 +51,17 @@ public class AppPostsController {
     return postService.findById(postId).fold(
         error -> ControllerHelper.returnError404(request, redirectAttributes, error.getDescr())
         , post -> AccessContextHelper.access(
-            () -> new ModelAndView("front/pages/post", Map.of("post", postViewMapper.map(post, this).get())),
+            () -> new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get())),
             account -> {
               if (post.getOwnerId().equals(account.getId())) {
-                return Optional.of(new ModelAndView("front/pages/post", Map.of("post", postViewMapper.map(post, this).get())));
+                return Optional.of(new ModelAndView(
+                    "front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get())));
               } else
                 return Optional.empty();
             },
             () -> {
               if (post.getPostStatus().equals(PostStatus.PUBLISHED)) {
-                return new ModelAndView("front/pages/post", Map.of("post", postViewMapper.map(post, this).get()));
+                return new ModelAndView("front/pages/" + (post.getPostType().equals(PostType.PAGE) ? "page" : "post"), Map.of("post", postViewMapper.map(post, this).get()));
               } else {
                 return ControllerHelper.returnError400(request, redirectAttributes, "Can't view post with id " + postId);
               }
@@ -67,5 +69,6 @@ public class AppPostsController {
         )
     );
   }
+
 
 }

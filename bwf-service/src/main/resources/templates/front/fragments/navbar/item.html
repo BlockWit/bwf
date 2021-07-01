@@ -9,5 +9,11 @@
 	</a>
 </li>
 
+<li class="nav-item" th:fragment="itemNI (targetName, targetUrl)">
+	<a class="nav-link" th:href="${targetUrl}">
+		<span th:text="${targetName}"></span>
+	</a>
+</li>
+
 </body>
 </html>

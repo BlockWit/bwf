@@ -17,6 +17,13 @@
 <!--                <li><span class="nav-link brand-top-name">BWF</span></li>-->
                 <li sec:authorize="hasAnyAuthority('ADMIN', 'USER')"
                     th:replace="front/fragments/navbar/item :: item(targetName = 'panel', targetUrl = '/panel', menuItemIcon = 'fa-th')"/>
+
+                <li th:replace="front/fragments/navbar/item :: itemNI(targetName = 'о нас', targetUrl = '/posts/post/20')"/>
+                <li th:replace="front/fragments/navbar/item :: itemNI(targetName = 'EOS', targetUrl = '/posts/post/14')"/>
+                <li th:replace="front/fragments/navbar/item :: itemNI(targetName = 'Ethereum', targetUrl = '/posts/post/23')"/>
+                <li th:replace="front/fragments/navbar/item :: itemNI(targetName = 'разработка', targetUrl = '/posts/post/33')"/>
+                <li th:replace="front/fragments/navbar/item :: itemNI(targetName = 'TON', targetUrl = '/posts/post/38')"/>
+
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li sec:authorize="!isAuthenticated()"

@@ -55,6 +55,7 @@ public class Account implements Serializable {
   @Column()
   private Long passwordRecoveryTimestamp;
 
+  // TODO: fix to non nullable
   @Enumerated(value = EnumType.STRING)
   private ConfirmationStatus confirmationStatus;
 
