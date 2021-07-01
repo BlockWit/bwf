@@ -64,26 +64,38 @@ public class AppController {
 
   @GetMapping("/migration")
   public ModelAndView migration() {
-    Pattern pattern = Pattern.compile("src=\\\"\\/app\\/media\\/(.*?)\\\"");
+    Pattern pattern = Pattern.compile("href=\\\"\\/app\\/pages\\/page\\/(.*?)\\\"");
 //    String mediaPath = optionService.findByName(OptionService.OPTION_MEDIA_PATH).get().getValue();
 
     postService.all().forEach(post -> {
       Matcher matcher = pattern.matcher(post.getContent());
       while (matcher.find()) {
         String matched = matcher.group();
-        String relPath = matched.substring("src=\"/app/media/".length(), matched.length() - 1);
-        Media media = mediaRepository.save(
-            new Media(
-                0L,
-                post.getOwnerId(),
-                relPath,
-                System.currentTimeMillis(),
-                MediaType.IMAGE_JPEG_VALUE,
-                true,
-                null)
-        );
+        String relPath = matched.substring("href=\"/app/pages/page/".length(), matched.length() - 1);
+
+        System.out.println("href=\"/posts/post/" + relPath + "\"");
         postRepository.save(post.toBuilder()
-            .content(post.getContent().replace(matched, "src=\"/media/" + media.getId() + "\""))
+            .content(post.getContent().replace(matched, "href=\"/posts/post/" + relPath + "\""))
+            .build());
+      }
+    });
+    return new ModelAndView("front/pages/home");
+  }
+
+  @GetMapping("/migration2")
+  public ModelAndView migration2() {
+    Pattern pattern = Pattern.compile("href=\\\"\\/app\\/posts\\/post\\/(.*?)\\\"");
+//    String mediaPath = optionService.findByName(OptionService.OPTION_MEDIA_PATH).get().getValue();
+
+    postService.all().forEach(post -> {
+      Matcher matcher = pattern.matcher(post.getContent());
+      while (matcher.find()) {
+        String matched = matcher.group();
+        String relPath = matched.substring("href=\"/app/posts/post/".length(), matched.length() - 1);
+
+        System.out.println("href=\"/posts/post/" + relPath + "\"");
+        postRepository.save(post.toBuilder()
+            .content(post.getContent().replace(matched, "href=\"/posts/post/" + relPath + "\""))
             .build());
       }
     });
