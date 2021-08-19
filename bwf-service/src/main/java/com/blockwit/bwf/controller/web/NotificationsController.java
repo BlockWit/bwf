@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.ControllerHelper;
 import com.blockwit.bwf.form.NewNotification;
 import com.blockwit.bwf.form.NewNotificationAssign;
 import com.blockwit.bwf.model.notifications.mapping.*;

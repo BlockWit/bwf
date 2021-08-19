@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.ControllerHelper;
 import com.blockwit.bwf.model.mapping.TaskViewMapper;
 import com.blockwit.bwf.model.tasks.SchedTaskStatus;
 import com.blockwit.bwf.repository.SchedTasksRepository;

@@ -50,7 +50,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/media/**",
             "/migration",
             "/migration2",
-            "/webjars/**"
+            "/webjars/**",
+            // SWAGGER
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v2/**",
+            "/swagger-resources/**"
         ).permitAll()
         .antMatchers(
             "/app/login",

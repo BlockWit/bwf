@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.AccessContextHelper;
+import com.blockwit.bwf.controller.ControllerHelper;
 import com.blockwit.bwf.model.mapping.PostViewMapper;
 import com.blockwit.bwf.model.posts.PostStatus;
 import com.blockwit.bwf.model.posts.PostType;

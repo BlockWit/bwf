@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.Constants;
 import com.blockwit.bwf.exception.AttemptTimelimitAccountServiceException;
 import com.blockwit.bwf.exception.NotFoundAccountServiceException;
 import com.blockwit.bwf.exception.WrongConfirmStatusAccountServiceException;

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.ControllerHelper;
+import com.blockwit.bwf.controller.MediaHelper;
 import com.blockwit.bwf.repository.AccountRepository;
 import com.blockwit.bwf.repository.MediaRepository;
 import com.blockwit.bwf.service.MediaService;

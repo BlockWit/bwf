@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.blockwit.bwf.controller;
+package com.blockwit.bwf.controller.web;
 
+import com.blockwit.bwf.controller.ControllerHelper;
 import com.blockwit.bwf.repository.PermissionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
