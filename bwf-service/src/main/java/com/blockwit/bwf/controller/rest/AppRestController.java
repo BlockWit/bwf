@@ -40,7 +40,7 @@ public class AppRestController {
 	@GetMapping(path = "/options", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OptionDTO>> options() {
 		return ResponseEntity.ok(optionService.findAll().stream()
-			.map(t -> new OptionDTO(t.getId(), t.getName(), t.getType(), t.getName(), t.getDescr()))
+			.map(t -> new OptionDTO(t.getId(), t.getName(), t.getType(), t.getValue(), t.getDescr()))
 			.collect(Collectors.toList()));
 	}
 
