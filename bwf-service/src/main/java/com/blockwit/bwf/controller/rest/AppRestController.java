@@ -1,6 +1,6 @@
 package com.blockwit.bwf.controller.rest;
 
-import com.blockwit.bwf.config.RESTSecurityConfig;
+import com.blockwit.bwf.security.RESTSecurityConfig;
 import com.blockwit.bwf.model.account.AccountHelper;
 import com.blockwit.bwf.model.rest.AccountDTO;
 import com.blockwit.bwf.model.rest.OptionDTO;

@@ -1,0 +1,1 @@
+ALTER TABLE accounts MODIFY id bigint;

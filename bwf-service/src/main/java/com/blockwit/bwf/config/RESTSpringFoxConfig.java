@@ -1,5 +1,6 @@
 package com.blockwit.bwf.config;
 
+import com.blockwit.bwf.security.RESTSecurityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;

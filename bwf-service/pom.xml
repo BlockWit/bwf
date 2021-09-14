@@ -24,6 +24,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.0.1</version>
+		</dependency>
+
 		<!-- REST interface -->
 		<dependency>
 			<groupId>io.springfox</groupId>

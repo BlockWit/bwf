@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.blockwit.bwf.config;
+package com.blockwit.bwf.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
