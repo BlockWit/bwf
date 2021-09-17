@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -47,18 +48,24 @@ public class RestAuthenticationController {
 	public ResponseEntity<?> authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest)
 		throws AuthenticationException, JOSEException, IOException {
 
-		String username = authenticationRequest.getUsername();
+		String login = authenticationRequest.getLogin();
 		String password = authenticationRequest.getPassword();
 
 		// throws authenticationException if it fails !
-		Authentication authentication = this.authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(username, password)
-		);
+		Authentication authentication;
+		try {
+			authentication = this.authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(login, password)
+			);
+		} catch(BadCredentialsException e) {
+			return ResponseEntity.badRequest().body("Wrong Login or password!");
+		}
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		int expirationInMinutes = secretProvider.expirationTimeInMinutes();
 
-		String token = JwtUtils.generateHMACToken(username,
+		String token = JwtUtils.generateHMACToken(login,
 			authentication.getAuthorities(),
 			secretProvider.getSecret(),
 			expirationInMinutes);
