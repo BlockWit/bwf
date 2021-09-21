@@ -9,6 +9,7 @@ import com.nimbusds.jwt.SignedJWT;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.GenericFilterBean;
@@ -26,10 +27,12 @@ public class JwtTokenAuthenticationFilter extends GenericFilterBean {
 
 	private RequestMatcher requestMatcher;
 	private String secretKey;
+	private UserDetailsService userDetailsService;
 
-	public JwtTokenAuthenticationFilter(String path, String secretKey) {
+	public JwtTokenAuthenticationFilter(String path, String secretKey, UserDetailsService userDetailsService) {
 		this.requestMatcher = new AntPathRequestMatcher(path);
 		this.secretKey = secretKey;
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class JwtTokenAuthenticationFilter extends GenericFilterBean {
             */
 			SignedJWT jwt = JwtUtils.extractAndDecodeJwt(request);
 			JwtUtils.checkAuthenticationAndValidity(jwt, secretKey);
-			Authentication auth = JwtUtils.buildAuthenticationFromJwt(jwt, request);
+			Authentication auth = JwtUtils.buildAuthenticationFromJwt(jwt, request, userDetailsService);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 
 			chain.doFilter(request, response);

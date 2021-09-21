@@ -1,5 +1,6 @@
 package com.blockwit.bwf.security;
 
+import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.security.jwt.config.SecretProvider;
 import com.blockwit.bwf.security.jwt.filter.JwtTokenAuthenticationFilter;
 import com.blockwit.bwf.security.jwt.filter.RestAccessDeniedHandler;
@@ -24,13 +25,6 @@ import org.springframework.security.web.access.ExceptionTranslationFilter;
 @EnableWebSecurity
 public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public static final String REST_URL_API_V_1 = "/api/v1";
-
-	public static final String REST_URL_API_V_1_PATTERN = REST_URL_API_V_1 + "/**";
-
-	public static final String REST_URL_REL_AUTH = "/auth";
-
-	public static final String REST_URL_API_V_1_AUTH = RESTSecurityConfig.REST_URL_API_V_1 + REST_URL_REL_AUTH;
 
 	private final UserDetailsService appUserDetailsService;
 	private final PasswordEncoder passwordEncoder;
@@ -55,27 +49,28 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter(String path, String secret) {
-		return new JwtTokenAuthenticationFilter(path, secret);
+		return new JwtTokenAuthenticationFilter(path, secret, appUserDetailsService);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.requestMatchers().antMatchers(REST_URL_API_V_1_PATTERN)
+			.requestMatchers().antMatchers(RestUrls.REST_URL_API_V_1_PATTERN)
 			.and()
 			.csrf().disable()
 			.httpBasic().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.antMatcher(REST_URL_API_V_1_PATTERN)
-			.addFilterAfter(jwtTokenAuthenticationFilter(RESTSecurityConfig.REST_URL_API_V_1_PATTERN, secretProvider.getSecret()), ExceptionTranslationFilter.class)
+			.antMatcher(RestUrls.REST_URL_API_V_1_PATTERN)
+			.addFilterAfter(jwtTokenAuthenticationFilter(RestUrls.REST_URL_API_V_1_PATTERN, secretProvider.getSecret()), ExceptionTranslationFilter.class)
 			.exceptionHandling()
 			.authenticationEntryPoint(new SecurityAuthenticationEntryPoint())
 			.accessDeniedHandler(new RestAccessDeniedHandler())
 			.and()
 			.authorizeRequests()
-			.antMatchers(HttpMethod.POST, RESTSecurityConfig.REST_URL_API_V_1_AUTH).permitAll()
-			.antMatchers(REST_URL_API_V_1 + "/options").hasAuthority(PermissionService.PERMISSION_ADMIN)
+			.antMatchers(HttpMethod.POST, RestUrls.REST_URL_API_V_1_AUTH).permitAll()
+			.antMatchers(RestUrls.REST_URL_API_V_1_OPTIONS,
+				RestUrls.REST_URL_REL_ACCOUNTS).hasAuthority(PermissionService.PERMISSION_ADMIN)
 			.anyRequest().authenticated();
 	}
 

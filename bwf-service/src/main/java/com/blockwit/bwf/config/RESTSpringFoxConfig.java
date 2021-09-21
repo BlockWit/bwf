@@ -1,6 +1,6 @@
 package com.blockwit.bwf.config;
 
-import com.blockwit.bwf.security.RESTSecurityConfig;
+import com.blockwit.bwf.controller.rest.RestUrls;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -16,7 +16,7 @@ public class RESTSpringFoxConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.select()
 			.apis(RequestHandlerSelectors.any())
-			.paths(PathSelectors.ant(RESTSecurityConfig.REST_URL_API_V_1_PATTERN))
+			.paths(PathSelectors.ant(RestUrls.REST_URL_API_V_1_PATTERN))
 			.build();
 	}
 

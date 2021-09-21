@@ -1,6 +1,6 @@
 package com.blockwit.bwf.security.jwt.controllers;
 
-import com.blockwit.bwf.security.RESTSecurityConfig;
+import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.security.jwt.JwtUtils;
 import com.blockwit.bwf.security.jwt.config.SecretProvider;
 import com.blockwit.bwf.security.jwt.model.AuthenticationRequest;
@@ -27,7 +27,7 @@ import java.io.IOException;
 @Slf4j
 @Controller
 @Api(value = "Authentication controller for Managing and Browsing Topics and Queues.")
-@RequestMapping(value = RESTSecurityConfig.REST_URL_API_V_1)
+@RequestMapping(value = RestUrls.REST_URL_API_V_1)
 public class RestAuthenticationController {
 
 	private final AuthenticationManager authenticationManager;
@@ -40,7 +40,7 @@ public class RestAuthenticationController {
 		this.secretProvider = secretProvider;
 	}
 
-	@RequestMapping(value = RESTSecurityConfig.REST_URL_REL_AUTH,
+	@RequestMapping(value = RestUrls.REST_URL_REL_AUTH,
 		method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +57,7 @@ public class RestAuthenticationController {
 			authentication = this.authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(login, password)
 			);
-		} catch(BadCredentialsException e) {
+		} catch (BadCredentialsException e) {
 			return ResponseEntity.badRequest().body("Wrong Login or password!");
 		}
 
