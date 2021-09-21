@@ -14,9 +14,12 @@
 
 package com.blockwit.bwf.service;
 
+import com.blockwit.bwf.model.IPageableService;
 import com.blockwit.bwf.model.Option;
 import com.blockwit.bwf.repository.OptionRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class OptionService {
+public class OptionService implements IPageableService<Option> {
 
 	public final static String OPTION_APP_NAME = "APP_NAME";
 	public final static String OPTION_APP_SHORT_NAME = "APP_SHORT_NAME";
@@ -178,6 +181,11 @@ public class OptionService {
 
 	public List<Option> findAll() {
 		return optionRepository.findAll();
+	}
+
+	@Override
+	public Page<Option> findPageable(Pageable pageable) {
+		return optionRepository.findAll(pageable);
 	}
 
 }

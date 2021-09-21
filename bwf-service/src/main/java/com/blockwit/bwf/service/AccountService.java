@@ -17,6 +17,7 @@ package com.blockwit.bwf.service;
 import com.blockwit.bwf.exception.*;
 import com.blockwit.bwf.model.ConfirmationStatus;
 import com.blockwit.bwf.model.Error;
+import com.blockwit.bwf.model.IPageableService;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.repository.AccountRepository;
 import com.blockwit.bwf.service.utils.WithOptional;
@@ -24,16 +25,21 @@ import io.vavr.control.Either;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 @Slf4j
 @Service
-public class AccountService {
+public class AccountService implements IPageableService<Account> {
 
 	private final AccountRepository accountRepository;
 
@@ -298,4 +304,8 @@ public class AccountService {
 		return accountRepository.findAll();
 	}
 
+	@Override
+	public Page<Account> findPageable(Pageable pageable) {
+		return accountRepository.findAll(pageable);
+	}
 }
