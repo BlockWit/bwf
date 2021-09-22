@@ -69,8 +69,13 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, RestUrls.REST_URL_API_V_1_AUTH).permitAll()
-			.antMatchers(RestUrls.REST_URL_API_V_1_OPTIONS,
-				RestUrls.REST_URL_REL_ACCOUNTS).hasAuthority(PermissionService.PERMISSION_ADMIN)
+			.antMatchers(
+				RestUrls.REST_URL_API_V_1_ADMIN_OPTIONS,
+				RestUrls.REST_URL_API_V_1_ADMIN_ACCOUNTS,
+				RestUrls.REST_URL_API_V_1_ADMIN_ROLES,
+				RestUrls.REST_URL_API_V_1_ADMIN_PERMISSIONS,
+				RestUrls.REST_URL_API_V_1_ADMIN_MENU
+			).hasAuthority(PermissionService.PERMISSION_ADMIN)
 			.anyRequest().authenticated();
 	}
 

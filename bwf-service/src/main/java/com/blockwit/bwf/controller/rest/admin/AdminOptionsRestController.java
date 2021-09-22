@@ -1,5 +1,7 @@
-package com.blockwit.bwf.controller.rest;
+package com.blockwit.bwf.controller.rest.admin;
 
+import com.blockwit.bwf.controller.rest.PageableHelper;
+import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.rest.OptionDTO;
 import com.blockwit.bwf.model.rest.common.PageDTO;
 import com.blockwit.bwf.model.rest.mappers.OptionDTOMapper;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@Api("REST API for Options")
-@RequestMapping(RestUrls.REST_URL_API_V_1_OPTIONS)
-public class OptionsRestController {
+@Api("Admin REST API for options")
+@RequestMapping(RestUrls.REST_URL_API_V_1_ADMIN_OPTIONS)
+public class AdminOptionsRestController {
 
 	@Autowired
 	OptionService optionService;
