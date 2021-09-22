@@ -1,7 +1,7 @@
 package com.blockwit.bwf.controller.rest;
 
 import com.blockwit.bwf.model.rest.AccountDTO;
-import com.blockwit.bwf.model.rest.common.PageableDTO;
+import com.blockwit.bwf.model.rest.common.PageDTO;
 import com.blockwit.bwf.model.rest.mappers.AccountDTOMapper;
 import com.blockwit.bwf.service.AccountService;
 import io.swagger.annotations.Api;
@@ -24,8 +24,9 @@ public class AccountsRestController {
 	AccountService accountService;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PageableDTO<AccountDTO>> options(@RequestParam(name = "page", defaultValue = "1") int page,
-														   @RequestParam(name = "pageSize", defaultValue = "4") int pageSize) {
+	public ResponseEntity<PageDTO<AccountDTO>> options(
+		@RequestParam(name = PageableHelper.PARAM_PAGE_NUMBER, defaultValue = PageableHelper.PAGE_NUMBER_DEFAULT + "") int page,
+		@RequestParam(name = PageableHelper.PARAM_PAGE_SIZE, defaultValue = PageableHelper.PAGE_SIZE_DEFAULT + "") int pageSize) {
 		return PageableHelper.pageable(accountService, page, pageSize, AccountDTOMapper::map);
 	}
 

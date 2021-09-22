@@ -8,13 +8,15 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class PageableDTO<T> implements Serializable {
+public class PageDTO<T> implements Serializable {
 
 	private int pageSize;
 
 	private int page;
 
 	private int pagesCount;
+
+	private long totalElements;
 
 	private List<T> items;
 

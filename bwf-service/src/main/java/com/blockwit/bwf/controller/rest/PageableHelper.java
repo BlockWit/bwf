@@ -1,8 +1,8 @@
 package com.blockwit.bwf.controller.rest;
 
 import com.blockwit.bwf.model.IPageableService;
-import com.blockwit.bwf.model.rest.common.PageableDTO;
-import com.blockwit.bwf.model.rest.common.PageableDTOMapper;
+import com.blockwit.bwf.model.rest.common.PageDTO;
+import com.blockwit.bwf.model.rest.common.PageDTOMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 
@@ -10,17 +10,32 @@ import java.util.function.Function;
 
 public class PageableHelper {
 
-	public static final <T, R> ResponseEntity<PageableDTO<R>> pageable(IPageableService<T> pageableService,
-																	   int page,
-																	   int pageSize,
-																	   Function<T, R> itemsDTOMapper) {
+	public static final String PARAM_PAGE_SIZE = "size";
+
+	public static final String PARAM_PAGE_NUMBER = "page";
+
+	public static final int PAGE_SIZE_LIMIT = 100;
+
+	public static final int PAGE_SIZE_DEFAULT = 10;
+
+	public static final int PAGE_NUMBER_DEFAULT = 1;
+
+	public static final <T, R> ResponseEntity<PageDTO<R>> pageable(IPageableService<T> pageableService,
+																   int page,
+																   int pageSize,
+																   Function<T, R> itemsDTOMapper) {
 
 		if (page < 1)
 			page = 0;
 		else
 			page--;
 
-		return ResponseEntity.ok(PageableDTOMapper.map(pageableService
+		if (pageSize > PageableHelper.PAGE_SIZE_LIMIT)
+			pageSize = PageableHelper.PAGE_SIZE_LIMIT;
+		if (pageSize < 1)
+			pageSize = PageableHelper.PAGE_SIZE_DEFAULT;
+
+		return ResponseEntity.ok(PageDTOMapper.map(pageableService
 			.findPageable(PageRequest.of(page, pageSize))
 			.map(itemsDTOMapper::apply)));
 	}

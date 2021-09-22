@@ -24,6 +24,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- JWT helper implementation -->
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
