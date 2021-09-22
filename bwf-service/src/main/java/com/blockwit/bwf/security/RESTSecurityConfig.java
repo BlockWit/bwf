@@ -74,6 +74,8 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 				RestUrls.REST_URL_API_V_1_ADMIN_ACCOUNTS,
 				RestUrls.REST_URL_API_V_1_ADMIN_ROLES,
 				RestUrls.REST_URL_API_V_1_ADMIN_PERMISSIONS,
+				RestUrls.REST_URL_API_V_1_ADMIN_POSTS,
+				RestUrls.REST_URL_API_V_1_ADMIN_MEDIA,
 				RestUrls.REST_URL_API_V_1_ADMIN_MENU
 			).hasAuthority(PermissionService.PERMISSION_ADMIN)
 			.anyRequest().authenticated();

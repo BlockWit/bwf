@@ -18,6 +18,10 @@ public class RestUrls {
 
 	public static final String REST_URL_REL_ROLES = "/roles";
 
+	public static final String REST_URL_REL_POSTS = "/posts";
+
+	public static final String REST_URL_REL_MEDIA = "/media";
+
 	public static final String REST_URL_REL_PERMISSIONS = "/permissions";
 
 	public static final String REST_URL_REL_MENU = "/menu";
@@ -29,6 +33,10 @@ public class RestUrls {
 
 	public static final String REST_URL_API_V_1_AUTH = REST_URL_API_V_1 + REST_URL_REL_AUTH;
 
+
+	public static final String REST_URL_API_V_1_ADMIN_MEDIA = REST_URL_ADMIN + REST_URL_REL_MEDIA;
+
+	public static final String REST_URL_API_V_1_ADMIN_POSTS = REST_URL_ADMIN + REST_URL_REL_POSTS;
 
 	public static final String REST_URL_API_V_1_ADMIN_ACCOUNTS = REST_URL_ADMIN + REST_URL_REL_ACCOUNTS;
 

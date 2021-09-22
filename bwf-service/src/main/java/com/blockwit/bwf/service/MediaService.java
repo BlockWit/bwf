@@ -15,6 +15,7 @@
 package com.blockwit.bwf.service;
 
 import com.blockwit.bwf.model.Error;
+import com.blockwit.bwf.model.IPageableService;
 import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.model.media.Media;
 import com.blockwit.bwf.repository.AccountRepository;
@@ -26,44 +27,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
 @Service
-public class MediaService {
+public class MediaService implements IPageableService<Media> {
 
-  @Autowired
-  private AccountRepository accountRepository;
+	@Autowired
+	private AccountRepository accountRepository;
 
-  @Autowired
-  private MediaRepository mediaRepository;
+	@Autowired
+	private MediaRepository mediaRepository;
 
-  public Either<Error, Media> findById(long postId) {
-    return ServiceHelper.findOwnableById(
-        accountRepository,
-        mediaRepository,
-        postId);
-  }
+	public Either<Error, Media> findById(long postId) {
+		return ServiceHelper.findOwnableById(
+			accountRepository,
+			mediaRepository,
+			postId);
+	}
 
-  public Page<Media> findAllMediaPageable(PageRequest pageRequest) {
-    Page<Media> page = mediaRepository.findAll(pageRequest);
+	public Page<Media> findAllMediaPageable(PageRequest pageRequest) {
+		Page<Media> page = mediaRepository.findAll(pageRequest);
 
-    List<Media> content = page.getContent();
-    List<Account> accounts = accountRepository.findAllById(
-        StreamEx.of(content)
-            .map(t -> t.getOwnerId())
-            .distinct()
-            .toList());
+		List<Media> content = page.getContent();
+		List<Account> accounts = accountRepository.findAllById(
+			StreamEx.of(content)
+				.map(t -> t.getOwnerId())
+				.distinct()
+				.toList());
 
-    return new PageImpl(StreamEx.of(content)
-        .map(notification -> notification.toBuilder()
-            .owner(StreamEx.of(accounts).findFirst(t -> t.getId().equals(notification.getOwnerId())).get())
-            .build())
-        .toList(),
-        page.getPageable(),
-        page.getTotalElements());
-  }
+		return new PageImpl(StreamEx.of(content)
+			.map(notification -> notification.toBuilder()
+				.owner(StreamEx.of(accounts).findFirst(t -> t.getId().equals(notification.getOwnerId())).get())
+				.build())
+			.toList(),
+			page.getPageable(),
+			page.getTotalElements());
+	}
+
+	@Override
+	public Page<Media> findPageable(Pageable pageable) {
+		Page<Media> page = mediaRepository.findAll(pageable);
+
+		List<Media> content = page.getContent();
+		List<Account> accounts = accountRepository.findAllById(
+			StreamEx.of(content)
+				.map(t -> t.getOwnerId())
+				.distinct()
+				.toList());
+
+		return new PageImpl(StreamEx.of(content)
+			.map(model -> model.toBuilder()
+				.owner(StreamEx.of(accounts).findFirst(t -> t.getId().equals(model.getOwnerId())).get())
+				.build())
+			.toList(),
+			page.getPageable(),
+			page.getTotalElements());
+	}
 
 }

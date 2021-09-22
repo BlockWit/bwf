@@ -16,7 +16,6 @@ package com.blockwit.bwf.service;
 
 import com.blockwit.bwf.model.IPageableService;
 import com.blockwit.bwf.model.Permission;
-import com.blockwit.bwf.model.account.Account;
 import com.blockwit.bwf.repository.PermissionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
