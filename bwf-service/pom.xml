@@ -192,6 +192,17 @@
 			<version>1.23.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.blockwit</groupId>
+			<artifactId>bw-utils</artifactId>
+			<version>0.0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<build>

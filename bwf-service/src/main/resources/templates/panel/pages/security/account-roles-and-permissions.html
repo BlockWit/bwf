@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/main}">
+<head>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <!--/*@thymesVar id="targetAccount" type="com.blockwit.bwf.model.account.Account"*/-->
+
+    <div class="row">
+        <div class="col-12"
+             th:insert="panel/fragments/cards :: cardDefault ('roles for account ' + ${targetAccount.getLogin()}, ~{ :: .card-body-profile-roles})">
+
+            <th:block class="card-body-profile-roles">
+
+                <div sec:authorize="hasAuthority('ADMIN')" class="row">
+                    <div class="col-12">
+                        <div class="margin mt-3 mb-3">
+                            <div class="btn-toolbar" role="toolbar"
+                                 aria-label="Roles toolbar">
+                                <div class="btn-group mr-2" role="group" aria-label="Add role">
+                                    <a th:href="${'/panel/accounts/account/' + targetAccount.getId() + '/roles/add'}"
+                                       class="btn btn-outline-success"
+                                       data-toggle="tooltip" title="Add role">
+                                        <i th:class="'fas fa-plus'"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <th:block
+                        th:replace="panel/fragments/tables :: unborderedBasicTable ('roles', ~{ :: .tl-inner-headers-roles}, ~{ :: .tl-inner-fields-roles})">
+
+                    <th:block class="tl-inner-headers tl-inner-headers-roles">
+                        <tr>
+                            <th>id</th>
+                            <th class="descr_field">name</th>
+                            <th></th>
+                        </tr>
+                    </th:block>
+                    <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Role"*/-->
+                    <th:block class="tl-inner-fields tl-inner-fields-roles"
+                              th:each="target : ${targetAccount.getRoles()}">
+                        <tr class="tl-inner-row">
+                            <td th:text="${target.getId()}"></td>
+                            <td class="descr_field" th:text="${target.getName()}"></td>
+                            <td
+                                    th:insert="panel/fragments/toolbars :: tableLineToolbar ('Role toolbar', ~{ :: .tl-inner-button-group-roles})">
+                                <th:block class="tl-inner-button-group-roles">
+                                    <a sec:authorize="hasAuthority('ADMIN')"
+                                       th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + targetAccount.getId() + '/roles/role/' + target.getId() +  '/remove'},'Remove','fas fa-trash-alt')"></a>
+                                </th:block>
+                            </td>
+                        </tr>
+                    </th:block>
+                </th:block>
+            </th:block>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"
+             th:insert="panel/fragments/cards :: cardDefault ('permissions for account ' + ${targetAccount.getLogin()}, ~{ :: .card-body-profile-permis})">
+
+            <th:block class="card-body-profile-permis">
+
+                <div sec:authorize="hasAuthority('ADMIN')" class="row">
+                    <div class="col-12">
+                        <div class="margin mt-3 mb-3">
+                            <div class="btn-toolbar" role="toolbar"
+                                 aria-label="Permissions toolbar">
+                                <div class="btn-group mr-2" role="group" aria-label="Add permission">
+                                    <a th:href="${'/panel/accounts/account/' + targetAccount.getId() + '/permissions/add'}"
+                                       class="btn btn-outline-success"
+                                       data-toggle="tooltip" title="Add permission">
+                                        <i th:class="'fas fa-plus'"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <th:block
+                        th:replace="panel/fragments/tables :: unborderedBasicTable ('permissions', ~{ :: .tl-inner-headers-permissions}, ~{ :: .tl-inner-fields-permissions})">
+
+                    <th:block class="tl-inner-headers tl-inner-headers-permissions">
+                        <tr>
+                            <th>id</th>
+                            <th class="descr_field">name</th>
+                            <th></th>
+                        </tr>
+                    </th:block>
+                    <!--/*@thymesVar id="target" type="com.blockwit.bwf.model.Permission"*/-->
+                    <th:block class="tl-inner-fields tl-inner-fields-permissions"
+                              th:each="target : ${targetAccount.getPermissions()}">
+                        <tr class="tl-inner-row">
+                            <td th:text="${target.getId()}"></td>
+                            <td class="descr_field" th:text="${target.getName()}"></td>
+                            <td
+                                    th:insert="panel/fragments/toolbars :: tableLineToolbar ('Permission toolbar', ~{ :: .tl-inner-button-group-permissions})">
+                                <th:block class="tl-inner-button-group-permissions">
+                                    <a sec:authorize="hasAuthority('ADMIN')"
+                                       th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + targetAccount.getId() + '/permissions/permission/' + target.getId() +  '/remove'},'Remove','fas fa-trash-alt')"></a>
+                                </th:block>
+                            </td>
+                        </tr>
+                    </th:block>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
+

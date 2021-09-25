@@ -14,8 +14,7 @@
 
 package com.blockwit.bwf.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,6 +24,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "roles")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role implements Serializable {
 
 	@Id
@@ -34,7 +36,7 @@ public class Role implements Serializable {
 	@Column(length = 150, nullable = false)
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinTable(
 		name = "permissions_to_roles",
 		joinColumns = @JoinColumn(name = "role_id"),

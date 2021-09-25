@@ -57,6 +57,8 @@
                            th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/setpass'},'Set new password','fas fa-key')"></a>
                         <a sec:authorize="hasAuthority('ADMIN')"
                            th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/delete'},'Delete','fas fa-trash-alt')"></a>
+                        <a sec:authorize="hasAuthority('ADMIN')"
+                           th:replace="panel/fragments/toolbars :: tableLineToolbarBtn (${'/panel/accounts/account/' + target.getId() + '/rolesandpermissions'},'Roles and permissions','fab fa-keycdn')"></a>
                     </th:block>
                 </td>
             </tr>

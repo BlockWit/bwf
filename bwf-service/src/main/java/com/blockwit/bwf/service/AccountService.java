@@ -309,4 +309,8 @@ public class AccountService implements IPageableService<Account> {
 		return accountRepository.findAll(pageable);
 	}
 
+	@Transactional
+	public void save(Account account) {
+		accountRepository.save(account);
+	}
 }

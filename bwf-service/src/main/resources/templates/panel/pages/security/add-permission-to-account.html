@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{panel/layouts/mainCardLayout}">
+<head>
+</head>
+<body>
+
+<!--/*@thymesVar id="account" type="com.blockwit.bwf.model.account.Account""*/-->
+<div layout:fragment="cardTitle">Add permissions to account [(${account.getLogin()})]</div>
+<div layout:fragment="cardBody">
+
+    <!--/*@thymesVar id="addPermissionToAccount" type="com.blockwit.bwf.form.AddPermissionToAccount"*/-->
+    <form th:action="${'/panel/accounts/account/' + account.getId() + '/permissions/add'}" method="POST" class="form-vertical" role="form"
+          th:object="${addPermissionToAccount}">
+        <div class="form-group" id="permissionName_field">
+            <label for="permissionName">Permission</label>
+            <!--/*@thymesVar id="permissions" type="java.util.List<com.blockwit.bwf.model.Permission>"*/-->
+            <select th:field="*{permissionName}" class="form-control" required="true" id="permissionName" name="permissionName">
+                <option th:each="permission : ${permissions}"
+                        th:value="${permission.getName()}"
+                        th:text="${permission.getName()}"
+                ></option>
+            </select>
+            <td th:if="${#fields.hasErrors('permissionName')}" th:errors="*{permissionName}">Permission name error</td>
+        </div>
+        <div class="form-group mt-5">
+            <button type="submit" class="btn btn-outline-primary btn-block">Add</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+

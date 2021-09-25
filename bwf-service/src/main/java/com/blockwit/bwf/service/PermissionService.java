@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,22 +37,43 @@ public class PermissionService implements IPageableService<Permission> {
 
 	public PermissionService(PermissionRepository permissionRepository) {
 		this.permissionRepository = permissionRepository;
+		List<String> perms = List.of(PERMISSION_ADMIN, PERMISSION_USER);
+		initializeDefaultValues(perms);
 	}
 
-	private static Permission getOrCreatePermission(PermissionRepository permissionRepository, String name) {
-		return permissionRepository.findByName(name).orElseGet(() -> {
-			Permission permission = new Permission();
-			permission.setName(name);
-			return permissionRepository.save(permission);
-		});
+	@Transactional
+	protected void initializeDefaultValues(List<String> names) {
+		Map<String, Permission> namesToModels = permissionRepository.findAll()
+			.stream().collect(Collectors.toMap(t -> t.getName(), t -> t));
+
+		if (!namesToModels.keySet().containsAll(names)) {
+			List<Permission> toSave = new ArrayList<>();
+			for (String name : names) {
+				if (!namesToModels.containsKey(name)) {
+					toSave.add(Permission.builder().name(name).build());
+				}
+			}
+
+			permissionRepository.saveAll(toSave);
+		}
+	}
+
+	public Optional<Permission> getPermission(String name) {
+		return permissionRepository.findByName(name);
 	}
 
 	public Set<Permission> getDefaultAdminPermissions() {
-		return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_ADMIN)));
+		return Set.of(getPermission(PERMISSION_ADMIN)).stream()
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.collect(Collectors.toSet());
 	}
 
 	public Set<Permission> getDefaultUserPermissions() {
-		return new HashSet<>(List.of(getOrCreatePermission(permissionRepository, PERMISSION_USER)));
+		return Set.of(getPermission(PERMISSION_USER)).stream()
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.collect(Collectors.toSet());
 	}
 
 	@Override
@@ -60,4 +81,11 @@ public class PermissionService implements IPageableService<Permission> {
 		return permissionRepository.findAll(pageable);
 	}
 
+	public List<Permission> findAll() {
+		return permissionRepository.findAll();
+	}
+
+	public Optional<Permission> findByName(String permissionName) {
+		return permissionRepository.findByName(permissionName);
+	}
 }
