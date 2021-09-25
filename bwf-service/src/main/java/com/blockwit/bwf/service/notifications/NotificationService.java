@@ -269,5 +269,23 @@ public class NotificationService {
 	public Page<Notification> findAllNotifications(Pageable pageable) {
 		return notificationsRepository.findAll(pageable);
 	}
+
+	public Page<NotificationExecutorState> findAllExecStates(Pageable pageable) {
+		return notificationExecutorStatesRepository.findAll(pageable);
+	}
+
+	public Page<NotificationType> findAllNotificationTypes(Pageable pageable) {
+		return notificationTypesRepository.findAll(pageable);
+	}
+
+	public Page<NotificationExecutorDescr> findAllNotificationExecutors(Pageable pageable) {
+		return notificationExecutorsRepository.findAll(pageable);
+	}
+
+	public Page<ExecutorToNotificationTypeAssign> findAllNotificationExecAssigns(Pageable pageable) {
+		return executorsToNotificationsTypeAssignRepository.findAll(pageable);
+	}
+
+
 }
 

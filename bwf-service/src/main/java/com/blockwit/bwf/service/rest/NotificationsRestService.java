@@ -1,12 +1,8 @@
 package com.blockwit.bwf.service.rest;
 
 import com.blockwit.bwf.controller.rest.PageableHelper;
-import com.blockwit.bwf.model.notifications.NotificationExecutorState;
-import com.blockwit.bwf.model.notifications.mapping.ExecStateView;
-import com.blockwit.bwf.model.notifications.mapping.ExecStatesViewMapper;
 import com.blockwit.bwf.model.rest.common.PageDTO;
-import com.blockwit.bwf.model.rest.notifications.NotificationDTO;
-import com.blockwit.bwf.model.rest.notifications.NotificationDTOMapper;
+import com.blockwit.bwf.model.rest.notifications.*;
 import com.blockwit.bwf.service.notifications.NotificationService;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +22,37 @@ public class NotificationsRestService {
 			pageSize,
 			t -> NotificationDTOMapper.map(t));
 	}
-//
-//	public PageDTO<NotificationExecutorStateDTO> findAllExecStates(int page, int pageSize) {
-//		return PageableHelper.pageable(
-//			t -> notificationService.findAllExecStates(t),
-//			page,
-//			pageSize,
-//			t -> NotificationExecutorStateDTOMapper.map(t));
-//	}
+
+	public PageDTO<NotificationExecutorStateDTO> findAllExecStates(int page, int pageSize) {
+		return PageableHelper.pageable(
+			t -> notificationService.findAllExecStates(t),
+			page,
+			pageSize,
+			t -> NotificationExecutorStateDTOMapper.map(t));
+	}
+
+	public PageDTO<NotificationExecutorDTO> findAllExecutors(int page, int pageSize) {
+		return PageableHelper.pageable(
+			t -> notificationService.findAllNotificationExecutors(t),
+			page,
+			pageSize,
+			t -> NotificationExecutorDTOMapper.map(t));
+	}
+
+	public PageDTO<NotificationTypeDTO> findAllNotifyTypes(int page, int pageSize) {
+		return PageableHelper.pageable(
+			t -> notificationService.findAllNotificationTypes(t),
+			page,
+			pageSize,
+			t -> NotificationTypeDTOMapper.map(t));
+	}
+
+	public PageDTO<NotificationExecutorAssignDTO> findAllExecutorsAssigns(int page, int pageSize) {
+		return PageableHelper.pageable(
+			t -> notificationService.findAllNotificationExecAssigns(t),
+			page,
+			pageSize,
+			t -> NotificationExecutorAssignDTOMapper.map(t));
+	}
 
 }
