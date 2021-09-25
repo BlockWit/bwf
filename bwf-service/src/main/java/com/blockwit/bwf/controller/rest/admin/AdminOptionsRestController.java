@@ -2,8 +2,8 @@ package com.blockwit.bwf.controller.rest.admin;
 
 import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.Option;
-import com.blockwit.bwf.model.rest.OptionDTO;
-import com.blockwit.bwf.model.rest.mappers.OptionDTOMapper;
+import com.blockwit.bwf.model.rest.options.OptionDTO;
+import com.blockwit.bwf.model.rest.options.OptionDTOMapper;
 import com.blockwit.bwf.service.OptionService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.permissions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class RoleDTO implements Serializable {
+public class PermissionDTO implements Serializable {
 
 	private Long id;
 

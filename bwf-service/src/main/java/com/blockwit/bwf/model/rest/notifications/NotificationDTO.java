@@ -1,4 +1,4 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.notifications;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,8 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class PermissionDTO implements Serializable {
+public class NotificationDTO implements Serializable {
 
 	private Long id;
-
-	private String name;
 
 }

@@ -1,7 +1,7 @@
-package com.blockwit.bwf.model.rest.mappers;
+package com.blockwit.bwf.model.rest.roles;
 
 import com.blockwit.bwf.model.Role;
-import com.blockwit.bwf.model.rest.RoleDTO;
+import com.blockwit.bwf.model.rest.roles.RoleDTO;
 
 public class RoleDTOMapper {
 

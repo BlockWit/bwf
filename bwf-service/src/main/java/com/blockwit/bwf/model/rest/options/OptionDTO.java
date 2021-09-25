@@ -1,4 +1,4 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.options;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

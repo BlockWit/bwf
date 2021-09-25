@@ -1,4 +1,4 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.roles;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,12 +7,10 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class AccountDTO implements Serializable {
+public class RoleDTO implements Serializable {
 
 	private Long id;
 
-	private String login;
-
-	private String email;
+	private String name;
 
 }

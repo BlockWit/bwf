@@ -24,6 +24,17 @@ public class RestUrls {
 
 	public static final String REST_URL_REL_PERMISSIONS = "/permissions";
 
+	public static final String REST_URL_REL_NOTIFICATIONS = "/notifications";
+
+	public static final String REST_URL_REL_PARTS = "/parts";
+
+	public static final String REST_URL_REL_EXECSTATES = "/execstates";
+
+	public static final String REST_URL_REL_NOTIFYTYPES = "/notifytypes";
+
+	public static final String REST_URL_REL_EXECUTORS = "/executors";
+
+
 	public static final String REST_URL_REL_MENU = "/menu";
 
 	public static final String REST_URL_ADMIN = REST_URL_API_V_1 + REST_URL_REL_ADMIN;
@@ -32,6 +43,27 @@ public class RestUrls {
 	public static final String REST_URL_API_V_1_PROFILE = REST_URL_API_V_1 + REST_URL_REL_PROFILE;
 
 	public static final String REST_URL_API_V_1_AUTH = REST_URL_API_V_1 + REST_URL_REL_AUTH;
+
+
+	//	public static final String REST_URL_REL_NOTIFICATIONS = "/notifications";
+//
+//	public static final String REST_URL_REL_PARTS = "/parts";
+//
+//	public static final String REST_URL_REL_EXECSTATES = "/execstates";
+//
+//	public static final String REST_URL_REL_NOTIFYTYPES = "/notifytypes";
+//
+//	public static final String REST_URL_REL_EXECUTORS = "/executors";
+	public static final String REST_URL_REL_NOTIFICATIONS_PARTS = REST_URL_ADMIN + REST_URL_REL_NOTIFICATIONS + REST_URL_REL_PARTS;
+
+
+	public static final String REST_URL_API_V_1_ADMIN_NOTIFICATIONS = REST_URL_ADMIN + REST_URL_REL_NOTIFICATIONS;
+
+	public static final String REST_URL_API_V_1_ADMIN_EXEC_STATES = REST_URL_REL_NOTIFICATIONS_PARTS + REST_URL_REL_EXECSTATES;
+
+	public static final String REST_URL_API_V_1_ADMIN_NOTIFY_TYPES = REST_URL_REL_NOTIFICATIONS_PARTS + REST_URL_REL_NOTIFYTYPES;
+
+	public static final String REST_URL_API_V_1_ADMIN_EXECUTORS = REST_URL_REL_NOTIFICATIONS_PARTS + REST_URL_REL_EXECUTORS;
 
 
 	public static final String REST_URL_API_V_1_ADMIN_MEDIA = REST_URL_ADMIN + REST_URL_REL_MEDIA;

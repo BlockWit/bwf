@@ -2,8 +2,8 @@ package com.blockwit.bwf.controller.rest.admin;
 
 import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.Permission;
-import com.blockwit.bwf.model.rest.PermissionDTO;
-import com.blockwit.bwf.model.rest.mappers.PermissionDTOMapper;
+import com.blockwit.bwf.model.rest.permissions.PermissionDTO;
+import com.blockwit.bwf.model.rest.permissions.PermissionDTOMapper;
 import com.blockwit.bwf.service.PermissionService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

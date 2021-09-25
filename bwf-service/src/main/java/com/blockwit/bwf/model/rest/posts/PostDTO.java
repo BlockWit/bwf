@@ -1,7 +1,8 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.posts;
 
 import com.blockwit.bwf.model.posts.PostStatus;
 import com.blockwit.bwf.model.posts.PostType;
+import com.blockwit.bwf.model.rest.accounts.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

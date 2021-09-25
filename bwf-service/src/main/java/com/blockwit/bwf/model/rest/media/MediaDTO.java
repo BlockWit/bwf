@@ -1,5 +1,6 @@
-package com.blockwit.bwf.model.rest;
+package com.blockwit.bwf.model.rest.media;
 
+import com.blockwit.bwf.model.rest.accounts.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

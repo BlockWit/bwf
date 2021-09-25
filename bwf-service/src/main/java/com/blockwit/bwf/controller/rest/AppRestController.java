@@ -1,8 +1,8 @@
 package com.blockwit.bwf.controller.rest;
 
 import com.blockwit.bwf.model.account.AccountHelper;
-import com.blockwit.bwf.model.rest.AccountDTO;
-import com.blockwit.bwf.model.rest.mappers.AccountDTOMapper;
+import com.blockwit.bwf.model.rest.accounts.AccountDTO;
+import com.blockwit.bwf.model.rest.accounts.AccountDTOMapper;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;

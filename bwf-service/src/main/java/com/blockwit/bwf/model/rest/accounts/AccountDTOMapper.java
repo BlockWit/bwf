@@ -1,7 +1,7 @@
-package com.blockwit.bwf.model.rest.mappers;
+package com.blockwit.bwf.model.rest.accounts;
 
 import com.blockwit.bwf.model.account.Account;
-import com.blockwit.bwf.model.rest.AccountDTO;
+import com.blockwit.bwf.model.rest.accounts.AccountDTO;
 
 public class AccountDTOMapper {
 

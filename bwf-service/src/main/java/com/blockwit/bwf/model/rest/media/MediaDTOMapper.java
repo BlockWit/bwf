@@ -1,7 +1,8 @@
-package com.blockwit.bwf.model.rest.mappers;
+package com.blockwit.bwf.model.rest.media;
 
 import com.blockwit.bwf.model.media.Media;
-import com.blockwit.bwf.model.rest.MediaDTO;
+import com.blockwit.bwf.model.rest.accounts.AccountDTOMapper;
+import com.blockwit.bwf.model.rest.media.MediaDTO;
 
 public class MediaDTOMapper {
 

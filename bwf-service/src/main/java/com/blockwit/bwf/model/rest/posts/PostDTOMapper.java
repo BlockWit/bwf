@@ -1,7 +1,8 @@
-package com.blockwit.bwf.model.rest.mappers;
+package com.blockwit.bwf.model.rest.posts;
 
 import com.blockwit.bwf.model.posts.Post;
-import com.blockwit.bwf.model.rest.PostDTO;
+import com.blockwit.bwf.model.rest.accounts.AccountDTOMapper;
+import com.blockwit.bwf.model.rest.posts.PostDTO;
 
 public class PostDTOMapper {
 

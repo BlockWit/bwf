@@ -2,8 +2,8 @@ package com.blockwit.bwf.controller.rest.admin;
 
 import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.account.Account;
-import com.blockwit.bwf.model.rest.AccountDTO;
-import com.blockwit.bwf.model.rest.mappers.AccountDTOMapper;
+import com.blockwit.bwf.model.rest.accounts.AccountDTO;
+import com.blockwit.bwf.model.rest.accounts.AccountDTOMapper;
 import com.blockwit.bwf.service.AccountService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

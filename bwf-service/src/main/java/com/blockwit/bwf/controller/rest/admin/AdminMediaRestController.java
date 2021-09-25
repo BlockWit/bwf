@@ -2,8 +2,8 @@ package com.blockwit.bwf.controller.rest.admin;
 
 import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.media.Media;
-import com.blockwit.bwf.model.rest.MediaDTO;
-import com.blockwit.bwf.model.rest.mappers.MediaDTOMapper;
+import com.blockwit.bwf.model.rest.media.MediaDTO;
+import com.blockwit.bwf.model.rest.media.MediaDTOMapper;
 import com.blockwit.bwf.service.MediaService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

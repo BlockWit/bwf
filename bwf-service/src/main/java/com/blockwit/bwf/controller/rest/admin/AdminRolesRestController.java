@@ -2,8 +2,8 @@ package com.blockwit.bwf.controller.rest.admin;
 
 import com.blockwit.bwf.controller.rest.RestUrls;
 import com.blockwit.bwf.model.Role;
-import com.blockwit.bwf.model.rest.RoleDTO;
-import com.blockwit.bwf.model.rest.mappers.RoleDTOMapper;
+import com.blockwit.bwf.model.rest.roles.RoleDTO;
+import com.blockwit.bwf.model.rest.roles.RoleDTOMapper;
 import com.blockwit.bwf.service.RoleService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

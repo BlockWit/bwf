@@ -1,7 +1,7 @@
-package com.blockwit.bwf.model.rest.mappers;
+package com.blockwit.bwf.model.rest.options;
 
 import com.blockwit.bwf.model.Option;
-import com.blockwit.bwf.model.rest.OptionDTO;
+import com.blockwit.bwf.model.rest.options.OptionDTO;
 
 public class OptionDTOMapper {
 
