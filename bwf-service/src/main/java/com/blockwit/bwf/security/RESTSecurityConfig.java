@@ -77,7 +77,10 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 				RestUrls.REST_URL_API_V_1_ADMIN_POSTS,
 				RestUrls.REST_URL_API_V_1_ADMIN_MEDIA,
 				RestUrls.REST_URL_API_V_1_ADMIN_MENU,
-				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS,
+				RestUrls.REST_URL_API_V_1_ADMIN_EXEC_STATES,
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFY_TYPES,
+				RestUrls.REST_URL_API_V_1_ADMIN_EXECUTORS
 			).hasAuthority(PermissionService.PERMISSION_ADMIN)
 			.anyRequest().authenticated();
 	}

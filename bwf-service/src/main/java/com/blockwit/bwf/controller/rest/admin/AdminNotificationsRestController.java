@@ -31,4 +31,11 @@ public class AdminNotificationsRestController {
 		return ResponseEntity.ok(notificationsRestService.findAllNotifications(page, pageSize));
 	}
 
+//	@GetMapping(path = RestUrls.REST_URL_API_V_1_REL_ADMIN_EXEC_STATES, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<PageDTO<NotificationDTO>> itemsExecStates(
+//		@RequestParam(name = PageableHelper.PARAM_PAGE_NUMBER, defaultValue = PageableHelper.PAGE_NUMBER_DEFAULT + "") int page,
+//		@RequestParam(name = PageableHelper.PARAM_PAGE_SIZE, defaultValue = PageableHelper.PAGE_SIZE_DEFAULT + "") int pageSize) {
+//		return ResponseEntity.ok(notificationsRestService.findAllExecStates(page, pageSize));
+//	}
+
 }
