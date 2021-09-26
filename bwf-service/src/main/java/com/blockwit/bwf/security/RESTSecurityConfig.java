@@ -69,7 +69,7 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, RestUrls.REST_URL_API_V_1_AUTH).permitAll()
-			.antMatchers(
+			.antMatchers(HttpMethod.GET,
 				RestUrls.REST_URL_API_V_1_ADMIN_OPTIONS,
 				RestUrls.REST_URL_API_V_1_ADMIN_ACCOUNTS,
 				RestUrls.REST_URL_API_V_1_ADMIN_ROLES,
@@ -78,11 +78,14 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 				RestUrls.REST_URL_API_V_1_ADMIN_MEDIA,
 				RestUrls.REST_URL_API_V_1_ADMIN_MENU,
 				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS,
-				RestUrls.REST_URL_API_V_1_ADMIN_EXEC_STATES,
-				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFY_TYPES,
-				RestUrls.REST_URL_API_V_1_ADMIN_EXECUTORS,
-				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFY_ASSIGNS
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS_EXEC_STATES,
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS_NOTIFY_TYPES,
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS_EXECUTORS,
+				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS_ASSIGNS
 			).hasAuthority(PermissionService.PERMISSION_ADMIN)
+			.antMatchers(HttpMethod.GET,
+				RestUrls.REST_URL_API_V_1_FRONT_POSTS_PATTERN)
+			.permitAll()
 			.anyRequest().authenticated();
 	}
 
