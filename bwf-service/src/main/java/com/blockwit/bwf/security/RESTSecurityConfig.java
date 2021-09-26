@@ -54,6 +54,7 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		System.out.println(RestUrls.REST_URL_API_V_1_FRONT_POSTS_PATTERN);
 		http
 			.requestMatchers().antMatchers(RestUrls.REST_URL_API_V_1_PATTERN)
 			.and()
