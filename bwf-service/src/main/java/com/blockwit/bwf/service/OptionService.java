@@ -44,6 +44,8 @@ public class OptionService implements IPageableService<Option> {
 	public static final String OPTION_LOGIN_LOCK_PERIOD = "OPTION_LOGIN_LOCK_PERIOD";
 	public static final String OPTION_LOGIN_TRY_PERIOD = "OPTION_LOGIN_TRY_PERIOD";
 
+	public static final String OPTION_MAIN_MENU_ID = "OPTION_MAIN_MENU_ID";
+
 	public final static String OPTION_PROFILE = "OPTION_PROFILE";
 
 	public final static String OPTION_TYPE_STRING = "string";
@@ -74,7 +76,8 @@ public class OptionService implements IPageableService<Option> {
 			OPTION_LOGIN_LOCK_PERIOD, new Option(0L, OPTION_LOGIN_LOCK_PERIOD, OPTION_TYPE_LONG, "86400000", "Account lock period in case of login attempts limit exceeded"),
 			OPTION_LOGIN_TRY_PERIOD, new Option(0L, OPTION_LOGIN_TRY_PERIOD, OPTION_TYPE_LONG, "3600000", "Period between two bad login attempts to increase bad attempts counter"),
 			OPTION_MEDIA_PATH, new Option(0L, OPTION_MEDIA_PATH, OPTION_TYPE_STRING, "/opt/bwf/media", "Media path"),
-			OPTION_HOME_PAGE_ID, new Option(0L, OPTION_HOME_PAGE_ID, OPTION_TYPE_LONG, "19", "Page id which shows as main")
+			OPTION_HOME_PAGE_ID, new Option(0L, OPTION_HOME_PAGE_ID, OPTION_TYPE_LONG, "19", "Page id which shows as main"),
+			OPTION_MAIN_MENU_ID, new Option(0L, OPTION_MAIN_MENU_ID, OPTION_TYPE_LONG, "1", "Frontend main menu")
 		));
 
 		defaultOptions.putAll(Map.of(

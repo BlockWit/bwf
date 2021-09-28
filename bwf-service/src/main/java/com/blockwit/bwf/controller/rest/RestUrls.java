@@ -102,7 +102,13 @@ public class RestUrls {
 	// Front
 	public static final String REST_URL_API_V_1_REL_FRONT_POSTS = REST_URL_REL_FRONT + REST_URL_REL_POSTS;
 
+	public static final String REST_URL_API_V_1_REL_FRONT_MENU = REST_URL_REL_FRONT + REST_URL_REL_MENU;
+
 	public static final String REST_URL_API_V_1_FRONT_POSTS = REST_URL_API_V_1 + REST_URL_API_V_1_REL_FRONT_POSTS;
+
+	public static final String REST_URL_API_V_1_FRONT_MENU = REST_URL_API_V_1 + REST_URL_API_V_1_REL_FRONT_MENU;
+
+	public static final String REST_URL_API_V_1_FRONT_MENU_PATTERN = REST_URL_API_V_1_FRONT_MENU + "/**";
 
 	public static final String REST_URL_API_V_1_FRONT_POSTS_PATTERN = REST_URL_API_V_1_FRONT_POSTS + "/**";
 
