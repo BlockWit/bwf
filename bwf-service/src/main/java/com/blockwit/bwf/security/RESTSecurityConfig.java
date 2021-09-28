@@ -85,6 +85,7 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
 				RestUrls.REST_URL_API_V_1_ADMIN_NOTIFICATIONS_ASSIGNS
 			).hasAuthority(PermissionService.PERMISSION_ADMIN)
 			.antMatchers(HttpMethod.GET,
+				RestUrls.REST_URL_API_V_1_FRONT_CONFIG,
 				RestUrls.REST_URL_API_V_1_FRONT_MENU_PATTERN,
 				RestUrls.REST_URL_API_V_1_FRONT_POSTS_PATTERN)
 			.permitAll()

@@ -22,7 +22,7 @@ import java.util.Optional;
 @RestController
 @Api("Front REST API for posts")
 @RequestMapping(RestUrls.REST_URL_API_V_1_FRONT_POSTS)
-public class RestPostsController {
+public class RestPostsRestController {
 
 	@Autowired
 	PostsRestService postsRestService;

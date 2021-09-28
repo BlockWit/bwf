@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api("Front REST API for menu items")
 @RequestMapping(RestUrls.REST_URL_API_V_1_FRONT_MENU)
-public class MenuItemsController {
+public class MenuItemsRestController {
 
 	@Autowired
 	MenuItemsRestService menuItemsRestService;
